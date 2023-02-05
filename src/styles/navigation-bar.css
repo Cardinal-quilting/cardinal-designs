@@ -1,0 +1,37 @@
+@import './styles.css';
+
+.nav-header {
+    background-color: var(--dark-grey-background-color);
+    color: var(--light-font-color);
+    display: flex;
+  
+    align-items: center;    
+  }
+
+.nav-logo {
+    height: 4vmin;
+    pointer-events: none;
+  }
+
+.nav-title {
+    margin: 0.2vh 1vw;
+    font-size: 3vmin;
+}
+  
+.nav-link {
+    padding: 0vmin;
+
+    text-decoration: none;
+
+    color: var(--light-font-color);
+    background-color: var(--dark-red);
+    border-color: #252525;
+    border-radius: 1vmin;
+
+    font-size: 3vmin;
+    font-weight: bold;
+
+    border-bottom: 0.25vmin solid black;
+
+    margin: 0.1vh 0.5vw;
+}
