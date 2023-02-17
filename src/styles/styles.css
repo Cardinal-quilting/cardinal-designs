@@ -1,10 +1,13 @@
 :root {
+    --light-grey-background-color: #f0f0f0;
     --grey-background-color: #4d4d4d;
     --dark-grey-background-color: #252525;
 
     --light-font-color: #e0e0e0;
 
-    --dark-red: #67000d;
+    --dark-red-theme: #67000d;
+    --black-theme: #252525;
+    --grey-theme: #4d4d4d;
 }
 
 body {

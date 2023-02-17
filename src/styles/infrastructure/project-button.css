@@ -1,0 +1,12 @@
+@import './../styles.css';
+
+.project-button {
+  padding: 0.1vh 0.1vw;
+  background-color: var(--dark-grey-background-color);
+  color: var(--light-font-color);
+  font-size: 1.5vmin;
+  
+  border-radius: 1vmin;
+
+  margin: 0.1vh 0.1vw;
+}

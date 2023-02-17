@@ -1,0 +1,19 @@
+@import './../styles.css';
+
+.nav-header {
+  background-color: var(--dark-grey-background-color);
+  color: var(--light-font-color);
+  display: flex;
+  
+  align-items: center;    
+}
+
+.nav-logo {
+  height: 4vmin;
+  pointer-events: none;
+}
+
+.nav-title {
+  margin: 0.2vh 1vw;
+  font-size: 3vmin;
+}

@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-
 import LaunchPage from './pages/launch-page';
 import ProjectPage from './pages/project-page';
 

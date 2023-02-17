@@ -1,22 +1,23 @@
 import React, { Component } from 'react'
-import {Link} from "react-router-dom";
+import DropdownMenu from '../infrastructure/dropdown-menu';
 
-import './../styles/navigation-bar.css';
+import './../styles/infrastructure/navigation-bar.css';
 import logo from './../../src/figures/logos/CardinalQuiltsSmallLogo.png';
 
 class NavigationBar extends Component {
     render() {
         return (
             <div>
-            <header class="nav-header">
+            <header className="nav-header">
             <img src={logo} alt="small_logo" className="nav-logo"/>
-            <h1 class="nav-title">Cardinal designs</h1>
-            <div>
-                <Link to="/" className="nav-link">Home</Link>
-            </div>
+            <h1 className="nav-title">Cardinal designs</h1>
+            <DropdownMenu 
+                name="Menu" 
+                font_size="2.5vmin" 
+                font_weight="bold" 
+                unselected_background_color="--grey-theme"
+            />
             </header>
-            <body class="Project-body">
-            </body>
           </div>
         )
     }

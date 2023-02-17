@@ -1,0 +1,12 @@
+@import './../styles.css';
+
+.dropdown-menu {
+    padding: 0.1vh 0.5vw;
+    position: absolute;
+    margin: 0vh 2vw;
+    background-color: var(--dark-red-theme);
+    color: var(--light-font-color);
+    font-size: 1.5vmin;
+    
+    border-radius: 1vmin;
+}
