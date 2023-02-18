@@ -5,22 +5,31 @@ import './../styles/pages/project-page.css';
 import NavigationBar from '../infrastructure/navigation-bar';
 import DropdownMenu from '../infrastructure/dropdown-menu';
 
-
+/**
+ * The top page for a user to interact with a Cardinal Designs project
+ */
 class ProjectPage extends Component {
     render() {
         return (
-            <div className="Project-body">        
+            <div className="Project-body"> 
+            {/* put a navation bar at the top of the page */}
             <NavigationBar />
+
             
             <div className="top-menu">
-            <DropdownMenu name="hi"/>
+                TOP
             </div>        
             <div className="row">
-            <div className="left-menu"></div>
+            <div className="left-menu">
+                LEFT
+            </div>
             <div className="project-display"></div>
-            <div className="right-menu"></div>
+            <div className="right-menu">
+                RIGHT
+            </div>
             </div>
             <div className="bottom-menu">
+                BOTTOM
             </div>        
             </div>
         )
