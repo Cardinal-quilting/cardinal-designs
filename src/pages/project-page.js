@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import './../styles/pages/project-page.css';
 
 import NavigationBar from '../infrastructure/navigation-bar';
-import DropdownMenu from '../infrastructure/dropdown-menu';
 
 /**
  * The top page for a user to interact with a Cardinal Designs project

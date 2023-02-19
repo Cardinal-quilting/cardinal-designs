@@ -9,6 +9,7 @@ import './../styles/infrastructure/tooltip.css';
  * @prop {string} props.yloc="0vmin" - The y-location of the tool time relative to the bottom left of the parent object. 
  * @prop {float} props.hover=500.0 - The time the mouse has to hover before the tooltip appears (in milliseconds).
  * @prop {string} props.message="" - The message that is displayed when the tooltip appears.
+ * @prop {string} props.font_size="1vmin" - The font size of the message text.
  */
 class Tooltip extends Component {
     constructor(props) {
@@ -29,7 +30,8 @@ class Tooltip extends Component {
         xloc: "0vmin",
         yloc: "0vmin",
         hover: 500.0,
-        message: ""
+        message: "",
+        font_size: "1vmin"
     }
 
     /**
@@ -70,7 +72,8 @@ class Tooltip extends Component {
                 className="tooltip"
                 style={{
                     left: this.props.xloc,
-                    bottom: this.props.yloc
+                    bottom: this.props.yloc,
+                    fontSize: this.props.font_size
                 }}
                 >
                     {this.props.message}

@@ -12,9 +12,10 @@ class LaunchPage extends Component {
             <div className="Launch">
             <header className="Launch-header">
                 <Tooltip 
-                    xloc="10%"
+                    xloc="5vmin"
                     hover="2500"
                     message="Create a new project using Cardinal Designs!"
+                    font_size="1.5vmin"
                 >
                 <ProjectButton name="New project" 
                     font_size="5vmin"

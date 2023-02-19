@@ -1,6 +1,5 @@
 @import './../styles.css';
 
-/* Wrapping */
 .tooltip-wrapper {
     display: inline-block;
     position: relative;
@@ -9,26 +8,11 @@
 
 .tooltip {
     position: absolute;
-    border-radius: 4vmin;
+    border-radius: 1vmin;
     padding: 6px;
     color: var(--light-font-color);
     background: var(--black-theme);
-    font-size: 14px;
     font-family: sans-serif;
     line-height: 1;
-    z-index: 100;
     white-space: nowrap;
 }
-
-/* CSS border triangles */
-.tooltip::before {
-    content: " ";
-    left: 200%;
-    border: solid transparent;
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border-width: var(60vmin);
-    margin-left: calc(var(60vmin) * -1);
-  }
