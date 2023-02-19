@@ -21,15 +21,9 @@
 }
 
 .top-menu {
-  min-height: 5vmin;
+  min-height: 3vh;
 }
 
 .bottom-menu {
-  min-height: 5vmin;
-}
-
-.project-display {
-  flex: 70%;
-  background-color: var(--light-grey-background-color);
-  min-height: 85vmin;
+  min-height: 10vh;
 }

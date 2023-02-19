@@ -3,7 +3,7 @@ import './../styles/infrastructure/navigation-bar.css';
 import './../styles/pages/launch-page.css';
 import logo from './../../src/figures/logos/CardinalQuiltsLogo.png';
 
-import ProjectButton from '../infrastructure/project-button';
+import ProjectButton from '../infrastructure/button';
 import Tooltip from '../infrastructure/tooltip';
 
 class LaunchPage extends Component {
@@ -28,7 +28,7 @@ class LaunchPage extends Component {
                 <img src={logo} alt="large_logo" className="Launch-logo"/>
             </header>
           </div>
-        )
+        );
     }
 }
 

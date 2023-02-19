@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import ProjectButton from '../infrastructure/project-button';
+import ProjectButton from '../infrastructure/button';
 
 import './../styles/infrastructure/dropdown-menu.css';
 

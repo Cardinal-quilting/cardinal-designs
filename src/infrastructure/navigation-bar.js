@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import DropdownMenu from '../infrastructure/dropdown-menu';
-import Tooltip from '../infrastructure/tooltip';
 
 import './../styles/infrastructure/navigation-bar.css';
 import logo from './../../src/figures/logos/CardinalQuiltsSmallLogo.png';

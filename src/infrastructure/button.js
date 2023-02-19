@@ -1,6 +1,6 @@
 import { Component } from "react";
 
-import './../styles/infrastructure/project-button.css';
+import './../styles/infrastructure/button.css';
 
 /**
  * Defines a clickable button.
@@ -15,12 +15,12 @@ import './../styles/infrastructure/project-button.css';
  */
 class ProjectButton extends Component {
     /**
-     * See project-button.css for default options
+     * See button.css for default options
      * @returns A wrapper around the button object
      */
     render() {
         return (
-            <button className="project-button" 
+            <button className="button" 
             style={{"backgroundColor": this.props.background_color,
                     "fontSize": this.props.font_size,
                     "fontWeight": this.props.font_weight
@@ -29,7 +29,7 @@ class ProjectButton extends Component {
             disabled={this.props.disabled}>
                 {this.props.name}
             </button>
-        )
+        );
     }
 }
 

@@ -1,0 +1,11 @@
+@import './../styles.css';
+
+.node {
+  position: relative;
+  
+  padding: 10;
+  margin: 20,;
+  background-color: var(--black-theme);
+  display: flex;
+  border-radius: 100%;
+}

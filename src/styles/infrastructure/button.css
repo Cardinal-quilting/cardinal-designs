@@ -1,6 +1,6 @@
 @import './../styles.css';
 
-.project-button {
+.button {
   padding: 0.1vh 0.1vw;
   background-color: var(--dark-grey-background-color);
   color: var(--light-font-color);
