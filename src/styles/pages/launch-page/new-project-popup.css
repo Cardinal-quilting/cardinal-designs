@@ -1,0 +1,9 @@
+@import 'styles/styles.css';
+
+.new-project-popup {
+    position: absolute;
+    min-width: 50vw;
+    min-height: 25vh;
+    background-color: var(--grey-background-color);
+    z-index: 1;
+}

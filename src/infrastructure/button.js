@@ -1,6 +1,6 @@
 import { Component } from "react";
 
-import 'styles/infrastructure/button.css';
+import "styles/infrastructure/button.css";
 
 /**
  * Defines a clickable button.
@@ -13,7 +13,18 @@ import 'styles/infrastructure/button.css';
  * @prop {string} props.name - The name of the button (displayed as text).
  * @prop {function} props.on_click - What happens when the user clicks this button
  */
-class ProjectButton extends Component {
+class Button extends Component {
+    static defaultProps = {
+        background_color: getComputedStyle(document.documentElement).getPropertyValue("--dark-grey-background-color"),
+        font_color: getComputedStyle(document.documentElement).getPropertyValue("--light-font-color"),
+        font_size: "1.5vmin",
+        font_weight: "",
+        margin: {
+            x: "0.1vw",
+            y: "0.1vh",
+        }
+    }
+    
     /**
      * See button.css for default options
      * @returns A wrapper around the button object
@@ -23,7 +34,9 @@ class ProjectButton extends Component {
             <button className="button" 
             style={{"backgroundColor": this.props.background_color,
                     "fontSize": this.props.font_size,
-                    "fontWeight": this.props.font_weight
+                    "fontWeight": this.props.font_weight,
+                    "color": this.props.font_color,
+                    "margin": this.props.margin.y+" "+this.props.margin.x
                     }}
             onClick={() => this.props.on_click()}
             disabled={this.props.disabled}>
@@ -33,4 +46,4 @@ class ProjectButton extends Component {
     }
 }
 
-export default ProjectButton;
+export default Button;

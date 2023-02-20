@@ -1,17 +1,16 @@
-@import './../styles.css';
+@import 'styles/styles.css';
 
-.Launch {
+.launch {
   text-align: center;
 }
 
-.Launch-logo {
+.launch-logo {
   height: 50vmin;
   pointer-events: none;
 }
 
-.Launch-header {
+.launch-header {
   margin: 0;
-  background-color: var(--grey-background-color);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -19,8 +18,4 @@
   justify-content: center;
   font-size: 6vmin;
   color: var(--light-font-color);
-}
-
-.Launch-link {
-  font-size: 4vw;
 }

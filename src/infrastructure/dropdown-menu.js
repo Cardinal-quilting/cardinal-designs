@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import ProjectButton from 'infrastructure/button';
+import Button from 'infrastructure/button';
 
 import 'styles/infrastructure/dropdown-menu.css';
 
@@ -96,7 +96,7 @@ class DropdownMenu extends Component {
     render() {
         return (
             <div>
-                <ProjectButton 
+                <Button 
                     background_color={this.state.top_button_background} 
                     on_click={() => this.openDropdown()} 
                     disabled={this.state.display} 
@@ -107,14 +107,14 @@ class DropdownMenu extends Component {
                 {this.state.display? 
                     <div className="dropdown-menu" ref={this.box}>
                         <li style={{"listStyleType":"none"}}> 
-                            <ProjectButton 
+                            <Button 
                                 on_click={() => this.#goTo("/")} 
                                 name="Home"
                             /> 
                         </li>
                         <hr></hr>
                         <li style={{"listStyleType":"none"}}>
-                            <ProjectButton 
+                            <Button 
                                 on_click={() => this.closeDropdown()} 
                                 name={"Close".concat(" ", this.props.name)}
                             /> 
