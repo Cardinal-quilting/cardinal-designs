@@ -1,6 +1,6 @@
 import { Component } from "react";
 
-import './../styles/infrastructure/tooltip.css';
+import 'styles/infrastructure/tooltip.css';
 
 /**
  * Wraps around an object to create a tooltip.

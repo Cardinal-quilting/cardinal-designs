@@ -1,6 +1,6 @@
 import { Component } from "react";
 
-import './../styles/infrastructure/button.css';
+import 'styles/infrastructure/button.css';
 
 /**
  * Defines a clickable button.

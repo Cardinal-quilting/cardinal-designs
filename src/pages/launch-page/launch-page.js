@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import './../styles/infrastructure/navigation-bar.css';
-import './../styles/pages/launch-page.css';
-import logo from './../../src/figures/logos/CardinalQuiltsLogo.png';
 
-import ProjectButton from '../infrastructure/button';
-import Tooltip from '../infrastructure/tooltip';
+import 'styles/pages/launch-page.css';
+import logo from 'figures/logos/CardinalQuiltsLogo.png';
+
+import ProjectButton from 'infrastructure/button';
+import Tooltip from 'infrastructure/tooltip';
 
 class LaunchPage extends Component {
     render() {
@@ -24,8 +24,15 @@ class LaunchPage extends Component {
                     on_click={() => window.location.replace("/project")}
                 />
                 </Tooltip>
+                <div>
+                    START POPUP
+                </div>
                 <h1>Cardinal designs</h1> 
-                <img src={logo} alt="large_logo" className="Launch-logo"/>
+                <img 
+                    src={logo} 
+                    alt="large_logo"
+                    className="Launch-logo"
+                />
             </header>
           </div>
         );

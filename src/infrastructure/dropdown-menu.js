@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
-import ProjectButton from '../infrastructure/button';
+import ProjectButton from 'infrastructure/button';
 
-import './../styles/infrastructure/dropdown-menu.css';
+import 'styles/infrastructure/dropdown-menu.css';
 
 /**
  * Defines a drop down menu button.

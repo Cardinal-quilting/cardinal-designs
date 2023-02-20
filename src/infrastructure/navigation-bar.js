@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import DropdownMenu from '../infrastructure/dropdown-menu';
 
-import './../styles/infrastructure/navigation-bar.css';
-import logo from './../../src/figures/logos/CardinalQuiltsSmallLogo.png';
+import 'styles/infrastructure/navigation-bar.css';
+import logo from 'figures/logos/CardinalQuiltsSmallLogo.png';
 
 class NavigationBar extends Component {
     render() {

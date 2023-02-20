@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import ProjectDisplay from '../user-interface/project-display';
+import ProjectDisplay from 'user-interface/project-display';
 
-import NavigationBar from '../infrastructure/navigation-bar';
+import NavigationBar from 'infrastructure/navigation-bar';
 
-import './../styles/pages/project-page.css';
+import 'styles/pages/project-page.css';
 
 /**
  * The top page for a user to interact with a Cardinal Designs project
@@ -17,19 +17,19 @@ class ProjectPage extends Component {
             <NavigationBar />
             
             <div className="top-menu">
-                TOP
+                VIEWS
             </div>        
             <div className="row">
             <div className="left-menu">
-                LEFT
+                PROJECT MODES
             </div>
             <ProjectDisplay />
             <div className="right-menu">
-                RIGHT
+                LOCAL OPTIONS
             </div>
             </div>        
             <div className="bottom-menu">
-                BOTTOM
+                DIAGNOSTIC INFORMATION
             </div>
             </div>
         )

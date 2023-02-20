@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import Draggable from './../user-interface/draggable';
+import Draggable from 'user-interface/draggable';
 
-import './../styles/design-components/node.css';
+import 'styles/design-components/node.css';
 
 /**
  * A <tt>node</tt> is a key point in the design.
