@@ -13,11 +13,11 @@
 }
 
 .left-menu {
-  flex: 15vmin;
+  flex: 15vw;
 }
 
 .right-menu {
-  flex: 15vmin;
+  flex: 15vw;
 }
 
 .top-menu {

@@ -9,9 +9,19 @@ import './../styles/user-interface/project-display.css';
  * @prop {string} props.width=80 - The width of the project display window (measured in <tt>vw</tt> units)
  */
 class ProjectDisplay extends Component {
+    constructor(props) {
+        super(props);
+
+        this.ref = React.createRef();
+    }
+
     static defaultProps = {
         height: 90,
         width: 80
+    }
+
+    get_display_info() {
+        return this.ref.current.getBoundingClientRect();
     }
 
     render() {
@@ -22,6 +32,7 @@ class ProjectDisplay extends Component {
         return (
             <div 
                 className="project-display"
+                ref = {this.ref}
                 style={{
                     minHeight: height,
                     maxHeight: height,
@@ -30,8 +41,11 @@ class ProjectDisplay extends Component {
                 }}
             >
                 <Node 
-                    display_width={this.props.width} 
-                    display_height={this.props.height}
+                    get_display_info = {() => this.get_display_info()}
+                    display={{
+                        width: this.props.width,
+                        height: this.props.height
+                    }}
                 />
             </div>
         );

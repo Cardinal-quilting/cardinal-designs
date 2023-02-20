@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 import ProjectDisplay from '../user-interface/project-display';
 
