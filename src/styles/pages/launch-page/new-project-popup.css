@@ -2,8 +2,24 @@
 
 .new-project-popup {
     position: absolute;
-    min-width: 50vw;
+    min-width: 75vw;
     min-height: 25vh;
     background-color: var(--grey-background-color);
     z-index: 1;
+}
+
+.input-form {
+    font-size: 3vh;
+    margin: 2vh 0vw;
+}
+
+.text-input-wrapper {
+    display: flex;
+    justify-content: space-around;
+}
+
+.text-input {
+    height: 3vh;
+    width: 50vw;
+    font-size: 2vh;
 }

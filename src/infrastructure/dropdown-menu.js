@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
-import Button from 'infrastructure/button';
+import Button from "infrastructure/button";
 
-import 'styles/infrastructure/dropdown-menu.css';
+import "styles/infrastructure/dropdown-menu.css";
 
 /**
  * Defines a drop down menu button.
@@ -51,10 +51,10 @@ class DropdownMenu extends Component {
     }
 
     /**
-     * Close the drop down menu if it is open and the user clicks outside
+     * Close the dropdown menu if it is open and the user clicks outside
      * @param {*} event Information about the click.
      */
-    handleOutsideClick = event => {
+    handleOutsideClick(event) {
         if( this.box.current && !this.box.current.contains(event.target) ) {
             this.closeDropdown();
         }

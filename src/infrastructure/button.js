@@ -38,7 +38,7 @@ class Button extends Component {
                     "color": this.props.font_color,
                     "margin": this.props.margin.y+" "+this.props.margin.x
                     }}
-            onClick={() => this.props.on_click()}
+            onClick={this.props.on_click}
             disabled={this.props.disabled}>
                 {this.props.name}
             </button>
