@@ -1,0 +1,7 @@
+@import "styles/styles.css";
+
+.file-input {
+    font-size: 2vh;
+    background-color: var(--dark-grey-background-color);
+    color: var(--light-font-color);
+}
