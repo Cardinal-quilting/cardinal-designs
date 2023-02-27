@@ -167,14 +167,14 @@ class LaunchPage extends Component {
                 {/* If the new project button is selected, display the new project popup */}
                 {this.state.show_new_project_popup? 
                     <NewProjectPopup 
-                        cancel_new_project={() => this.cancel_popup()}
+                        cancel_popup={() => this.cancel_popup()}
                         title="Start new project:"
                     />
                 : null}
                 {/* If the load project button is selected, display the load project popup */}
                 {this.state.load_project_popup? 
                     <LoadProjectPopup 
-                        cancel_new_project={() => this.cancel_popup()}
+                        cancel_popup={() => this.cancel_popup()}
                         title="Load project:"
                     />
                 : null}
