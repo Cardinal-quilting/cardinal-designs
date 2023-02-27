@@ -13,8 +13,11 @@ import 'styles/pages/project-page.css';
 function ProjectPage() {
     const location = useLocation();
 
+    //const project_info = JSON.parse(new URLSearchParams(location.search).get("info"));
+    //console.log(project_info);
+        
     // create a new project
-    var project = new Project(JSON.parse(location.state));
+    //var project = new Project(JSON.parse(location.state));
 
     return (
         <div className="Project-body">

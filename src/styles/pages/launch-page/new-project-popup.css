@@ -1,25 +1,13 @@
-@import 'styles/styles.css';
-
-.new-project-popup {
-    position: absolute;
-    min-width: 75vw;
-    min-height: 25vh;
-    background-color: var(--grey-background-color);
-    z-index: 1;
-}
-
-.input-form {
-    font-size: 3vh;
-    margin: 2vh 0vw;
-}
+@import "styles/styles.css";
 
 .text-input-wrapper {
     display: flex;
+    flex-direction: row;
     justify-content: space-around;
 }
 
 .text-input {
     height: 3vh;
-    width: 50vw;
+    width: 35vw;
     font-size: 2vh;
 }

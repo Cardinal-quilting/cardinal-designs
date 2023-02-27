@@ -30,8 +30,12 @@ class Tooltip extends Component {
      */
     componentDidUpdate(prevProps, prevState) {
         // make sure the tooltip stays hidden if the previous state was disabled
-        if( !prevProps.enabled && prevState.active ) {
-            this.hideTip();
+        if( !prevProps.enabled ) {
+            if( prevState.active ) { 
+                this.hideTip();
+            } else { // always clearn the timeout
+                clearInterval(this.timeout);
+            }
         }
     }
 
