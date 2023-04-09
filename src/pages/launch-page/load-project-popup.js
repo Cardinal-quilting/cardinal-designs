@@ -1,5 +1,3 @@
-import { useNavigate, Link } from 'react-router-dom';
-
 import React from "react";
 
 import Popup from "infrastructure/popup";
@@ -7,6 +5,13 @@ import Popup from "infrastructure/popup";
 import "styles/pages/launch-page/load-project-popup.css";
 
 import Button from "infrastructure/button";
+
+//import Dialog from 'electron-dialog';
+//import { remote } from "electron";
+//const fs = require("fs");
+
+
+
 
 /**
  * A popup window that loads an existing project.
@@ -47,6 +52,8 @@ class LoadProjectPopup extends Popup {
                     }}
                     key="choose-file-button"
                 >
+                    {/*<input directory="" webkitdirectory="" type="file" />*/}
+
                     <input
                         className="file-input" 
                         id="file-input" 
@@ -62,38 +69,6 @@ class LoadProjectPopup extends Popup {
             
         );
     }
-
-
-
-    form_inputs() {
-        /*return (
-            <div>
-                
-                
-                <Button
-                    name="Upload file"
-                    on_click={this.upload_file}
-                >
-                    
-                </Button>
-                <input 
-                        className="file-input" 
-                        id="file-input" 
-                        type="file" 
-                        ref={this.file_input_ref}
-                        onChange={this.get_file}
-                        style={{
-                            display: "none"
-                        }}/>
-                
-                
-
-                
-            </div>
-        );*/
-        return [];
-    }
-
 }
 
-export default LoadProjectPopup;
+export default LoadProjectPopup; 

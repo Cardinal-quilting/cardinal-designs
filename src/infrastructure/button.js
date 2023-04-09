@@ -9,7 +9,7 @@ import "styles/infrastructure/button.css";
  * @prop {string} props.background_color=var(--dark-grey-background-color) - The background color of the button.
  * @prop {string} props.font_size=1.5vmin - The font size for the button's text.
  * @prop {string} props.font_weight - Set to "bold" to have a button with bold font
- * @prop {bool} props.disabled - Disable the button.
+ * @prop {bool} props.enabled=true - Enable/disable the button.
  * @prop {string} props.name - The name of the button (displayed as text).
  * @prop {function} props.on_click - What happens when the user clicks this button
  * @prop {string} props.margin.x="0.1vw" - The x direction margin
@@ -24,7 +24,8 @@ class Button extends Component {
         margin: {
             x: "0.1vw",
             y: "0.1vh",
-        }
+        },
+        enabled: true
     }
     
     /**
@@ -41,7 +42,7 @@ class Button extends Component {
                     "margin": this.props.margin.y+" "+this.props.margin.x
                     }}
             onClick={this.props.on_click}
-            disabled={this.props.disabled}>    
+            disabled={!this.props.enabled}>    
                 {this.props.name}
                 {this.props.children}
             </button>

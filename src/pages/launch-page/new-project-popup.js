@@ -20,6 +20,7 @@ class NewProjectPopup extends Popup {
         }
         
         this.update_aspect_ratio = this.update_aspect_ratio.bind(this);
+        this.start_project = this.start_project.bind(this);
     }
 
     /**
@@ -63,7 +64,12 @@ class NewProjectPopup extends Popup {
      * Get the project information and launch the new project.
      */
     start_project() {
-        window.location.href = `/project`;
+        const info = {
+            project_type: "paper-piecing",
+            aspect_ratio: this.state.project_parameters.aspect_ratio
+        };
+
+        window.location.href = `/project?info=${JSON.stringify(info)}`;
     }
 
     /**

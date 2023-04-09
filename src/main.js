@@ -1,13 +1,33 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron');
+const electronDialog = require('electron').dialog;
 
-require('dotenv').config()
+const path = require("path");
+const { electron } = require('process');
+
+var fs = require("fs");
+
+const { save_project_as, save_project } = require(path.join(__dirname, "backend/save_and_load.js"));
+
+require('dotenv').config();
+
+// prevent garbage collection
+let window;
 
 function createWindow () {
+  const preload_script_path = path.join(__dirname, "backend/preload.js");
+
   // create the browser window.
-  const win = new BrowserWindow({ webPreferences: { nodeIntegration: true } });
+  const window = new BrowserWindow({ 
+    webPreferences: { 
+      nodeIntegration: true,
+      enableRemoteModule: true,
+      contextIsolation: true,
+      preload: preload_script_path
+    } 
+  });
 
   // maximize the window by default
-  win.maximize();
+  window.maximize();
 
   // set the image for the MacOS dock
   if( process.platform=='darwin' ) {
@@ -15,11 +35,15 @@ function createWindow () {
   }
 
   // load the index.html from a url
-  win.loadURL(`http://localhost:${process.env.PORT}`);
+  window.loadURL(`http://localhost:${process.env.PORT}`);
 
   // open the DevTools
-  if( process.env.SHOW_DEV_TOOLS==1 ) { win.webContents.openDevTools(); }
+  if( process.env.SHOW_DEV_TOOLS==1 ) { window.webContents.openDevTools(); }
 }
+
+// handle saving the project
+ipcMain.handle("save_project_as", function save_as(_event, data) { return save_project_as(_event, data, window); });
+ipcMain.handle("save_project", function save(_event, data) { save_project(_event, data[0], data[1], window); });
 
 // this method will be called when Electron has finished initialization 
 // and is ready to create browser windows; 
@@ -29,8 +53,8 @@ app.whenReady().then(createWindow);
 // quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
-app.on('window-all-closed', () => {
-  if( process.platform!=='darwin' ) { app.quit(); }
+app.on("window-all-closed", () => {
+  if( process.platform!=="darwin" ) { app.quit(); }
 });
 
 app.on('activate', () => {

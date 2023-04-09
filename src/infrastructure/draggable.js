@@ -6,6 +6,7 @@ import { Component } from 'react';
  * @prop {float} props.pos.y - The current y position of the object
  * @prop {function} props.get_display_info - Get information about the project display window
  * @prop {function} props.set_position - Pass the new position to the object being dragged
+ * @prop {bool} props.enabled=true - The dragging feature is enabled
  * @prop {bool} state.dragging - Are we currently dragging the object?
  * @prop {float} state.start_move.pixel.x - The x pixel location where we started dragging (relative to the bottom left of the project display window)
  * @prop {float} state.start_move.pixel.y - The y pixel location where we started dragging (relative to the bottom left of the project display window)
@@ -23,6 +24,10 @@ class Draggable extends Component {
         this.onMouseDown = this.onMouseDown.bind(this);
         this.onMouseMove = this.onMouseMove.bind(this);
         this.onMouseUp = this.onMouseUp.bind(this);
+    }
+
+    static defaultProps = {
+        enabled: true
     }
 
     /**
@@ -46,7 +51,7 @@ class Draggable extends Component {
      */
     onMouseDown(event) {
         // only left mouse
-        if( event.button!==0 ) { return; }
+        if( event.button!==0 | !this.props.enabled ) { return; }
 
         // get information about the project display (importantly, location)
         const display = this.props.get_display_info();

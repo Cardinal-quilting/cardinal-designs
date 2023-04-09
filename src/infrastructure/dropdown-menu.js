@@ -11,8 +11,10 @@ import "styles/infrastructure/dropdown-menu.css";
  * @prop {string} props.unselected_background_color - The color of the background with the dropdown is not selected; must be a property value.
  * @prop {float} props.font_size=1.5vmin - The font size for the button's text.
  * @prop {string} props.font_weight - Set to "bold" to have a button with bold font
+ * @prop {bool} props.enabled=true - True: the dropdown menu is enabled, False: the dropdown menu is disabled
  * @prop {bool} state.display - True: the dropdown menu is open, False: the dropdown menu is closed
  * @prop {string} state.top_button_background={var(--dark-red-theme)} - The color of the dropdown button
+ * @prop {string} state.announce_state - Pass true into this function when the dropdown is opened and false when the dropdown is closed.
  */
 class DropdownMenu extends Component {
     /**
@@ -34,6 +36,7 @@ class DropdownMenu extends Component {
 
     static defaultProps = {
         unselected_background_color: "--black-theme",
+        enabled: true
     }
 
     /**
@@ -64,6 +67,8 @@ class DropdownMenu extends Component {
      * Close the dropdown menu
      */
     closeDropdown() {
+        this.props.announce_state(false);
+
         const background = getComputedStyle(document.documentElement).getPropertyValue(this.props.unselected_background_color);
         this.setState({
             display: false,
@@ -75,6 +80,8 @@ class DropdownMenu extends Component {
      * Open the dropdown menu
      */
     openDropdown() {
+        this.props.announce_state(true);
+
         const background = getComputedStyle(document.documentElement).getPropertyValue("--dark-red-theme");
         
         this.setState({
@@ -84,10 +91,11 @@ class DropdownMenu extends Component {
     }
 
     /**
-     * @param {*} link Go to this link
+     * Must be overriden by children
+     * @returns A list containing the content of the dropdown menu
      */
-    #goTo(link) {
-        window.location.replace(link);
+    content() {
+        return []
     }
     
     /**
@@ -99,26 +107,19 @@ class DropdownMenu extends Component {
                 <Button 
                     background_color={this.state.top_button_background} 
                     on_click={() => this.openDropdown()} 
-                    disabled={this.state.display} 
+                    enabled={!this.state.display & this.props.enabled} 
                     name={this.props.name+(this.state.display? "\u25BE":"\u25B8")}
                     font_size={this.props.font_size}
                     font_weight={this.props.font_weight}
                     />
                 {this.state.display? 
                     <div className="dropdown-menu" ref={this.box}>
-                        <li style={{"listStyleType":"none"}}> 
-                            <Button 
-                                on_click={() => this.#goTo("/")} 
-                                name="Home"
-                            /> 
-                        </li>
-                        <hr></hr>
-                        <li style={{"listStyleType":"none"}}>
-                            <Button 
-                                on_click={() => this.closeDropdown()} 
-                                name={"Close".concat(" ", this.props.name)}
-                            /> 
-                        </li>
+                        {this.content().map((d) => <li key={d.key} style={{listStyle: "none"}}>{d}</li>)}
+                        <hr/>
+                        <Button 
+                            on_click={() => this.closeDropdown()} 
+                            name={"Close".concat(" ", this.props.name)}
+                        /> 
                     </div>
                 : null}
             </div>

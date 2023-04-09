@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import Node from '../design-components/node';
+import Node from "pages/project-page/project-display/node";
 
-import './../styles/user-interface/project-display.css';
+import "styles/pages/project-page/project-display/project-display.css";
 
 /**
  * @prop {string} props.height=90 - The height of the project display window (measured in <tt>vh</tt> units)
  * @prop {string} props.width=80 - The width of the project display window (measured in <tt>vw</tt> units)
+ * @prop {bool} props.enabled=true - Is the functionality of this componenent enabled?
  */
 class ProjectDisplay extends Component {
     constructor(props) {
@@ -17,7 +18,8 @@ class ProjectDisplay extends Component {
 
     static defaultProps = {
         height: 90,
-        width: 80
+        width: 80,
+        enabled: true
     }
 
     get_display_info() {
@@ -46,6 +48,7 @@ class ProjectDisplay extends Component {
                         width: this.props.width,
                         height: this.props.height
                     }}
+                    draggable = {this.props.enabled}
                 />
             </div>
         );

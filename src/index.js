@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import LaunchPage from 'pages/launch-page/launch-page';
-import ProjectPage from 'pages/project-page';
+import ProjectPage from 'pages/project-page/project-page';
 
 export default function App() {
   return ( 

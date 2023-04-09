@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import Draggable from 'user-interface/draggable';
+import Draggable from 'infrastructure/draggable';
 
-import 'styles/design-components/node.css';
+import 'styles/pages/project-page/project-display/node.css';
 
 /**
  * A <tt>node</tt> is a key point in the design.
@@ -10,6 +10,7 @@ import 'styles/design-components/node.css';
  * @prop {string} props.display.width - The width of the display window containing the project (measured in <tt>vw</tt> units)
  * @prop {string} props.display.height - The height of the display window containing the project (measured in <tt>vh</tt> units)
  * @prop {string} props.size="1" - The width/height of the bounding box containing the node (measured in <tt>vmin</tt> units)
+ * @prop {bool} props.draggable=true - Is this object draggable?
  * @prop {float} state.pos.x=0.5 - The x position of the node, with 0 being the left side and 1 being the right side
  * @prop {float} state.pos.x=0.5 - The y position of the node, with 0 being the bottom and 1 being the top
  * @prop {function} props.get_display_info - Get information about the project display window
@@ -31,6 +32,7 @@ class Node extends Component {
      */ 
     static defaultProps = {
         size: 1,
+        draggable: true
     }
 
     /**
@@ -61,6 +63,7 @@ class Node extends Component {
                 pos={this.state.pos}
                 get_display_info = {this.props.get_display_info}
                 set_position = {(x, y) => this.set_position(x, y)}
+                enabled = {this.props.draggable}
             >
                 <div 
                     className="node"
