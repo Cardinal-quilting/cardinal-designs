@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import NewProjectPopup from "pages/launch-page/new-project-popup";
-import LoadProjectPopup from "pages/launch-page/load-project-popup";
 
 import Button from "infrastructure/button";
 import Tooltip from "infrastructure/tooltip";
@@ -21,8 +20,7 @@ class LaunchPage extends Component {
 
         this.state = {
             page_active: true,
-            show_new_project_popup: false,
-            load_project_popup: false,
+            show_new_project_popup: false
         };
 
         this.start_new_project = this.start_new_project.bind(this);
@@ -34,8 +32,7 @@ class LaunchPage extends Component {
     start_new_project() {
         this.setState({
             page_active: false,
-            show_new_project_popup: true,
-            load_project_popup: false
+            show_new_project_popup: true
         });
     }
 
@@ -45,9 +42,23 @@ class LaunchPage extends Component {
     load_project() {
         this.setState({
             page_active: false,
-            show_new_project_popup: false,
-            load_project_popup: true
         });
+
+        const load_from_file = async() => {
+            const data = await window.API.invoke("load_project");
+            if (!data) {
+                this.setState({
+                    page_active: true
+                });
+                return;
+            }
+
+            window.location.href = `/project?info=${JSON.stringify(data)}`;
+
+            console.log(data);
+        }
+
+        load_from_file();
     }
 
     /**
@@ -57,7 +68,6 @@ class LaunchPage extends Component {
         this.setState({
             page_active: true,
             show_new_project_popup: false,
-            load_project_popup: false
         });
     }
      
@@ -169,13 +179,6 @@ class LaunchPage extends Component {
                     <NewProjectPopup 
                         cancel_popup={() => this.cancel_popup()}
                         title="Start new project:"
-                    />
-                : null}
-                {/* If the load project button is selected, display the load project popup */}
-                {this.state.load_project_popup? 
-                    <LoadProjectPopup 
-                        cancel_popup={() => this.cancel_popup()}
-                        title="Load project:"
                     />
                 : null}
                 {/* Show the cardinal designs header */}

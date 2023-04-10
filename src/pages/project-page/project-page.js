@@ -18,10 +18,11 @@ class ProjectPage extends Component {
         super(props);
 
         const project_info = JSON.parse(new URLSearchParams(window.location.search).get("info"));
-
+        
         this.state = {
             saving: false,
             project: new Project(project_info),
+            project_filename: project_info.filename,
             component_enabled: {
                 navigation_bar: true,
                 project_display: true

@@ -2,8 +2,8 @@
  * A Cardinal Designs project.
  */
 class Project {
-    constructor(parameters) {
-        this.parameters = parameters;
+    constructor(data) {
+        this.metadata = data.metadata;
     }
 }
 
