@@ -10,8 +10,11 @@ import 'styles/pages/project-page/project-page.css';
 
 /**
  * The project page allows user to interact with their project.
- * @prop {bool} state.navigation_menu_open=false True: The navigation bar has a menu option, False: the navigation bar does not have a menu open
+ * @prop {bool} state.saving=true We are currently writing project data to file
+ * @prop {bool} state.project We are currently working on this project
+ * @prop {bool} state.project_filename The filename where we want to save the project
  * @prop {bool} state.component_enabled.navigation_bar=true Disable/enable the navigation bar
+ * @prop {bool} state.component_enabled.project_display=true Disable/enable the project display
  */
 class ProjectPage extends Component {
     constructor(props) {
@@ -94,7 +97,7 @@ class ProjectPage extends Component {
 
     render() {
         return (
-        <div className="Project-body">
+        <div className="project-body">
             {/* put a navation bar at the top of the page */}
             <NavigationBar 
                 save_project={this.save_project}
@@ -112,6 +115,7 @@ class ProjectPage extends Component {
             </div>
             <ProjectDisplay
                 enabled={this.state.component_enabled.project_display}
+                project={this.state.project}
             />
             <div className="right-menu">
                 LOCAL OPTIONS

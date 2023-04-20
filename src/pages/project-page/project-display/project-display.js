@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import Node from "pages/project-page/project-display/node";
+import RecursivePiecing from 'pages/project-page/project-display/recursive-piecing';
 
 import "styles/pages/project-page/project-display/project-display.css";
 
@@ -13,6 +13,14 @@ class ProjectDisplay extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            mounted: false,
+            window_size: {
+                height: window.innerWidth,
+                width: window.innerWidth,
+            }
+        }
+
         this.ref = React.createRef();
     }
 
@@ -22,15 +30,27 @@ class ProjectDisplay extends Component {
         enabled: true
     }
 
-    get_display_info() {
-        return this.ref.current.getBoundingClientRect();
+    update_dimensions = () => {
+        this.setState({window_size: {
+            height: window.innerWidth,
+            width: window.innerWidth,
+        }});
+    }
+
+    componentDidMount() {
+        window.addEventListener("resize", this.update_dimensions);
+        this.setState({mounted: true});
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.update_dimensions);
     }
 
     render() {
         // the width/height of the display window with units
         const width = this.props.width.toString()+"vw";
         const height = this.props.height.toString()+"vh";
-        
+
         return (
             <div 
                 className="project-display"
@@ -39,17 +59,18 @@ class ProjectDisplay extends Component {
                     minHeight: height,
                     maxHeight: height,
                     minWidth: width,
-                    maxWidth: width
+                    maxWidth: width,
                 }}
             >
-                <Node 
-                    get_display_info = {() => this.get_display_info()}
-                    display={{
-                        width: this.props.width,
-                        height: this.props.height
-                    }}
-                    draggable = {this.props.enabled}
-                />
+            
+            {this.state.mounted? <RecursivePiecing
+                parent_height = {this.props.height}
+                parent_width = {this.props.width}
+                parent_ref = {this.ref}
+                project = {this.props.project}
+            >
+            </RecursivePiecing> : null}
+
             </div>
         );
     }

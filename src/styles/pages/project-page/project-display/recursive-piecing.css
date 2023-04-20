@@ -1,0 +1,12 @@
+@import 'styles/styles.css';
+
+.recursive-display-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0;
+
+    background-color: var(--dark-red-theme);
+    color: var(--dark-font-color);
+}

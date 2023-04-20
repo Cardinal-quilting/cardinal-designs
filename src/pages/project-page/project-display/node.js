@@ -21,8 +21,8 @@ class Node extends Component {
 
         this.state = {
             pos: {
-                x: 0.5,
-                y: 0.5
+                x: this.props.initial_pos.x,
+                y: this.props.initial_pos.y
             }
         }
     }
@@ -32,7 +32,11 @@ class Node extends Component {
      */ 
     static defaultProps = {
         size: 1,
-        draggable: true
+        draggable: true,
+        initial_pos: {
+            x: 0.5,
+            y: 0.5
+        }
     }
 
     /**
@@ -49,17 +53,17 @@ class Node extends Component {
         });
     }
 
-    render() {
+    render() {        
         // the position of the node in display coordinates
-        const xpos = (this.state.pos.x*this.props.display.width).toString()+"vw";
-        const ypos = ((1.0-this.state.pos.y)*this.props.display.height).toString()+"vh";
-
+        const xpos = (this.state.pos.x*this.props.display.parent_width).toString()+"vw";
+        const ypos = ((1-this.state.pos.y)*this.props.display.parent_height).toString()+"vh";
+        
         // the size of the node and the margin in display coordinates; the margin shifts the node the position reflects the center 
         const size = this.props.size.toString()+"vmin";
         const margin = (-this.props.size/2).toString()+"vmin";
         
         return (
-            <Draggable
+           <Draggable
                 pos={this.state.pos}
                 get_display_info = {this.props.get_display_info}
                 set_position = {(x, y) => this.set_position(x, y)}
@@ -69,7 +73,9 @@ class Node extends Component {
                     className="node"
                     style={{
                         marginTop: margin,
+                        marginBottom: margin,
                         marginLeft: margin,
+                        marginRight: margin,
                         width: size,
                         height: size,
                         left: xpos,
