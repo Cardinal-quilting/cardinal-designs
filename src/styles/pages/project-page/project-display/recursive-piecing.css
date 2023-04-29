@@ -7,6 +7,6 @@
 
     margin: 0;
 
-    background-color: var(--dark-red-theme);
+    background-color: var(--light-grey-background-color);
     color: var(--dark-font-color);
 }

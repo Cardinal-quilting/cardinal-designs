@@ -61,7 +61,7 @@ class ProjectPage extends Component {
         });
 
         const save_to_file = async () => {
-            const filename = await window.API.invoke("save_project_as", this.state.project);
+            const filename = await window.API.invoke("save_project_as", this.state.project.stringify());
             if (filename) { 
                 this.setState({
                     saving: false,

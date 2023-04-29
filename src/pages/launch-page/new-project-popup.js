@@ -66,7 +66,6 @@ class NewProjectPopup extends Popup {
     start_project() {
         const info = {
             metadata: {
-                project_type: "paper-piecing",
                 aspect_ratio: this.state.project_parameters.aspect_ratio
             }
         };

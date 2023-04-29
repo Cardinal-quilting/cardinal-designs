@@ -18,13 +18,12 @@ function open_save_dialog(window) {
       .catch((error) => { console.error('System file dialog error: ' + error); });
 }
 
-function save_project_as(_event, project, window) {
+function save_project_as(_event, project_data, window) {
     // Return the path to display in the UI
     return open_save_dialog(window).then((result) => {
       // returns "undefined" if dialog is cancelled
       if (result.canceled) { return; }
-      project.filename = result.filePath;
-      fs.writeFile(result.filePath, JSON.stringify(project), function(err) {
+      fs.writeFile(result.filePath, project_data, function(err) {
         if (err) throw err;
       });
       
