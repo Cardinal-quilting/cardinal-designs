@@ -100,26 +100,37 @@ class ProjectPage extends Component {
         <div className="project-body">
             {/* put a navation bar at the top of the page */}
             <NavigationBar 
+                zIndex="2"
                 save_project={this.save_project}
                 save_project_as={this.save_project_as}
                 announce_dropdown_state={this.navigation_menu_state}  
                 enabled={this.state.component_enabled.navigation_bar}
             />
         
-            <div className="top-menu">
-                VIEWS
-            </div>        
             <div className="row">
-            <div className="left-menu">
-                PROJECT MODES
+                <div className="top-left-menu">
+                    VIEWS LEFT
+                </div>     
+                <div className="top-middle-menu">
+                    VIEWS MIDDLE
+                </div>
+                <div className="top-right-menu">
+                    VIEWS RIGHT
+                </div>        
             </div>
-            <ProjectDisplay
-                enabled={this.state.component_enabled.project_display}
-                project={this.state.project}
-            />
-            <div className="right-menu">
-                LOCAL OPTIONS
-            </div>
+
+            <div className="row">
+                <div className="left-menu">
+                    PROJECT MODES
+                </div>
+                <ProjectDisplay
+                    zIndex="0"
+                    enabled={this.state.component_enabled.project_display}
+                    project={this.state.project}
+                />
+                <div className="right-menu">
+                    LOCAL OPTIONS
+                </div>
             </div>        
             <div className="bottom-menu">
                 DIAGNOSTIC INFORMATION

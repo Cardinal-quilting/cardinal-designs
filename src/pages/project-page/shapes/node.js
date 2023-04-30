@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Draggable from 'infrastructure/draggable';
 
-import 'styles/pages/project-page/project-display/node.css';
+import 'styles/pages/project-page/shapes/node.css';
 
 /**
  * A <tt>node</tt> is a key point in the design.
@@ -61,6 +61,7 @@ class Node extends Component {
         // the size of the node and the margin in display coordinates; the margin shifts the node the position reflects the center 
         const size = this.props.size.toString()+"vmin";
         const margin = (-this.props.size/2).toString()+"vmin";
+        
         
         return (
            <Draggable

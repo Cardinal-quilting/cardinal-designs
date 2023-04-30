@@ -29,19 +29,20 @@ class NavigationBar extends Component {
     }
 
     static defaultProps = {
-        enabled: true
+        enabled: true,
+        zIndex: 0
     }
 
     #has_open_dropdown(dropdown_state) {
-        for( const [key, value] of Object.entries(dropdown_state) ) {
-            if( value ) { return true; }
+        for( const value of Object.entries(dropdown_state) ) {
+            if( value[1] ) { return true; }
         }
         return false;
     }
 
     componentDidUpdate(prevProps, prevState) {
         const dropdown_open = this.#has_open_dropdown(this.state.dropdown_state)
-        if( dropdown_open!=this.#has_open_dropdown(prevState.dropdown_state) ) { 
+        if( dropdown_open!==this.#has_open_dropdown(prevState.dropdown_state) ) { 
             this.props.announce_dropdown_state(dropdown_open)
         }
     }
@@ -59,7 +60,9 @@ class NavigationBar extends Component {
 
     render() {
         return (
-            <div>
+            <div
+                style={{zIndex: this.props.zIndex}}
+            >
             <header className="nav-header">
             <img src={logo} alt="small_logo" className="nav-logo"/>
             <h1 className="nav-title">Cardinal designs</h1>
@@ -72,6 +75,7 @@ class NavigationBar extends Component {
                 enabled={this.props.enabled}
             />
             <OptionsDropdown
+                    zIndex={this.props.zIndex}
                     name="Options" 
                     font_size="2.5vmin" 
                     font_weight="bold" 

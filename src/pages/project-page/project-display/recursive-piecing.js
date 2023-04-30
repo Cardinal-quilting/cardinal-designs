@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 
-import Node from "pages/project-page/project-display/node";
+import NodeChain from "pages/project-page/shapes/node-chain";
 
 import "styles/pages/project-page/project-display/recursive-piecing.css";
-import SectionContainer from "projects/sections/section-container";
 
 /**
  * @prop {string} props.height=90 - The height of the project display (measured in <tt>vh</tt> units)
@@ -48,26 +47,7 @@ class RecursivePiecing extends Component {
         const [parent_height, parent_width, height, width] = this.project_dimensions();
 
         const height_percent = (100*height).toString()+"%";
-        const width_percent = (100*width).toString()+"%";
-
-        // are we allowed to interact with the project?
-        const enabled = this.props.enabled==undefined? true : this.props.enabled;
-
-        var nodes = [];
-        for( let key in this.props.project.points.cloud ) {
-            nodes.push((
-            <Node 
-                get_display_info = {() => this.get_display_info()}
-                display={{
-                    parent_width: width*this.props.parent_width,
-                    parent_height: height*parent_width/parent_height*this.props.parent_height
-                }}
-                initial_pos={this.props.project.access_point(key).position}
-                key={this.props.project.access_point(key).id}
-                draggable={enabled & this.props.project.access_point(key).moveable}
-            /> 
-            ));
-        }
+        const width_percent = (100*width).toString()+"%"; 
 
         return (
             <div
@@ -75,10 +55,22 @@ class RecursivePiecing extends Component {
                 ref={this.ref}
                 style={{
                     paddingBottom: height_percent,
-                    paddingRight: width_percent
+                    paddingRight: width_percent,
                 }}
             >
-            { nodes.map( (d) => d) }
+                <NodeChain
+                    moveable={this.props.enabled}
+                    get_display_info = {() => this.get_display_info()}
+                    display={{
+                        parent_width: width*this.props.parent_width,
+                        parent_height: height*parent_width/parent_height*this.props.parent_height
+                    }}                    
+                    aspect_ratio={this.props.project.metadata.aspect_ratio}
+                    points={this.props.project.whole_project.points}
+                    access_point={this.props.project.access_point}
+                >
+                </NodeChain>
+                
             </div>
         );
     }

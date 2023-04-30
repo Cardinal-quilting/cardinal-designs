@@ -1,9 +1,13 @@
 @import 'styles/styles.css';
 
 .recursive-display-body {
+    position: relative;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
+    flex-direction: column;
 
     margin: 0;
 

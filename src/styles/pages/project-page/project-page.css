@@ -20,7 +20,23 @@
   flex: 15vw;
 }
 
-.top-menu {
+.top-left-menu {
+  flex: 15vw;
+  min-height: 3vh;
+}
+
+.top-middle-menu {
+  display: flex;
+  min-width: 80vw;
+
+  justify-content: center;
+  align-items: center;
+
+  min-height: 3vh;
+}
+
+.top-right-menu {
+  flex: 15vw;
   min-height: 3vh;
 }
 

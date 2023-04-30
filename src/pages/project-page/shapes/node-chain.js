@@ -1,0 +1,53 @@
+import React, { Component } from "react";
+
+import Node from "pages/project-page/shapes/node";
+import Line from "pages/project-page/shapes/line";
+
+import 'styles/pages/project-page/shapes/node-chain.css';
+
+class NodeChain extends Component {
+    render() {
+        const enabled = this.props.enabled===undefined? true : this.props.enabled;
+
+        const nodes = this.props.points.map( (p) => {
+            const point = this.props.access_point(p);
+
+            return (
+            <Node 
+                get_display_info = {this.props.get_display_info}
+                display={this.props.display}
+                initial_pos={point.position}
+                key={point.id}
+                draggable={enabled & point.moveable}
+            />
+            );
+        });
+
+        const lines = this.props.points.map( (p1, index, elements) => {
+            const point1 = this.props.access_point(p1);
+            const point2 = this.props.access_point(elements[++index%this.props.points.length]);
+
+            return (
+            <Line
+                aspect_ratio={this.props.aspect_ratio}
+                display={this.props.display}
+                point1={point1}
+                point2={point2}
+                key={point1.id + "-" + point2.id}
+            >
+            </Line>
+            );
+        });
+        
+        return (
+            <div
+                className="node-chain"
+            >
+                { nodes.map( (d) => d) }
+                { lines.map( (l) => l) }
+            </div>
+        );
+    }
+}
+
+export default NodeChain;

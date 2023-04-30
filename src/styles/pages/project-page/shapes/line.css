@@ -1,0 +1,7 @@
+@import 'styles/styles.css';
+
+.line {
+    position: absolute;
+    display: flex;
+    transform-origin: left;
+}

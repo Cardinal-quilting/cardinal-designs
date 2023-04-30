@@ -27,7 +27,8 @@ class ProjectDisplay extends Component {
     static defaultProps = {
         height: 90,
         width: 80,
-        enabled: true
+        enabled: true,
+        zIndex: 0
     }
 
     update_dimensions = () => {
@@ -56,6 +57,7 @@ class ProjectDisplay extends Component {
                 className="project-display"
                 ref = {this.ref}
                 style={{
+                    zIndex: this.props.zIndex,
                     minHeight: height,
                     maxHeight: height,
                     minWidth: width,

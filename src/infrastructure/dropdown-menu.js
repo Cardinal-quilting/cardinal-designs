@@ -36,7 +36,8 @@ class DropdownMenu extends Component {
 
     static defaultProps = {
         unselected_background_color: "--black-theme",
-        enabled: true
+        enabled: true,
+        zIndex: 0
     }
 
     /**
@@ -103,7 +104,9 @@ class DropdownMenu extends Component {
      */
     render() {
         return (
-            <div>
+            <div
+                style={{zIndex: this.props.zIndex}}
+            >
                 <Button 
                     background_color={this.state.top_button_background} 
                     on_click={() => this.openDropdown()} 
