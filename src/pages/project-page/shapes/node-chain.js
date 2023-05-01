@@ -29,6 +29,7 @@ class NodeChain extends Component {
 
             return (
             <Line
+                get_display_info = {this.props.get_display_info}
                 aspect_ratio={this.props.aspect_ratio}
                 display={this.props.display}
                 point1={point1}

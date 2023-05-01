@@ -12,6 +12,7 @@ class Line extends Component {
 
         this.mouse_enter = this.mouse_enter.bind(this);
         this.mouse_leave = this.mouse_leave.bind(this);
+        this.mouse_click = this.mouse_click.bind(this);
     } 
     
     static defaultProps = {
@@ -29,6 +30,32 @@ class Line extends Component {
         this.setState({
             current_color: this.props.color 
          });
+    }
+
+    mouse_click(event) {
+        // get the end points of the line in pixel cordinates
+        const display_info = this.props.get_display_info();
+        const x1 = display_info.width*this.props.point1.position.x + display_info.left
+        const y1 = display_info.bottom - display_info.height*this.props.point1.position.y;
+        const x2 = display_info.width*this.props.point2.position.x + display_info.left
+        const y2 = display_info.bottom - display_info.height*this.props.point2.position.y;
+
+        // a vector that points along the line
+        const v1 = x2 - x1;
+        const v2 = y2 - y1;
+
+        // the location where we clicked
+        const xe = event.clientX - x1;
+        const ye = event.clientY - y1;
+
+        // scale*[v1, v2] + [x1, y1] is the location on the line where we clicked in pixel space
+        const scale = (v1*xe + v2*ye)/(v1*v1 + v2*v2)
+        
+        // the coordinate relative to the parent
+        const x = scale*(this.props.point2.position.x-this.props.point1.position.x) + this.props.point1.position.x;
+        const y = scale*(this.props.point2.position.y-this.props.point1.position.y) + this.props.point1.position.y;
+        
+        console.log("CLICKED POINT:", x, y)
     }
 
     render() {
@@ -52,6 +79,7 @@ class Line extends Component {
             <div
                 onMouseEnter={this.mouse_enter}
                 onMouseLeave={this.mouse_leave}
+                onClick={this.mouse_click}
                 className="line"
                 style={{
                     marginTop: margin,
