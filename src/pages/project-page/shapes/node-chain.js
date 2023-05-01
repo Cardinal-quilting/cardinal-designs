@@ -42,9 +42,9 @@ class NodeChain extends Component {
         return (
             <div
                 className="node-chain"
-            >
-                { nodes.map( (d) => d) }
+            >                
                 { lines.map( (l) => l) }
+                { nodes.map( (d) => d) }                    
             </div>
         );
     }

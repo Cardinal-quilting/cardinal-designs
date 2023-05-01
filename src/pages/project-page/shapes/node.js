@@ -20,17 +20,23 @@ class Node extends Component {
         super(props);
 
         this.state = {
+            current_color: this.props.color,
             pos: {
                 x: this.props.initial_pos.x,
                 y: this.props.initial_pos.y
             }
         }
+
+        this.mouse_enter = this.mouse_enter.bind(this);
+        this.mouse_leave = this.mouse_leave.bind(this);
     }
 
     /**
      * The default props 
      */ 
     static defaultProps = {
+        color: "--black-theme",
+        mouseover_color: "--red-theme",
         size: 1,
         draggable: true,
         initial_pos: {
@@ -53,6 +59,18 @@ class Node extends Component {
         });
     }
 
+    mouse_enter() {
+        this.setState({
+            current_color: this.props.mouseover_color 
+         });
+    }
+
+    mouse_leave() {
+        this.setState({
+            current_color: this.props.color 
+         });
+    }
+
     render() {        
         // the position of the node in display coordinates
         const xpos = (this.state.pos.x*this.props.display.parent_width).toString()+"vw";
@@ -62,7 +80,6 @@ class Node extends Component {
         const size = this.props.size.toString()+"vmin";
         const margin = (-this.props.size/2).toString()+"vmin";
         
-        
         return (
            <Draggable
                 pos={this.state.pos}
@@ -71,8 +88,11 @@ class Node extends Component {
                 enabled = {this.props.draggable}
             >
                 <div 
+                    onMouseEnter={this.mouse_enter}
+                    onMouseLeave={this.mouse_leave}
                     className="node"
                     style={{
+                        backgroundColor: getComputedStyle(document.documentElement).getPropertyValue(this.state.current_color),
                         marginTop: margin,
                         marginBottom: margin,
                         marginLeft: margin,

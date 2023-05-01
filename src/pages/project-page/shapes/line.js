@@ -3,6 +3,34 @@ import React, { Component } from 'react';
 import 'styles/pages/project-page/shapes/line.css';
 
 class Line extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            current_color: this.props.color,
+        }
+
+        this.mouse_enter = this.mouse_enter.bind(this);
+        this.mouse_leave = this.mouse_leave.bind(this);
+    } 
+    
+    static defaultProps = {
+        color: "--black-theme",
+        mouseover_color: "--red-theme"
+    }
+
+    mouse_enter() {
+        this.setState({
+            current_color: this.props.mouseover_color 
+         });
+    }
+
+    mouse_leave() {
+        this.setState({
+            current_color: this.props.color 
+         });
+    }
+
     render() {
         const x1 = this.props.point1.position.x
         const y1 = this.props.point1.position.y
@@ -22,13 +50,15 @@ class Line extends Component {
 
         return (
             <div
+                onMouseEnter={this.mouse_enter}
+                onMouseLeave={this.mouse_leave}
                 className="line"
                 style={{
                     marginTop: margin,
                     marginBottom: margin,
                     width: width,
                     borderBottom: "0.5vmin solid",
-                    color: getComputedStyle(document.documentElement).getPropertyValue("--black-theme"),
+                    color: getComputedStyle(document.documentElement).getPropertyValue(this.state.current_color),
                     transform: "rotate("+ angle.toString() +"rad)", 
                     left: x1pos,
                     top: y1pos
