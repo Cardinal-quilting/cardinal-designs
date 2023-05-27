@@ -61,8 +61,8 @@ class Draggable extends Component {
            dragging: true, 
            start_move: {
                 pixel: {
-                    x: event.pageX - display.left,
-                    y: event.pageY - display.top
+                    x: event.screenX - display.left,
+                    y: event.screenY - display.top
                 },
                 pos: {
                     x: this.props.pos.x,
@@ -87,8 +87,8 @@ class Draggable extends Component {
         const display = this.props.get_display_info();
 
         // figure out how far we have moved our mouse 
-        var xmove = (event.pageX - display.left - this.state.start_move.pixel.x)/(display.right-display.left);
-        var ymove = (event.pageY - display.top - this.state.start_move.pixel.y)/(display.top-display.bottom);
+        var xmove = (event.screenX - display.left - this.state.start_move.pixel.x)/(display.right-display.left);
+        var ymove = (event.screenY - display.top - this.state.start_move.pixel.y)/(display.top-display.bottom);
 
         // deterine the new location of the object
         xmove += this.state.start_move.pos.x;

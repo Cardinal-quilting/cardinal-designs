@@ -194,7 +194,7 @@ class LaunchPage extends Component {
                 {/* Show the cardinal designs logo */}
                 <img 
                     src={logo} 
-                    alt="large_logo"
+                    alt="large logo"
                     className="launch-logo"
                     style={{ 
                         opacity: background_opacity

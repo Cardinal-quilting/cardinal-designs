@@ -1,0 +1,6 @@
+@import 'styles/styles.css';
+
+.row {
+    border-color: var(--dark-red-theme);
+    display: flex;
+  }

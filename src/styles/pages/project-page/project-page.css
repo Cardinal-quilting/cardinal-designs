@@ -3,43 +3,12 @@
 .project-body {
   margin: 0;
   min-height: 100vh;
-
-  background-color: var(--grey-background-color);
   color: var(--light-font-color);
 }
 
-.row {
-  display: flex;
-}
-
-.left-menu {
-  flex: 15vw;
-}
-
-.right-menu {
-  flex: 15vw;
-}
-
-.top-left-menu {
-  flex: 15vw;
-  min-height: 3vh;
-}
-
-.top-middle-menu {
-  display: flex;
-  min-width: 80vw;
-
-  justify-content: center;
-  align-items: center;
-
-  min-height: 3vh;
-}
-
-.top-right-menu {
-  flex: 15vw;
-  min-height: 3vh;
-}
-
 .bottom-menu {
+  position: relative;
+
   min-height: 10vh;
+  background-color: var(--grey-background-color);
 }

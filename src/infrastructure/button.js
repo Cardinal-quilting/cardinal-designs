@@ -21,6 +21,7 @@ class Button extends Component {
         font_color: getComputedStyle(document.documentElement).getPropertyValue("--light-font-color"),
         font_size: "1.5vmin",
         font_weight: "",
+        zIndex: 0,
         margin: {
             x: "0.1vw",
             y: "0.1vh",
@@ -35,11 +36,12 @@ class Button extends Component {
     render() {
         return (
             <button className="button" 
-            style={{"backgroundColor": this.props.background_color,
-                    "fontSize": this.props.font_size,
-                    "fontWeight": this.props.font_weight,
-                    "color": this.props.font_color,
-                    "margin": this.props.margin.y+" "+this.props.margin.x
+            style={{backgroundColor: this.props.background_color,
+                    fontSize: this.props.font_size,
+                    fontWeight: this.props.font_weight,
+                    color: this.props.font_color,
+                    margin: this.props.margin.y+" "+this.props.margin.x,
+                    zIndex: this.props.zIndex
                     }}
             onClick={this.props.on_click}
             disabled={!this.props.enabled}>    

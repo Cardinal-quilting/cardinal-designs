@@ -1,0 +1,6 @@
+@import 'styles/styles.css';
+
+.menu-right {
+    min-height: 3vh;
+    background-color: var(--grey-background-color);   
+}

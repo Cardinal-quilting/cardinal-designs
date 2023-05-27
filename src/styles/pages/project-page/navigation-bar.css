@@ -4,8 +4,12 @@
   background-color: var(--dark-grey-background-color);
   color: var(--light-font-color);
   display: flex;
+
+  position: relative;
   
-  align-items: center;    
+  align-items: center;   
+  max-width: 100vw; 
+  min-width: 100vw; 
 }
 
 .nav-logo {

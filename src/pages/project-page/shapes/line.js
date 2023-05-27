@@ -21,12 +21,16 @@ class Line extends Component {
     }
 
     mouse_enter() {
+        if( !this.props.enabled ) { return; }
+
         this.setState({
             current_color: this.props.mouseover_color 
          });
     }
 
     mouse_leave() {
+        if( !this.props.enabled ) { return; }
+        
         this.setState({
             current_color: this.props.color 
          });

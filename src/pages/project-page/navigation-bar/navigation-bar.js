@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 
 import Button from "infrastructure/button";
 
-import OptionsDropdown from './options-dropdown';
+import OptionsDropdown from "./options-dropdown";
 
-import 'styles/pages/project-page/navigation-bar.css';
-import logo from 'figures/logos/CardinalQuiltsSmallLogo.png';
+import "styles/pages/project-page/navigation-bar.css";
+import logo from "figures/logos/CardinalQuiltsSmallLogo.png";
 
 /**
  * The navigation bar for the project page
@@ -60,13 +60,11 @@ class NavigationBar extends Component {
 
     render() {
         return (
-            <div
-                style={{zIndex: this.props.zIndex}}
-            >
-            <header className="nav-header">
-            <img src={logo} alt="small_logo" className="nav-logo"/>
-            <h1 className="nav-title">Cardinal designs</h1>
+            <div className="nav-header" style={{zIndex: this.props.zIndex}}>
+            <img src={logo} alt="small_logo" className="nav-logo" style={{zIndex: this.props.zIndex}}/>
+            <h1 className="nav-title"  style={{zIndex: this.props.zIndex}}>Cardinal designs</h1>
             <Button 
+                zIndex={this.props.zIndex}
                 name="Save"
                 font_size="2.5vmin" 
                 font_weight="bold" 
@@ -85,8 +83,7 @@ class NavigationBar extends Component {
                     save_project={this.props.save_project}
                     save_project_as={this.props.save_project_as}
             />
-            </header>
-          </div>
+            </div>
         )
     }
 }

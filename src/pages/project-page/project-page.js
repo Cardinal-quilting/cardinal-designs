@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 
-import ProjectDisplay from 'pages/project-page/project-display/project-display';
+import NavigationBar from "pages/project-page/navigation-bar/navigation-bar";
 
-import NavigationBar from 'pages/project-page/navigation-bar/navigation-bar';
+import { EnabledState, ZIndexState } from "./project-page-state";
 
-import Project from 'projects/project';
+import Project from "projects/project";
+import ProjectGrid from "./project-grid/project-grid";
 
-import 'styles/pages/project-page/project-page.css';
+import "styles/pages/project-page/project-page.css";
 
 /**
  * The project page allows user to interact with their project.
@@ -24,12 +25,10 @@ class ProjectPage extends Component {
         
         this.state = {
             saving: false,
+            z_index: new ZIndexState(),
             project: new Project(project_info),
             project_filename: project_info.filename,
-            component_enabled: {
-                navigation_bar: true,
-                project_display: true
-            }
+            enabled_components: new EnabledState()
         }
 
         this.save_project = this.save_project.bind(this);
@@ -54,10 +53,7 @@ class ProjectPage extends Component {
     save_project_as() {
         this.setState({
             saving: true,
-            component_enabled: {
-                navigation_bar: false,
-                project_display: false
-            }
+            component_enabled: new EnabledState(EnabledState.Options.none)
         });
 
         const save_to_file = async () => {
@@ -66,18 +62,12 @@ class ProjectPage extends Component {
                 this.setState({
                     saving: false,
                     project_filename: filename,
-                    component_enabled: {
-                        navigation_bar: true,
-                        project_display: true
-                    }
+                    enabled_components: new EnabledState()
                 });
             } else {
                 this.setState({
                     saving: false,
-                    component_enabled: {
-                        navigation_bar: true,
-                        project_display: true
-                    }
+                    enabled_components: new EnabledState()
                 });
             }
         }
@@ -85,13 +75,10 @@ class ProjectPage extends Component {
     }
 
     navigation_menu_state(is_open) {
-        const enabled = !is_open & !this.state.saving;
-
+        const enabled = (!is_open && !this.state.saving);
+                
         this.setState({
-            component_enabled: {
-                navigation_bar: enabled,
-                project_display: enabled
-           }
+            enabled_components: enabled? new EnabledState() : new EnabledState(EnabledState.Options.none)
         });
     }
 
@@ -100,39 +87,24 @@ class ProjectPage extends Component {
         <div className="project-body">
             {/* put a navation bar at the top of the page */}
             <NavigationBar 
-                zIndex="2"
+                zIndex={this.state.z_index.nav_bar}
                 save_project={this.save_project}
                 save_project_as={this.save_project_as}
                 announce_dropdown_state={this.navigation_menu_state}  
-                enabled={this.state.component_enabled.navigation_bar}
+                enabled={this.state.enabled_components.navigation_bar()}
             />
-        
-            <div className="row">
-                <div className="top-left-menu">
-                    VIEWS LEFT
-                </div>     
-                <div className="top-middle-menu">
-                    VIEWS MIDDLE
-                </div>
-                <div className="top-right-menu">
-                    VIEWS RIGHT
-                </div>        
-            </div>
 
-            <div className="row">
-                <div className="left-menu">
-                    PROJECT MODES
-                </div>
-                <ProjectDisplay
-                    zIndex="0"
-                    enabled={this.state.component_enabled.project_display}
-                    project={this.state.project}
-                />
-                <div className="right-menu">
-                    LOCAL OPTIONS
-                </div>
-            </div>        
-            <div className="bottom-menu">
+            <ProjectGrid
+                zIndex={this.state.z_index.project_grid}
+                enabled_components={this.state.enabled_components}
+                project={this.state.project}
+            />
+
+            <div className="bottom-menu"
+                style={{
+                    zIndex: 1
+                }}
+            >
                 DIAGNOSTIC INFORMATION
             </div>
         </div>

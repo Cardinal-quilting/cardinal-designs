@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import RecursivePiecing from 'pages/project-page/project-display/recursive-piecing';
+import BackgroundImage from 'pages/project-page/project-display/background-image';
 
 import "styles/pages/project-page/project-display/project-display.css";
 
@@ -49,30 +50,39 @@ class ProjectDisplay extends Component {
 
     render() {
         // the width/height of the display window with units
-        const width = this.props.width.toString()+"vw";
-        const height = this.props.height.toString()+"vh";
+        var width, height;
+        width = this.props.width.toString()+"vw";
+        height = this.props.height.toString()+"vh";
 
         return (
             <div 
                 className="project-display"
                 ref = {this.ref}
                 style={{
+                    enabled: this.props.enabled,
                     zIndex: this.props.zIndex,
                     minHeight: height,
                     maxHeight: height,
+                    height: height,
                     minWidth: width,
                     maxWidth: width,
+                    width: width
                 }}
             >
-            
+                
             {this.state.mounted? <RecursivePiecing
-                parent_height = {this.props.height}
-                parent_width = {this.props.width}
-                parent_ref = {this.ref}
-                project = {this.props.project}
+                enabled={this.props.enabled}
+                parent_height={this.props.height}
+                parent_width={this.props.width}
+                parent_ref={this.ref}
+                project={this.props.project}
             >
             </RecursivePiecing> : null}
 
+            <BackgroundImage
+                parent_height={this.props.height}
+                parent_width={this.props.width}
+            />
             </div>
         );
     }

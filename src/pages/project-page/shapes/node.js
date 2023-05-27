@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import Draggable from 'infrastructure/draggable';
+import Draggable from "infrastructure/draggable";
 
-import 'styles/pages/project-page/shapes/node.css';
+import "styles/pages/project-page/shapes/node.css";
 
 /**
  * A <tt>node</tt> is a key point in the design.
@@ -35,6 +35,7 @@ class Node extends Component {
      * The default props 
      */ 
     static defaultProps = {
+        enabled: true,
         color: "--black-theme",
         mouseover_color: "--red-theme",
         size: 1,
@@ -60,12 +61,16 @@ class Node extends Component {
     }
 
     mouse_enter() {
+        if( !this.props.enabled ) { return; }
+
         this.setState({
             current_color: this.props.mouseover_color 
          });
     }
 
     mouse_leave() {
+        if( !this.props.enabled ) { return; }
+
         this.setState({
             current_color: this.props.color 
          });
@@ -85,7 +90,7 @@ class Node extends Component {
                 pos={this.state.pos}
                 get_display_info = {this.props.get_display_info}
                 set_position = {(x, y) => this.set_position(x, y)}
-                enabled = {this.props.draggable}
+                enabled = {this.props.enabled & this.props.draggable}
             >
                 <div 
                     onMouseEnter={this.mouse_enter}

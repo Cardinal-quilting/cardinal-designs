@@ -59,6 +59,7 @@ class RecursivePiecing extends Component {
                 }}
             >
                 <NodeChain
+                    enabled={this.props.enabled}
                     moveable={this.props.enabled}
                     get_display_info = {() => this.get_display_info()}
                     display={{

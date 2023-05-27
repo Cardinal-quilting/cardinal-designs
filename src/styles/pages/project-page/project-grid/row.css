@@ -1,0 +1,6 @@
+@import 'styles/styles.css';
+
+.row {    
+    border-style: none;
+    display: flex;
+}

@@ -18,7 +18,8 @@ class NodeChain extends Component {
                 display={this.props.display}
                 initial_pos={point.position}
                 key={point.id}
-                draggable={enabled & point.moveable}
+                enabled={enabled}
+                draggable={enabled && point.moveable}
             />
             );
         });
@@ -29,6 +30,7 @@ class NodeChain extends Component {
 
             return (
             <Line
+                enabled={enabled}
                 get_display_info = {this.props.get_display_info}
                 aspect_ratio={this.props.aspect_ratio}
                 display={this.props.display}
