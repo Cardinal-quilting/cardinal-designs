@@ -30,7 +30,6 @@ class Button extends Component {
     }
     
     /**
-     * See button.css for default options
      * @returns A wrapper around the button object
      */
     render() {
@@ -41,7 +40,8 @@ class Button extends Component {
                     fontWeight: this.props.font_weight,
                     color: this.props.font_color,
                     margin: this.props.margin.y+" "+this.props.margin.x,
-                    zIndex: this.props.zIndex
+                    zIndex: this.props.zIndex,
+                    cursor: this.props.enabled? "pointer" : "default"
                     }}
             onClick={this.props.on_click}
             disabled={!this.props.enabled}>    

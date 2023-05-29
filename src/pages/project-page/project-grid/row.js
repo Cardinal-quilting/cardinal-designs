@@ -14,6 +14,7 @@ class Row extends Component {
             >
                 {this.props.children[0]}
                 <ColumnBorder
+                    zIndex={this.props.zIndex}
                     set_hover={this.props.set_left_hover}
                     set_width={this.props.set_left_width}
                     current_width={this.props.left_width}
@@ -21,7 +22,8 @@ class Row extends Component {
                     side="left"
                 />
                 {this.props.children[1]}
-                <ColumnBorder
+                <ColumnBorder 
+                    zIndex={this.props.zIndex}
                     set_hover={this.props.set_right_hover}
                     set_width={this.props.set_right_width}
                     current_width={this.props.right_width}

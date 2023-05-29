@@ -76,6 +76,7 @@ class ColumnBorder extends Component {
             className="column-border"
             style={{
                 backgroundColor: getComputedStyle(document.documentElement).getPropertyValue(this.props.color),
+                zIndex: this.props.zIndex
             }}
         />
         );

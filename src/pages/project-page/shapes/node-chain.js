@@ -14,6 +14,7 @@ class NodeChain extends Component {
 
             return (
             <Node 
+            z_index={this.props.z_index}
                 get_display_info = {this.props.get_display_info}
                 display={this.props.display}
                 initial_pos={point.position}
@@ -30,6 +31,7 @@ class NodeChain extends Component {
 
             return (
             <Line
+                z_index={this.props.z_index}
                 enabled={enabled}
                 get_display_info = {this.props.get_display_info}
                 aspect_ratio={this.props.aspect_ratio}

@@ -35,16 +35,19 @@ export class EnabledState {
  */
 export class ZIndexState {
     // the z index of the navigation bar
-    nav_bar = 2
+    nav_bar = 3
 
     project_grid = {
         // the z index of the views 
-        views: 1,
+        views: 2,
 
         // the z index of the menus 
-        menus: 1,
+        menus: 2,
 
         // the z index of the project display
-        project_display: 0
+        project_display: {
+            min: 0,
+            max: 1
+        }
     }
 }

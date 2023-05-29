@@ -1,13 +1,7 @@
 @import 'styles/styles.css';
 
 .options-box {
-    border-style: solid;
     border-radius: 0%;
-    border-width: 0.25vw;
+    border-width: 0.1vw;
     border-color: var(--black-theme);
-}
-
-.options-title {
-    font-weight: bold;
-    font-size: 1vw;
 }

@@ -19,20 +19,6 @@ class RecursivePiecing extends Component {
         this.ref = React.createRef();
     }
 
-    project_dimensions() {
-        const parent_width = this.props.parent_ref.current.getBoundingClientRect().width;
-        const parent_height = this.props.parent_ref.current.getBoundingClientRect().height;
-                
-        const max_width = 0.99;
-        const max_height = max_width*parent_height/parent_width;
-
-        const height = max_width/this.props.project.metadata.aspect_ratio;
-        if( height<=max_height ) {
-            return [parent_height, parent_width, height, max_width];
-        }
-        return [parent_height, parent_width, max_height, max_height*this.props.project.metadata.aspect_ratio];
-    }
-
     componentDidMount() {
         this.setState({mounted: true});
     }
@@ -43,8 +29,7 @@ class RecursivePiecing extends Component {
 
     render() {
         if( !this.state.mounted ) { return <div></div>; }
-
-        const [parent_height, parent_width, height, width] = this.project_dimensions();
+        const [parent_height, parent_width, height, width] = this.props.get_project_dimensions();
 
         const height_percent = (100*height).toString()+"%";
         const width_percent = (100*width).toString()+"%"; 
@@ -61,6 +46,7 @@ class RecursivePiecing extends Component {
                 <NodeChain
                     enabled={this.props.enabled}
                     moveable={this.props.enabled}
+                    z_index={this.props.component_z_index}
                     get_display_info = {() => this.get_display_info()}
                     display={{
                         parent_width: width*this.props.parent_width,

@@ -105,7 +105,8 @@ class Node extends Component {
                         width: size,
                         height: size,
                         left: xpos,
-                        top: ypos
+                        top: ypos,
+                        zIndex: this.props.z_index
                     }}
                 />
             </Draggable>

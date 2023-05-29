@@ -23,6 +23,7 @@ class ProjectDisplay extends Component {
         }
 
         this.ref = React.createRef();
+        this.project_dimensions = this.project_dimensions.bind(this);
     }
 
     static defaultProps = {
@@ -48,11 +49,24 @@ class ProjectDisplay extends Component {
         window.removeEventListener("resize", this.update_dimensions);
     }
 
+    project_dimensions() {
+        const parent_width = this.ref.current.getBoundingClientRect().width;
+        const parent_height = this.ref.current.getBoundingClientRect().height;
+                
+        const max_width = 0.99;
+        const max_height = max_width*parent_height/parent_width;
+
+        const height = max_width/this.props.project.metadata.aspect_ratio;
+        if( height<=max_height ) {
+            return [parent_height, parent_width, height, max_width];
+        }
+        return [parent_height, parent_width, max_height, max_height*this.props.project.metadata.aspect_ratio];
+    }
+
     render() {
         // the width/height of the display window with units
-        var width, height;
-        width = this.props.width.toString()+"vw";
-        height = this.props.height.toString()+"vh";
+        const width = this.props.width.toString()+"vw";
+        const height = this.props.height.toString()+"vh";
 
         return (
             <div 
@@ -60,7 +74,7 @@ class ProjectDisplay extends Component {
                 ref = {this.ref}
                 style={{
                     enabled: this.props.enabled,
-                    zIndex: this.props.zIndex,
+                    zIndex: this.props.zIndices.min,
                     minHeight: height,
                     maxHeight: height,
                     height: height,
@@ -71,19 +85,25 @@ class ProjectDisplay extends Component {
             >
                 
             {this.state.mounted? <RecursivePiecing
+                component_z_index={this.props.zIndices.max}
                 enabled={this.props.enabled}
                 parent_height={this.props.height}
                 parent_width={this.props.width}
                 parent_ref={this.ref}
                 project={this.props.project}
+                get_project_dimensions={this.project_dimensions}
             >
             </RecursivePiecing> : null}
 
-            <BackgroundImage
+            {(this.props.background_image.display_image & this.state.mounted)? <BackgroundImage
+                get_project_dimensions={this.project_dimensions}
                 parent_height={this.props.height}
                 parent_width={this.props.width}
-            />
+                background_image={this.props.background_image}
+                update_background_image={this.props.update_background_image}
+            /> : null}
             </div>
+
         );
     }
 }

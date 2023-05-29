@@ -93,7 +93,8 @@ class Line extends Component {
                     color: getComputedStyle(document.documentElement).getPropertyValue(this.state.current_color),
                     transform: "rotate("+ angle.toString() +"rad)", 
                     left: x1pos,
-                    top: y1pos
+                    top: y1pos,
+                    zIndex: this.props.z_index
                 }}
                 
             >
