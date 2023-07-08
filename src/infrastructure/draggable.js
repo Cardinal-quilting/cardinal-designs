@@ -37,11 +37,11 @@ class Draggable extends Component {
      */
     componentDidUpdate(prevProps, prevState) {
         if( this.state.dragging && !prevState.dragging ) {
-            document.addEventListener('mousemove', this.onMouseMove);
-            document.addEventListener('mouseup', this.onMouseUp);
+            document.addEventListener("mousemove", this.onMouseMove);
+            document.addEventListener("mouseup", this.onMouseUp);
         } else if( !this.state.dragging && prevState.dragging ) {
-            document.removeEventListener('mousemove', this.onMouseMove);
-            document.removeEventListener('mouseup', this.onMouseUp);
+            document.removeEventListener("mousemove", this.onMouseMove);
+            document.removeEventListener("mouseup", this.onMouseUp);
         }
     }
 
@@ -90,7 +90,7 @@ class Draggable extends Component {
         var xmove = (event.screenX - display.left - this.state.start_move.pixel.x)/(display.right-display.left);
         var ymove = (event.screenY - display.top - this.state.start_move.pixel.y)/(display.top-display.bottom);
 
-        // deterine the new location of the object
+        // determine the new location of the object
         xmove += this.state.start_move.pos.x;
         ymove += this.state.start_move.pos.y;
 

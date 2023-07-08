@@ -27,7 +27,12 @@ export class EnabledState {
         return false;
     }
 
-    
+    left_menu() {
+        if( this.option===EnabledState.Options.all ) {
+            return true;
+        } 
+        return false;
+    }    
 }
 
 /**

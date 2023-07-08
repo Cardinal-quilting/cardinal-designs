@@ -18,6 +18,7 @@ class MenuLeft extends Component {
                 <BackgroundImageOptions
                     title="Background image"
                     width={this.props.left_width}
+                    enabled={this.props.enabled}
                     title_font_size={String(Math.min(0.095*this.props.left_width, 1.5))+"vw"}
                     font_size={String(Math.min(0.085*this.props.left_width, 1.5))+"vw"}
                     background_image={this.props.background_image}

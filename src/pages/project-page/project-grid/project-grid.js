@@ -105,6 +105,7 @@ class ProjectGrid extends Component {
                     <MenuLeft
                         zIndex={this.props.zIndex.menus}
                         left_width={this.state.left_width}
+                        enabled={this.props.enabled_components.left_menu()}
                         background_image={this.state.background_image}
                         update_background_image={this.update_background_image}
                     />

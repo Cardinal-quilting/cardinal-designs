@@ -95,7 +95,8 @@ class ProjectDisplay extends Component {
             >
             </RecursivePiecing> : null}
 
-            {(this.props.background_image.display_image & this.state.mounted)? <BackgroundImage
+            {(this.props.background_image.display_image & this.props.background_image.file!=null & this.state.mounted)? <BackgroundImage
+                enabled={this.props.enabled}
                 get_project_dimensions={this.project_dimensions}
                 parent_height={this.props.height}
                 parent_width={this.props.width}
