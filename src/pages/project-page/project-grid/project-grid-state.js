@@ -1,5 +1,4 @@
 export class BackgroundImageState {
-    //file = "/Users/andrewdavis/Cardinal-designs/cardinal-designs/src/figures/logos/CardinalQuiltsLogo.png"
     file = null
 
     display_image = true
