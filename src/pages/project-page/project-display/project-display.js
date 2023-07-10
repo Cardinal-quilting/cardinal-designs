@@ -99,7 +99,7 @@ class ProjectDisplay extends Component {
             {(this.props.display_state.background_image.display_image 
                 & this.props.display_state.background_image.file!=null 
                 & this.state.mounted)? <BackgroundImage
-                enabled={this.props.enabled}
+                enabled={this.props.enabled & this.props.display_state.background_image.enable_image}
                 get_project_dimensions={this.project_dimensions}
                 parent_height={this.props.height}
                 parent_width={this.props.width}

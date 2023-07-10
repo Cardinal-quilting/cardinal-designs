@@ -3,6 +3,7 @@ import React from "react";
 import OptionsBox from "infrastructure/options-box";
 
 import Button from "infrastructure/button";
+import Tooltip from "infrastructure/tooltip";
 
 import "styles/pages/project-page/project-grid/background-image-options.css";
 
@@ -11,6 +12,7 @@ class BackgroundImageOptions extends OptionsBox {
         super(props);
 
         this.change_display_image = this.change_display_image.bind(this);
+        this.change_enable_image = this.change_enable_image.bind(this);
         this.update_zoom = this.update_zoom.bind(this);
         this.update_opacity = this.update_opacity.bind(this);
         this.update_restore_position = this.update_restore_position.bind(this);
@@ -27,13 +29,22 @@ class BackgroundImageOptions extends OptionsBox {
 
     display_image() {    
         return (
-            <div className="component">
+            <div 
+                className="component" 
+                key="display"
+            >
+            <Tooltip
+                pos={{
+                    x: "5vw",
+                    y: "-2vh"
+                }}
+                message="Display the image."
+            >
             <label className="display">
             <input
                 type="checkbox"
                 onChange={this.change_display_image}
                 defaultChecked={this.props.background_image.display_image}
-                key="display"
             />
             <span 
                 className="display"
@@ -44,6 +55,7 @@ class BackgroundImageOptions extends OptionsBox {
                 Display image
             </span>
             </label>
+            </Tooltip>
             </div>
         );
     }
@@ -132,12 +144,20 @@ class BackgroundImageOptions extends OptionsBox {
         <div
             key="restore_position"
         >
+            <Tooltip
+                pos={{
+                    x: "5vw",
+                    y: "-2vh"
+                }}
+                message="Restore the image to its original position and zoom."
+            >
             <Button
                     on_click={this.update_restore_position}
                     enabled={this.props.enabled}
                 >
                     Default position
             </Button>
+            </Tooltip>
         </div>)
     }
 
@@ -179,9 +199,48 @@ class BackgroundImageOptions extends OptionsBox {
         );
     }
 
+    change_enable_image() {
+        this.props.background_image.enable_image = !this.props.background_image.enable_image;
+        this.props.update_background_image(this.props.background_image);
+    }
+
+    enable_image() {    
+        return (
+            <div 
+                className="component"
+                key="enable"
+            >
+            <Tooltip
+                pos={{
+                    x: "5vw",
+                    y: "-2vh"
+                }}
+                message="Allow dragging and resizing using the scroll wheel."
+            >
+            <label className="enable">
+            <input
+                type="checkbox"
+                onChange={this.change_enable_image}
+                defaultChecked={this.props.background_image.enable_image}
+            />
+            <span 
+                className="enable"
+                style={{
+                    fontSize: this.props.font_size
+                }}
+            >
+                Enable image
+            </span>
+            </label>
+            </Tooltip>
+            </div>
+        );
+    }
+
     content() {
         return [this.upload_image(), 
                 this.display_image(), 
+                this.enable_image(), 
                 this.zoom(), 
                 this.opacity(), 
                 this.restore_position()];

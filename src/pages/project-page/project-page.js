@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import NavigationBar from "pages/project-page/navigation-bar/navigation-bar";
 
-import { EnabledState, ZIndexState } from "./background-image-state";
+import { EnabledState, ZIndexState } from "./project-page-state";
 
 import Project from "projects/project";
 import ProjectGrid from "./project-grid/project-grid";

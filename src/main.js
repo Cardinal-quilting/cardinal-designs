@@ -45,9 +45,6 @@ function createWindow () {
 ipcMain.handle("save_project_as", function save_as(_event, data) { return save_project_as(_event, data, window); });
 ipcMain.handle("save_project", function save(_event, data) { save_project(_event, data[0], data[1], window); });
 
-// handle loading the project 
-ipcMain.handle("load_project", function (_event) { return load_project(_event, window); });
-
 // this method will be called when Electron has finished initialization 
 // and is ready to create browser windows; 
 // some APIs can only be used after this event occurs.

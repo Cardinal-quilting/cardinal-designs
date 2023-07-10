@@ -74,7 +74,6 @@ class BackgroundImage extends Component {
 
     mouse_leave() {
         if( !this.props.enabled ) { return; }
-
         window.removeEventListener("wheel", this.wheel);
     }
 
@@ -93,10 +92,6 @@ class BackgroundImage extends Component {
 
         event.stopPropagation();
         event.preventDefault();
-    }
-
-    handle_image_upload(event) {
-        console.log("HI");
     }
 
     render() {

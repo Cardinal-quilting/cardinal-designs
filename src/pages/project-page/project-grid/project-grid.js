@@ -53,12 +53,6 @@ class ProjectGrid extends Component {
         });
     }
 
-    /*update_background_image(background_image) {
-        this.setState({
-            background_image: background_image
-        });
-    }*/
-
     render() {
         return (
             <div>

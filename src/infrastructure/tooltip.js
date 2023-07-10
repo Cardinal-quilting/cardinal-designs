@@ -43,8 +43,10 @@ class Tooltip extends Component {
      * The default props for the tooltip.
      */
     static defaultProps = {
-        xloc: "0vmin",
-        yloc: "0vmin",
+        pos: {
+            x: "0vmin",
+            y: "0vmin",
+        },
         hover: 500.0,
         message: "",
         font_size: "1vmin",
@@ -88,9 +90,10 @@ class Tooltip extends Component {
             <div>
                 {this.props.children}
                 {show_tool_tip && (
-                <div 
+                <div                 
                 className="tooltip"
                 style={{
+                    zIndex: 99999999,
                     left: this.props.pos.x,
                     bottom: this.props.pos.y,
                     fontSize: this.props.font_size

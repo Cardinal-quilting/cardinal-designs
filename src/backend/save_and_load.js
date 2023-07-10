@@ -38,23 +38,8 @@ function save_project(_event, filename, project, window) {
     });
 }
 
-function open_load_dialog(window) {
-  // Return selected path back to the UI
-  return electronDialog.showOpenDialog(window, file_options())
-      .then((result) => { if (result) { return result; } })
-      .catch((error) => { console.error('System file dialog error: ' + error); });
-}
-
-
-function load_project(_event, window) {
-  return open_load_dialog(window).then((result) => {
-    if (result.canceled) { return; }
-    return JSON.parse(fs.readFileSync(result.filePaths[0]));
-  });
-}
-
 module.exports = {
     save_project_as,
-    save_project,
-    load_project
+    save_project
+    //load_project
 }
