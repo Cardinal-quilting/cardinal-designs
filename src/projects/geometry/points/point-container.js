@@ -1,4 +1,4 @@
-import Point from "projects/points/point";
+import Point from "projects/geometry/points/point";
 
 class PointContainer {
     constructor() {

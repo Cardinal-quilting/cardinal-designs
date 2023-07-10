@@ -52,9 +52,9 @@ class RecursivePiecing extends Component {
                         parent_width: width*this.props.parent_width,
                         parent_height: height*parent_width/parent_height*this.props.parent_height
                     }}                    
-                    aspect_ratio={this.props.project.metadata.aspect_ratio}
-                    points={this.props.project.whole_project.points}
-                    access_point={this.props.project.access_point}
+                    aspect_ratio={this.props.project_metadata.aspect_ratio}
+                    points={this.props.project_geometry.whole_project.points}
+                    access_point={this.props.project_geometry.access_point}
                 >
                 </NodeChain>
                 

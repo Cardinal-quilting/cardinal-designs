@@ -56,11 +56,11 @@ class ProjectDisplay extends Component {
         const max_width = 0.99;
         const max_height = max_width*parent_height/parent_width;
 
-        const height = max_width/this.props.project.metadata.aspect_ratio;
+        const height = max_width/this.props.project_metadata.aspect_ratio;
         if( height<=max_height ) {
             return [parent_height, parent_width, height, max_width];
         }
-        return [parent_height, parent_width, max_height, max_height*this.props.project.metadata.aspect_ratio];
+        return [parent_height, parent_width, max_height, max_height*this.props.project_metadata.aspect_ratio];
     }
 
     render() {
@@ -90,17 +90,20 @@ class ProjectDisplay extends Component {
                 parent_height={this.props.height}
                 parent_width={this.props.width}
                 parent_ref={this.ref}
-                project={this.props.project}
+                project_metadata={this.props.project_metadata}
+                project_geometry={this.props.project_geometry}
                 get_project_dimensions={this.project_dimensions}
             >
             </RecursivePiecing> : null}
 
-            {(this.props.background_image.display_image & this.props.background_image.file!=null & this.state.mounted)? <BackgroundImage
+            {(this.props.display_state.background_image.display_image 
+                & this.props.display_state.background_image.file!=null 
+                & this.state.mounted)? <BackgroundImage
                 enabled={this.props.enabled}
                 get_project_dimensions={this.project_dimensions}
                 parent_height={this.props.height}
                 parent_width={this.props.width}
-                background_image={this.props.background_image}
+                background_image={this.props.display_state.background_image}
                 update_background_image={this.props.update_background_image}
             /> : null}
             </div>

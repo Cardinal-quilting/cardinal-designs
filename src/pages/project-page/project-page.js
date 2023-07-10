@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import NavigationBar from "pages/project-page/navigation-bar/navigation-bar";
 
-import { EnabledState, ZIndexState } from "./project-page-state";
+import { EnabledState, ZIndexState } from "./background-image-state";
 
 import Project from "projects/project";
 import ProjectGrid from "./project-grid/project-grid";
@@ -21,30 +21,40 @@ class ProjectPage extends Component {
     constructor(props) {
         super(props);
 
-        const project_info = JSON.parse(new URLSearchParams(window.location.search).get("info"));
+        var project_info = JSON.parse(new URLSearchParams(window.location.search).get("info"));
+        if( project_info.load_from_file ) {
+            project_info = JSON.parse(localStorage.getItem("loadFile"));
+        }    
+        this.project = new Project(project_info)
         
         this.state = {
             saving: false,
             z_index: new ZIndexState(),
-            project: new Project(project_info),
+            project_metadata: this.project.metadata,
+            project_geometry: this.project.project_geometry,
+            display_state: this.project.display_state,
             project_filename: project_info.filename,
             enabled_components: new EnabledState()
         }
 
         this.save_project = this.save_project.bind(this);
         this.save_project_as = this.save_project_as.bind(this);
+
         this.navigation_menu_state = this.navigation_menu_state.bind(this);
+
+        this.update_background_image = this.update_background_image.bind(this);
     }
 
     /**
      * Save the project
      */
     save_project() {
-        if (!this.state.project_filename) {
-            this.save_project_as();        
+        this.save_project_as();       
+        /*if (!this.state.project_filename) {
+            this.save_project_as(); 
         } else {
             window.API.invoke("save_project", [this.state.project_filename, this.state.project]);
-        }
+        }*/
     }
 
     /**
@@ -57,7 +67,7 @@ class ProjectPage extends Component {
         });
 
         const save_to_file = async () => {
-            const filename = await window.API.invoke("save_project_as", this.state.project.stringify());
+            const filename = await window.API.invoke("save_project_as", this.project.stringify());
             if (filename) { 
                 this.setState({
                     saving: false,
@@ -82,6 +92,13 @@ class ProjectPage extends Component {
         });
     }
 
+    update_background_image(background_image) {
+        this.project.display_state.background_image = background_image;
+        this.setState({
+            display_state: this.project.display_state
+        });
+    }
+
     render() {
         return (
         <div className="project-body">
@@ -97,7 +114,10 @@ class ProjectPage extends Component {
             <ProjectGrid
                 zIndex={this.state.z_index.project_grid}
                 enabled_components={this.state.enabled_components}
-                project={this.state.project}
+                project_metadata={this.state.project_metadata}
+                project_geometry={this.state.project_geometry}
+                display_state={this.state.display_state}
+                update_background_image={this.update_background_image}
             />
 
             <div className="bottom-menu"

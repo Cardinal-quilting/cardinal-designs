@@ -24,6 +24,10 @@ class LaunchPage extends Component {
         };
 
         this.start_new_project = this.start_new_project.bind(this);
+        this.load_project = this.load_project.bind(this);
+        this.load_project_button = this.load_project_button.bind(this);
+
+        this.load_project_ref = React.createRef();
     }
 
     /**
@@ -36,29 +40,25 @@ class LaunchPage extends Component {
         });
     }
 
+    load_project_button() {
+        this.load_project_ref.current.click();
+    }
+
     /**
-     * Display the popup window to load an existing project.
+     * Display tbhe popup window to load an existing project.
      */
-    load_project() {
-        this.setState({
-            page_active: false,
-        });
-
-        const load_from_file = async() => {
-            const data = await window.API.invoke("load_project");
-            if (!data) {
-                this.setState({
-                    page_active: true
-                });
-                return;
-            }
-
-            window.location.href = `/project?info=${JSON.stringify(data)}`;
-
-            console.log(data);
+    load_project(event) {
+        if( event.target.files.length===0 ) {
+            return;
         }
-
-        load_from_file();
+        
+        const reader = new FileReader();
+        reader.onload = () => {
+            localStorage.setItem("loadFile", reader.result);
+            const info = { load_from_file: true }
+            window.location.href = `/project?info=${JSON.stringify(info)}`;
+        };
+        reader.readAsText(event.target.files[0]);
     }
 
     /**
@@ -138,13 +138,20 @@ class LaunchPage extends Component {
                     font_size="1.5vmin"
                     enabled={this.state.page_active}
                 >
+                    <input 
+                        type="file" 
+                        accept=".crdnl"
+                        ref={this.load_project_ref}
+                        style={{ display: "none" }}
+                        onChange={this.load_project}
+                    />
                     <Button 
                         name="Load project" 
                         font_size="5vmin"
                         background_color={button_color}
                         font_color={button_font_color}
                         font_weight="bold"
-                        on_click={() => this.load_project()}
+                        on_click={this.load_project_button}
                         disabled={!this.state.page_active}
                         margin={{x: "2.0vw",
                                  y: "0.0vh"}}

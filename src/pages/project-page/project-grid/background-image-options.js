@@ -137,18 +137,20 @@ class BackgroundImageOptions extends OptionsBox {
                     enabled={this.props.enabled}
                 >
                     Default position
-                </Button>
+            </Button>
         </div>)
     }
 
     handle_image_upload(event) {
-        const reader = new FileReader();
+        if( event.target.files.length===0 ) {
+            return;
+        }
 
+        const reader = new FileReader();
         reader.onload = () => {
             this.props.background_image.file = reader.result;
             this.props.update_background_image(this.props.background_image);
         };
-
         reader.readAsDataURL(event.target.files[0]);
     }
 
@@ -178,7 +180,11 @@ class BackgroundImageOptions extends OptionsBox {
     }
 
     content() {
-        return [this.display_image(), this.upload_image(), this.zoom(), this.opacity(), this.restore_position()];
+        return [this.upload_image(), 
+                this.display_image(), 
+                this.zoom(), 
+                this.opacity(), 
+                this.restore_position()];
     }
 }
 

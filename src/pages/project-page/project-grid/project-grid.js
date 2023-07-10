@@ -10,8 +10,6 @@ import MenuRight from "./menu-right";
 
 import ProjectDisplay from "pages/project-page/project-display/project-display";
 
-import { BackgroundImageState } from "./project-grid-state";
-
 import "styles/pages/project-page/project-grid/project-grid.css";
 
 class ProjectGrid extends Component {
@@ -23,15 +21,12 @@ class ProjectGrid extends Component {
             right_width: 15,
             left_border_color: "--grey-background-color",
             right_border_color: "--grey-background-color",
-            background_image: new BackgroundImageState()
         }
 
         this.set_left_width = this.set_left_width.bind(this);
         this.set_right_width = this.set_right_width.bind(this);
         this.set_left_hover = this.set_left_hover.bind(this);
         this.set_right_hover = this.set_right_hover.bind(this);
-
-        this.update_background_image = this.update_background_image.bind(this);
     }
 
     set_left_width(width) {
@@ -58,11 +53,11 @@ class ProjectGrid extends Component {
         });
     }
 
-    update_background_image(background_image) {
+    /*update_background_image(background_image) {
         this.setState({
             background_image: background_image
         });
-    }
+    }*/
 
     render() {
         return (
@@ -106,16 +101,18 @@ class ProjectGrid extends Component {
                         zIndex={this.props.zIndex.menus}
                         left_width={this.state.left_width}
                         enabled={this.props.enabled_components.left_menu()}
-                        background_image={this.state.background_image}
-                        update_background_image={this.update_background_image}
+                        background_image={this.props.display_state.background_image}
+                        update_background_image={this.props.update_background_image}
                     />
                     <ProjectDisplay
                         zIndices={this.props.zIndex.project_display}
                         enabled={this.props.enabled_components.project_display()}
-                        project={this.props.project}
+                        project_metadata={this.props.project_metadata}
+                        project_geometry={this.props.project_geometry}
+                        display_state={this.props.display_state}
                         width={100-this.state.left_width-this.state.right_width}
-                        background_image={this.state.background_image}
-                        update_background_image={this.update_background_image}
+                        background_image={this.props.display_state.background_image}
+                        update_background_image={this.props.update_background_image}
                     />
                     <MenuRight
                         zIndex={this.props.zIndex.menus}
