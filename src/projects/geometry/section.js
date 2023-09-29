@@ -1,4 +1,4 @@
-import Point from "projects/geometry/points/point";
+import Point from "projects/geometry/point";
 
 class Section {
     constructor(points, access_point) {
@@ -8,10 +8,16 @@ class Section {
         // get the center point
         this.center = this.compute_center(points);
 
+        console.log("center", this.center);
+
         // store the points in a clockwise order
         this.point_distance = this.point_distance.bind(this);
         this.points = points.sort(this.point_distance);
-        
+        for( let i=0; i<this.points.length; ++i ) {
+            console.log(this.access_point(this.points[i]));
+        }
+        console.log("");
+
         this.id = Section.count++;
     }
 
@@ -44,6 +50,9 @@ class Section {
             // forth quadrant 
             return y/norm + 3.0*Math.PI/2.0;
         }
+        console.log("1", id1, det(this.access_point(id1)));
+        console.log("2", id2, det(this.access_point(id2)));
+
         return det(this.access_point(id1))-det(this.access_point(id2)); 
     }
 }

@@ -18,6 +18,8 @@ class LaunchPage extends Component {
     constructor(props) {
         super(props);
 
+        console.log("lanch-page.js"); 
+
         this.state = {
             page_active: true,
             show_new_project_popup: false

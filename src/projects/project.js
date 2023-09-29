@@ -1,5 +1,5 @@
 import DisplayState from "projects/display-state/display-state";
-import Geometry from "projects/geometry/geometry";
+import SectionBinaryTree from "projects/geometry/section-binary-tree";
 
 /**
  * A Cardinal Designs project.
@@ -7,7 +7,7 @@ import Geometry from "projects/geometry/geometry";
 class Project {
     constructor(data) {
         this.metadata = data.metadata;
-        this.project_geometry = new Geometry();
+        this.project_geometry = new SectionBinaryTree();
         this.display_state = data.display_state? data.display_state : new DisplayState();
     }
 

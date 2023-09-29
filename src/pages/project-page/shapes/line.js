@@ -7,7 +7,7 @@ class Line extends Component {
         super(props);
 
         this.state = {
-            current_color: this.props.color,
+            use_mouseover_color: false
         }
 
         this.mouse_enter = this.mouse_enter.bind(this);
@@ -16,7 +16,6 @@ class Line extends Component {
     } 
     
     static defaultProps = {
-        color: "--black-theme",
         mouseover_color: "--red-theme"
     }
 
@@ -24,7 +23,7 @@ class Line extends Component {
         if( !this.props.enabled ) { return; }
 
         this.setState({
-            current_color: this.props.mouseover_color 
+            use_mouseover_color: true
          });
     }
 
@@ -32,7 +31,7 @@ class Line extends Component {
         if( !this.props.enabled ) { return; }
         
         this.setState({
-            current_color: this.props.color 
+            use_mouseover_color: false
          });
     }
 
@@ -59,7 +58,7 @@ class Line extends Component {
         const x = scale*(this.props.point2.position.x-this.props.point1.position.x) + this.props.point1.position.x;
         const y = scale*(this.props.point2.position.y-this.props.point1.position.y) + this.props.point1.position.y;
         
-        console.log("CLICKED POINT:", x, y)
+        this.props.click(x, y, this.props.id);
     }
 
     render() {
@@ -78,6 +77,8 @@ class Line extends Component {
         const width = (Math.sqrt(xdiff*xdiff + ydiff*ydiff)*this.props.display.parent_width).toString()+"vw";
 
         const margin = (-0.25).toString()+"vmin";
+        
+        const color = this.state.use_mouseover_color? this.props.mouseover_color : this.props.color;
 
         return (
             <div
@@ -90,7 +91,7 @@ class Line extends Component {
                     marginBottom: margin,
                     width: width,
                     borderBottom: "0.5vmin solid",
-                    color: getComputedStyle(document.documentElement).getPropertyValue(this.state.current_color),
+                    color: getComputedStyle(document.documentElement).getPropertyValue(color),
                     transform: "rotate("+ angle.toString() +"rad)", 
                     left: x1pos,
                     top: y1pos,

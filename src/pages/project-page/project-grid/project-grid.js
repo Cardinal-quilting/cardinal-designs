@@ -9,6 +9,7 @@ import MenuLeft from "./menu-left";
 import MenuRight from "./menu-right";
 
 import ProjectDisplay from "pages/project-page/project-display/project-display";
+import GridMode from "pages/project-page/project-grid/grid-mode";
 
 import "styles/pages/project-page/project-grid/project-grid.css";
 
@@ -21,6 +22,7 @@ class ProjectGrid extends Component {
             right_width: 15,
             left_border_color: "--grey-background-color",
             right_border_color: "--grey-background-color",
+            grid_mode: GridMode.default
         }
 
         this.set_left_width = this.set_left_width.bind(this);
@@ -53,6 +55,12 @@ class ProjectGrid extends Component {
         });
     }
 
+    swap_grid_mode(new_grid_mode) {
+        this.setState({
+            grid_mode: new_grid_mode
+        });
+    }
+
     render() {
         return (
             <div>
@@ -74,6 +82,8 @@ class ProjectGrid extends Component {
                     <Views
                         zIndex={this.props.zIndex.views}
                         width={100-this.state.left_width-this.state.right_width}
+                        grid_mode={this.state.grid_mode}
+                        cancel_splitting_section_grid_mode={() => this.swap_grid_mode(GridMode.default)}
                     />
                     <ViewsRight
                         zIndex={this.props.zIndex.views}
@@ -103,10 +113,13 @@ class ProjectGrid extends Component {
                         enabled={this.props.enabled_components.project_display()}
                         project_metadata={this.props.project_metadata}
                         project_geometry={this.props.project_geometry}
+                        update_project_geometry={this.props.update_project_geometry}
                         display_state={this.props.display_state}
                         width={100-this.state.left_width-this.state.right_width}
                         background_image={this.props.display_state.background_image}
                         update_background_image={this.props.update_background_image}
+                        grid_mode={this.state.grid_mode}
+                        swap_grid_mode={(new_grid_mode) => this.swap_grid_mode(new_grid_mode)}
                     />
                     <MenuRight
                         zIndex={this.props.zIndex.menus}

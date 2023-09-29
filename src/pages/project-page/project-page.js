@@ -99,6 +99,13 @@ class ProjectPage extends Component {
         });
     }
 
+    update_project_geometry() {
+        console.log("project-page.js UPDATE GEO");
+        this.setState({
+            project_geometry: this.project.project_geometry
+        });
+    }
+
     render() {
         return (
         <div className="project-body">
@@ -116,6 +123,7 @@ class ProjectPage extends Component {
                 enabled_components={this.state.enabled_components}
                 project_metadata={this.state.project_metadata}
                 project_geometry={this.state.project_geometry}
+                update_project_geometry={() => this.update_project_geometry()}
                 display_state={this.state.display_state}
                 update_background_image={this.update_background_image}
             />

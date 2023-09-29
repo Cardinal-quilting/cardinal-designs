@@ -92,9 +92,11 @@ class ProjectDisplay extends Component {
                 parent_ref={this.ref}
                 project_metadata={this.props.project_metadata}
                 project_geometry={this.props.project_geometry}
+                update_project_geometry={this.props.update_project_geometry}
                 get_project_dimensions={this.project_dimensions}
-            >
-            </RecursivePiecing> : null}
+                grid_mode={this.props.grid_mode}
+                swap_grid_mode={(new_grid_mode) => this.props.swap_grid_mode(new_grid_mode)}
+            /> : null}
 
             {(this.props.display_state.background_image.display_image 
                 & this.props.display_state.background_image.file!=null 
