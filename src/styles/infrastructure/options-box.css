@@ -1,7 +1,0 @@
-@import 'styles/styles.css';
-
-.options-box {
-    border-radius: 0%;
-    border-width: 0.1vw;
-    border-color: var(--black-theme);
-}

@@ -1,7 +1,0 @@
-@import 'styles/styles.css';
-
-.column-border {
-    min-width: 0.25vw;
-    max-width: 0.25vw;
-    cursor: col-resize;
-}

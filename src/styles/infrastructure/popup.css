@@ -1,8 +1,0 @@
-@import 'styles/styles.css';
-
-.popup {
-    position: absolute;
-    min-width: 50vw;
-    background-color: var(--grey-background-color);
-    z-index: 1;
-}
