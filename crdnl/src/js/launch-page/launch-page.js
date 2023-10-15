@@ -9,6 +9,8 @@ import NavigationBar from "./navigation-bar";
 
 import PopUp from "js/infrastructure/pop-up";
 
+import Button from "js/infrastructure/button";
+
 import "css/styles.css";
 import "css/launch-page/launch-page.css"
 
@@ -67,7 +69,28 @@ class LaunchPage extends Component {
                     borderRadius: "1vmin"
                 }}/>
 
-                <p>Welcome to Cardinal Designs!</p>
+                <p style={{fontSize: "5vh"}}>Welcome to Cardinal Designs!</p>
+
+                <div>
+                    <Button 
+                    settings={this.state.settings} 
+                    margin_right="5vw"
+                    font_size="5vh"
+                    background_color={this.state.settings.accent_background_color}
+                    >
+                        New project
+                    </Button>
+                    <Button 
+                    settings={this.state.settings} 
+                    margin_left="5vw"
+                    font_size="5vh"
+                    background_color={this.state.settings.accent_background_color}
+                    >
+                        Load project
+                    </Button>
+                </div>
+
+                {/* the pop window to change the settings */}
                 {this.state.display_settings_form? 
                 <PopUp
                 settings={this.state.settings}

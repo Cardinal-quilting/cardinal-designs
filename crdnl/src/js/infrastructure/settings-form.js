@@ -34,7 +34,7 @@ class SettingsForm extends Component {
     }    
 
     render() {
-        const background_colors = ["background_color", "dark_background_color"] 
+        const background_colors = ["background_color", "dark_background_color", "accent_background_color"] 
         const font_colors = ["font_color", "greyed_out_font_color"];
 
         return ( 
