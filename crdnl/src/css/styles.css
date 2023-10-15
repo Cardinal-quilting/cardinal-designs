@@ -1,6 +1,8 @@
 :root {
+    --dark-background-color: #252525;
     --background-color: #4d4d4d;
 
+    --greyed-out-font-color: #969696;
     --font-color: #f0f0f0;
 }
 
