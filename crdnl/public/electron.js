@@ -7,12 +7,13 @@ require("dotenv").config();
 function createWindow() {
   // create the browser window.
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
     webPreferences: {
       nodeIntegration: true,
     },
   });
+
+  // take the full screen
+  win.maximize();
 
   // set the image for the MacOS dock
   if( process.platform=="darwin" ) {
@@ -24,7 +25,7 @@ function createWindow() {
   win.loadURL(`http://localhost:${process.env.PORT}`);
 
   // open the DevTools
-  if( process.env.SHOW_DEV_TOOLS==1 ) { win.webContents.openDevTools({ mode: "detach" }); }
+  if( process.env.SHOW_DEV_TOOLS==1 ) { win.webContents.openDevTools(/*{ mode: "detach" }*/); }
 }
 
 // this method will be called when Electron has finished

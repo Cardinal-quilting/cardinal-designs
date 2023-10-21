@@ -1,0 +1,7 @@
+@import "css/styles.css";
+
+.row {
+    border-style: none;
+    display: flex;
+    align-items: center;
+}

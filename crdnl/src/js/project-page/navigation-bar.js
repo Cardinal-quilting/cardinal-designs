@@ -33,7 +33,7 @@ class ProjectPageNavigationBar extends NavigationBar {
                     height: "3vh",
                     margin: "0.25vh 0.5vw 0.25vh 0.0vw", // top, right, bottom, left
                     opacity: (this.props.disabled? 0.1 : 1.0),
-                    borderRadius: "1vmin"
+                    borderRadius: "1vmin"                    
                 }}/>
                 <div
                 style={{

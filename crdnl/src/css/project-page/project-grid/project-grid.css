@@ -1,0 +1,6 @@
+@import "css/styles.css";
+
+.project-grid {
+    min-width: 100vw;
+    max-width: 100vw;
+}

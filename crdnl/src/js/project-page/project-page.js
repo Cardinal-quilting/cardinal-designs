@@ -4,6 +4,8 @@ import PopUp from "js/infrastructure/pop-up";
 
 import SettingsForm from "js/infrastructure/settings-form";
 
+import ProjectGrid from "./project-grid/project-grid";
+
 import Page from "js/page";
 
 import "css/project-page/project-page.css"
@@ -35,12 +37,16 @@ class ProjectPage extends Page {
                 toggle_display_settings_form={this.toggle_display_settings_form}
                 disabled={this.state.display_settings_form}
                 go_to_launch_page={this.props.go_to_launch_page}
-                />
+            />
             <div className="project-page"
             style={{
                 backgroundColor: background_color
             }}
             >
+                <ProjectGrid
+                    settings={this.props.settings}
+                />
+                <div>bottom</div>
                 { // the pop window to change the settings
                 this.state.display_settings_form? this.render_navigation_bar() : null 
                 }
