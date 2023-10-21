@@ -26,6 +26,8 @@ class ProjectPageNavigationBar extends NavigationBar {
             style={{
                 backgroundColor: this.props.background_color,
                 color: this.props.settings.font_color,
+                maxHeight: this.props.height,
+                minHeight: this.props.height
             }}
             >
                 <img src={logo} className="logo" alt="logo"

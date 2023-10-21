@@ -1,15 +1,15 @@
 import { Component } from "react";
 
+import "css/project-page/grids/row-border.css"
 
-import "css/project-page/project-grid/column-border.css"
-
-class ColumnBorder extends Component {
+class RowBorder extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            left_width: 15, // units are in vw
             dragging: false
-        }
+        };
 
         this.on_mouse_down = this.on_mouse_down.bind(this);
         this.on_mouse_move = this.on_mouse_move.bind(this);
@@ -32,8 +32,8 @@ class ColumnBorder extends Component {
 
         this.setState({
             dragging: true,
-            start_width: this.props.current_width,
-            start_page_x: event.clientX
+            start_height: this.props.current_height,
+            start_page_y: event.clientY
         });
 
         event.stopPropagation();
@@ -41,13 +41,15 @@ class ColumnBorder extends Component {
     }
 
     on_mouse_move(event) {
-        this.props.set_width(this.state.start_width + (this.props.side==="left"? -1.0 : 1.0)*100.0*(this.state.start_page_x-event.clientX)/window.innerWidth);
+        this.props.set_height(Math.max(6, this.state.start_height + 100.0*(this.state.start_page_y-event.clientY)/window.innerHeight));
 
         event.stopPropagation();
         event.preventDefault();
     }
 
     on_mouse_up(event) {
+        this.props.set_color(false);
+
         this.setState({
             dragging: false,
             start_width: undefined,
@@ -60,18 +62,18 @@ class ColumnBorder extends Component {
 
     render() {
         return (
-            <div className="column-border"
+            <div className="row-border"
+            style={{
+                backgroundColor: this.props.color
+            }}
             onMouseEnter={() => this.props.set_color(true)}
             onMouseLeave={() => this.props.set_color(false)}
             onMouseDown={this.on_mouse_down}
-            style={{
-                backgroundColor: this.props.color,
-            }}
             >
                 &nbsp;
             </div>
-        );
+        )
     }
 }
 
-export default ColumnBorder;
+export default RowBorder;

@@ -2,18 +2,26 @@ import { Component } from "react";
 
 import ColumnBorder from "./column-border";
 
-import "css/project-page/project-grid/row.css"
+import "css/project-page/grids/row.css"
 
 class Row extends Component {
     render() {
+        const height = String(this.props.height)+"vh";
+
         return ( 
-            <div className="row">
+            <div className="row"
+            style={{
+                minHeight: height,
+                maxHeight: height
+            }}
+            >
                 {this.props.children[0]}
                 <ColumnBorder
                 color={this.props.left_border_color}
                 set_color={this.props.set_left_border_color}
                 current_width={this.props.left_width}
                 set_width={this.props.set_left_width}
+                height={height}
                 side="left"
                 />
                 {this.props.children[1]}
@@ -22,6 +30,7 @@ class Row extends Component {
                 set_color={this.props.set_right_border_color}
                 current_width={this.props.right_width}
                 set_width={this.props.set_right_width}
+                height={height}
                 side="right"
                 />
                 {this.props.children[2]}

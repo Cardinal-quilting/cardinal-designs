@@ -1,0 +1,6 @@
+.row-border {
+    min-height: 0.4vh;
+    max-height: 0.4vh;
+    min-width: 100.0vw;
+    cursor: row-resize;
+}
