@@ -1,0 +1,6 @@
+@import "css/styles.css";
+
+.project-page-navigation-bar {
+    display: flex;
+    align-items: center;
+}

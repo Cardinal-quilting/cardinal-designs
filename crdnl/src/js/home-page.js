@@ -41,6 +41,7 @@ class HomePage extends Component {
             return (
                 <ProjectPage
                 settings={this.state.settings}
+                update_setting_element={this.update_setting_element}
                 go_to_launch_page={() => this.switch_page("launch page")}
                 />
             );

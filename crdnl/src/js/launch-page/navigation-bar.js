@@ -1,29 +1,19 @@
-import React, { Component } from "react";
+import NavigationBar from "js/infrastructure/navigation-bar";
 
-import Button from "js/infrastructure/button";
-
-class NavigationBar extends Component {
+class LaunchPageNavigationBar extends NavigationBar {
     render() { 
         return (
-            <div className="navigation-bar"
+            <div
             style={{
                 textAlign: "right",
                 backgroundColor: this.props.background_color,
                 color: this.props.settings.font_color
             }}
             >
-                {this.props.disabled? null :
-                <Button 
-                settings={this.props.settings}
-                on_click={this.props.toggle_display_settings_form}
-                font_color={this.props.settings.greyed_out_font_color}
-                disabled={this.props.disabled}
-                >
-                    Settings
-                </Button>}
+                {this.props.disabled? null : this.settings_button()}
             </div>
         );
     }
 }
 
-export default NavigationBar;
+export default LaunchPageNavigationBar;

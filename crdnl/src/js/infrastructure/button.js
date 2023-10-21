@@ -11,9 +11,7 @@ class Button extends Component {
     }
 
     render() {
-        return (
-            <button
-            style={{
+        const style = {
                 backgroundColor: this.props.background_color===undefined? this.props.settings.background_color : this.props.background_color,
                 color: this.props.font_color===undefined? this.props.settings.font_color : this.props.font_color,
                 cursor: this.props.disabled? "default" : "pointer",
@@ -24,7 +22,11 @@ class Button extends Component {
                 marginTop: this.props.margin_top,
                 marginBottom: this.props.margin_bottom,
                 fontSize: this.props.font_size
-            }}
+            }
+
+        return (
+            <button
+            style={style}
             disabled={this.props.disabled}
             onClick={this.props.on_click}
             >
