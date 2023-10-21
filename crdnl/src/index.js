@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import LaunchPage from "./js/launch-page/launch-page";
+import HomePage from "js/home-page";
 
 import "css/styles.css";
 import reportWebVitals from "./reportWebVitals";
@@ -12,7 +12,7 @@ function App() {
     <div>
       <Router>
         <Routes>
-          <Route path="/" element={<LaunchPage />}/>          
+        <Route path="/" element={<HomePage />}/> 
         </Routes>
       </Router>
     </div>
