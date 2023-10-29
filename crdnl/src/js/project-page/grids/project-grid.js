@@ -2,6 +2,8 @@ import Grid from "./grid";
 
 import Row from "./row";
 
+import ProjectDisplay from "./project-display";
+
 import "css/project-page/grids/row.css"
 
 class ProjectGrid extends Grid {
@@ -9,7 +11,7 @@ class ProjectGrid extends Grid {
         super(props);
 
         this.state = Object.assign(this.state, {
-            bottom_height: this.props.height-5, // units are in vh  
+            bottom_height: this.props.height-5 // units are in vh 
         });
     }
 
@@ -17,6 +19,7 @@ class ProjectGrid extends Grid {
         // compute the widths of each column
         const [left_width, center_width, right_width] = this.column_widths();
         const height = String(this.props.height)+"vh"
+        const display_height = this.props.height-this.props.views_height
 
         return ( 
             <div className="project-grid"
@@ -30,11 +33,11 @@ class ProjectGrid extends Grid {
                 right_border_color={this.state.right_border_color}
                 set_left_border_color={this.set_left_border_color}
                 set_right_border_color={this.set_right_border_color}
-                left_width={this.state.left_width}
-                right_width={this.state.right_width}
-                set_left_width={this.set_left_width}
-                set_right_width={this.set_right_width}
-                height={this.props.top_height}                
+                left_width={this.props.left_width}
+                right_width={this.props.right_width}
+                set_left_width={this.props.set_left_width}
+                set_right_width={this.props.set_right_width}
+                height={this.props.views_height}                
                 >
                 <div 
                 style={{
@@ -66,11 +69,11 @@ class ProjectGrid extends Grid {
                 right_border_color={this.state.right_border_color}   
                 set_left_border_color={this.set_left_border_color}
                 set_right_border_color={this.set_right_border_color}
-                left_width={this.state.left_width}
-                right_width={this.state.right_width}
-                set_left_width={this.set_left_width}
-                set_right_width={this.set_right_width}
-                height={this.props.height-this.props.top_height} 
+                left_width={this.props.left_width}
+                right_width={this.props.right_width}
+                set_left_width={this.props.set_left_width}
+                set_right_width={this.props.set_right_width}
+                height={display_height} 
                 >
                 <div 
                 style={{
@@ -80,14 +83,11 @@ class ProjectGrid extends Grid {
                 >
                     left menu
                 </div>
-                <div
-                style={{ 
-                    minWidth: center_width, 
-                    maxWidth: center_width,
-                }}
-                >
-                    PROJECT
-                </div>
+                <ProjectDisplay 
+                settings={this.props.settings}
+                width={center_width}
+                height={String(display_height)+"vh"}
+                />
                 <div
                 style={{ 
                     minWidth: right_width, 
