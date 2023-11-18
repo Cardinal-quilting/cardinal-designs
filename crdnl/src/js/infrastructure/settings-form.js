@@ -50,8 +50,7 @@ class SettingsForm extends Component {
         const font_size = String(this.props.settings.font_size)+"vmin";
 
         return (
-          <div key={name}
-          >
+          <div key={name}>
             <input
             type="number"
             step="0.01"

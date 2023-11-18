@@ -5,6 +5,7 @@ class BackgroundImageOptionsBox extends OptionsBox {
         super(props);
 
         this.update_zoom = this.update_zoom.bind(this);
+        this.update_zoom_max = this.update_zoom_max.bind(this);
     }
 
     update_zoom(event) {
@@ -38,14 +39,53 @@ class BackgroundImageOptionsBox extends OptionsBox {
                 style={{
                     width: String(0.9*this.props.width)+"vw"
                 }}
-                />
-            
+            />
+            </div>
+        );
+    }
+
+    update_zoom_max(event) {
+        this.props.project_settings.max_background_image_zoom = event.target.value
+        this.props.set_project_settings(this.props.project_settings);
+    }
+
+    zoom_max() {
+        const font_size = String(this.props.settings.small_font_size)+"vmin";
+
+        return (
+            <div name="zoom_max"
+            style={{
+                color: this.props.settings.font_color,
+                accentColor: this.props.settings.accent_background_color,
+                fontSize: font_size,
+            }}
+            >
+                <input
+                type="number"
+                step="0.01"
+                min="0.0"
+                value={this.props.project_settings.max_background_image_zoom}
+                onChange={this.update_zoom_max}
+                style={{
+                width: String(2*Number(this.props.settings.font_size))+"vmin",
+                fontSize: font_size,
+                color: this.props.settings.font_color,
+                backgroundColor: this.props.settings.background_color,
+                }}
+            />
+            <label htmlFor={"zoom_max"}
+                style={{
+                    fontSize: font_size
+                }}
+            >
+                Zoom max
+            </label>
             </div>
         );
     }
 
     content() {
-        return [this.zoom()];
+        return [this.zoom(), this.zoom_max()];
     }
 
 }
