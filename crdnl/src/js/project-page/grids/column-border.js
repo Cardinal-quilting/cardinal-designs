@@ -40,7 +40,10 @@ class ColumnBorder extends Component {
     }
 
     on_mouse_move(event) {
-        this.props.set_width(this.state.start_width + (this.props.side==="left"? -1.0 : 1.0)*100.0*(this.state.start_page_x-event.clientX)/window.innerWidth);
+        var val = this.state.start_width + (this.props.side==="left"? -1.0 : 1.0)*100.0*(this.state.start_page_x-event.clientX)/window.innerWidth;
+        val = Math.max(0.5, val);
+        val = Math.min(49.5, val);
+        this.props.set_width(val);
 
         event.stopPropagation();
         event.preventDefault();

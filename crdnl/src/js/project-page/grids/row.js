@@ -12,7 +12,7 @@ class Row extends Component {
             <div className="row"
             style={{
                 minHeight: height,
-                maxHeight: height
+                maxHeight: height,
             }}
             >
                 {this.props.children[0]}

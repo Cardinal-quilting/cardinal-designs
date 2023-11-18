@@ -40,17 +40,17 @@ class LaunchPage extends Page {
         <Button 
         settings={this.props.settings} 
         margin_right="5vw"
-        font_size="5vh"
+        font_size={String(this.props.settings.large_font_size)+"vmin"}
         background_color={this.props.settings.accent_background_color}
         disabled={this.state.display_settings_form}
-        on_click={this.props.start_new_project}
+        on_click={() => this.props.start_new_project()}
         >
             New project
         </Button>
         <Button 
         settings={this.props.settings} 
         margin_left="5vw"
-        font_size="5vh"
+        font_size={String(this.props.settings.large_font_size)+"vmin"}
         background_color={this.props.settings.accent_background_color}
         disabled={this.state.display_settings_form}
         >
@@ -87,7 +87,7 @@ class LaunchPage extends Page {
                     borderRadius: "1vmin"
                 }}/>
 
-                <p style={{fontSize: "5vh"}}>Welcome to Cardinal Designs!</p>
+                <p style={{fontSize: String(this.props.settings.large_font_size)+"vmin"}}>Welcome to Cardinal Designs!</p>
                 
                 {
                 this.state.display_settings_form? 

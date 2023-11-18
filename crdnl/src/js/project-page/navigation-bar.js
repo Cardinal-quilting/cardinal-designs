@@ -13,6 +13,7 @@ class ProjectPageNavigationBar extends NavigationBar {
                 settings={this.props.settings}
                 on_click={this.props.go_to_launch_page}
                 font_color={this.props.settings.font_color}
+                font_size={String(this.props.settings.font_size)+"vh"}
                 disabled={this.props.disabled}
                 >
                     Home
@@ -25,14 +26,12 @@ class ProjectPageNavigationBar extends NavigationBar {
             <div className="project-page-navigation-bar"
             style={{
                 backgroundColor: this.props.background_color,
-                color: this.props.settings.font_color,
-                maxHeight: this.props.height,
-                minHeight: this.props.height
+                color: this.props.settings.font_color
             }}
             >
                 <img src={logo} className="logo" alt="logo"
                 style={{
-                    height: "3vh",
+                    height: String(this.props.settings.font_size)+"vh",
                     margin: "0.25vh 0.5vw 0.25vh 0.0vw", // top, right, bottom, left
                     opacity: (this.props.disabled? 0.1 : 1.0),
                     borderRadius: "1vmin"                    

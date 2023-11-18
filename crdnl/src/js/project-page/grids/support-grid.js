@@ -6,8 +6,8 @@ import MiniMap from "./mini-map";
 
 class SupportGrid extends Grid {
     render() {
-        // compute the widths of each column
-        const [left_width, center_width, right_width] = this.column_widths();
+        const center_width = String(this.center_width()) + "vw";
+        const right_width = String(this.props.right_width) + "vw";
 
         const project_display_factor = Math.min(this.props.left_width/this.props.project_display_width, this.props.height/this.props.project_display_height);
 
@@ -25,7 +25,9 @@ class SupportGrid extends Grid {
             >
             <MiniMap
             settings={this.props.settings}
-            width={left_width}
+            project_info={this.props.project_info}
+            project_settings={this.props.project_settings}
+            width={this.props.left_width}
             height={String(this.props.height)+"vh"}
             project_display_factor={project_display_factor}
             />

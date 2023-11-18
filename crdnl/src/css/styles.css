@@ -9,6 +9,10 @@
 
     /* this matches the red in the cardinal logo */
     --accent-color: #c41a21;
+
+    --small-font-size: 1;
+    --font-size: 2;
+    --large-font-size: 5;
 }
 
 body {

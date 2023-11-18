@@ -26,13 +26,8 @@ class Grid extends Component {
         })
     }
 
-    column_widths() {
-        const left_width = String(this.props.left_width) + "vw";
-        // subtract an extra 0.5 to account for the column borders in each row
-        const center_width = String(99.5-this.props.left_width-this.props.right_width) + "vw";
-        const right_width = String(this.props.right_width) + "vw";
-
-        return [left_width, center_width, right_width];
+    center_width() {
+        return 99.5-this.props.left_width-this.props.right_width;
     }
 }
 

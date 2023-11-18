@@ -9,12 +9,18 @@ import ProjectPage from "./project-page/project-page";
 const PageNames = { launch_page: "launch page",
                     project_page: "project page" }
 
+// enum to decide how to launch a new project 
+const ProjectStatus = { unknown: "unknown", // no user input, unknown launch status
+                       launch_new_project: "new project", // start a new project
+                       laod_project: "load project" } // launch an existing project
+
 class HomePage extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             settings: new Settings(),
+            project_status: "unknown",
             page: "launch page"
         }
 
@@ -30,9 +36,10 @@ class HomePage extends Component {
         });
     }
 
-    switch_page(page_name) {
+    switch_page(page_name, project_status="unknown") {
         this.setState({
-            page: page_name
+            page: page_name,
+            project_status: project_status
         });
     }
 
@@ -43,6 +50,7 @@ class HomePage extends Component {
                 settings={this.state.settings}
                 update_setting_element={this.update_setting_element}
                 go_to_launch_page={() => this.switch_page("launch page")}
+                project_status={this.state.project_status}
                 />
             );
         } else {
@@ -50,7 +58,7 @@ class HomePage extends Component {
                 <LaunchPage 
                 settings={this.state.settings}
                 update_setting_element={this.update_setting_element}
-                start_new_project={() => this.switch_page("project page")}
+                start_new_project={() => this.switch_page("project page", "new project")}
                 />
             );
         }

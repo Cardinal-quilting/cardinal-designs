@@ -2,7 +2,9 @@ import Grid from "./grid";
 
 import Row from "./row";
 
-import ProjectDisplay from "./project-display";
+import MainDisplay from "./main-display";
+
+import LeftMenu from "./left-menu";
 
 import "css/project-page/grids/row.css"
 
@@ -11,13 +13,17 @@ class ProjectGrid extends Grid {
         super(props);
 
         this.state = Object.assign(this.state, {
-            bottom_height: this.props.height-5 // units are in vh 
+            bottom_height: this.props.height-5, // units are in vh 
         });
     }
 
     render() {
         // compute the widths of each column
-        const [left_width, center_width, right_width] = this.column_widths();
+        const left_width = String(this.props.left_width) + "vw";
+        const numerical_center_width = this.center_width()
+        const center_width = String(numerical_center_width) + "vw";
+        const right_width = String(this.props.right_width) + "vw";
+
         const height = String(this.props.height)+"vh"
         const display_height = this.props.height-this.props.views_height
 
@@ -75,18 +81,18 @@ class ProjectGrid extends Grid {
                 set_right_width={this.props.set_right_width}
                 height={display_height} 
                 >
-                <div 
-                style={{
-                    minWidth: left_width, 
-                    maxWidth: left_width,
-                }}
-                >
-                    left menu
-                </div>
-                <ProjectDisplay 
+                <LeftMenu 
                 settings={this.props.settings}
-                width={center_width}
+                width={this.props.left_width}
+                project_settings={this.props.project_settings}
+                set_project_settings={this.props.set_project_settings}
+                />
+                <MainDisplay 
+                settings={this.props.settings}
+                width={numerical_center_width}
                 height={String(display_height)+"vh"}
+                project_info={this.props.project_info}
+                project_settings={this.props.project_settings}
                 />
                 <div
                 style={{ 

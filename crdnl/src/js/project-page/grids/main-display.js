@@ -2,9 +2,9 @@ import React, { Component } from "react";
 
 import Project from "../main-displays/project/project";
 
-import "css/project-page/grids/mini-map.css"
+import "css/project-page/grids/main-display.css"
 
-class MiniMap extends Component {
+class MainDisplay extends Component {
     constructor(props) {
         super(props);
 
@@ -28,27 +28,26 @@ class MiniMap extends Component {
         const width = String(this.props.width) + "vw";
 
         return (
-            <div className="mini-map"
+            <div className="main-display"
             ref={this.ref}
-            style={{
+            style={{ 
                 minWidth: width, 
                 maxWidth: width,
                 minHeight: this.props.height, 
                 maxHeight: this.props.height,
                 backgroundColor: this.props.settings.project_display_background_color,
-                overflow: "hidden"
+                overflow: "hidden",
             }}
             >
                 {this.state.mounted? 
-                <Project 
-                    project_info={this.props.project_info}
-                    project_settings={this.props.project_settings}
-                    display_scale_factor={this.props.project_display_factor} 
-                    display_dimensions = {this.display_dimensions}
+                <Project
+                display_dimensions = {this.display_dimensions}
+                project_info = {this.props.project_info}
+                project_settings={this.props.project_settings}
                 /> : null}
-            </div> 
+            </div>
         );
     }
 }
 
-export default MiniMap;
+export default MainDisplay;

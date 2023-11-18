@@ -8,6 +8,10 @@ class Settings {
     
     font_color = getComputedStyle(document.documentElement).getPropertyValue("--font-color");
     greyed_out_font_color = getComputedStyle(document.documentElement).getPropertyValue("--greyed-out-font-color");
+
+    small_font_size = getComputedStyle(document.documentElement).getPropertyValue("--small-font-size");
+    font_size = getComputedStyle(document.documentElement).getPropertyValue("--font-size");
+    large_font_size = getComputedStyle(document.documentElement).getPropertyValue("--large-font-size");
 }
 
 export default Settings;
