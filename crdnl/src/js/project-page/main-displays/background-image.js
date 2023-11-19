@@ -99,6 +99,7 @@ class BackgroundImage extends Component {
             >
                 <img src={logo} className="logo" alt="logo"
                 style={{
+                    opacity: this.props.project_settings.background_image_opacity,
                     position: "abolute",
                     transform: `translate(${this.props.project_settings.background_image_translation.x}px, ${this.props.project_settings.background_image_translation.y}px) scale(${this.props.project_settings.background_image_zoom})`,                
                     height: height_px

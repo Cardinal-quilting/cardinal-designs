@@ -1,5 +1,6 @@
 export class ProjectSettings {
     background_image_zoom = 1.0
+    background_image_opacity = 0.5
     background_image_max_zoom = 5.0
     background_image_wheel_sensitivity = 0.00025
     background_image_translation = { x: 0, y: 0 } // units are px

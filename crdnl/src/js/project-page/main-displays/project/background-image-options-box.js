@@ -15,6 +15,7 @@ class BackgroundImageOptionsBox extends OptionsBox {
         this.toggle_disable_movment = this.toggle_disable_movment.bind(this);
         this.display_image = this.display_image.bind(this);
         this.toggle_display_image = this.toggle_display_image.bind(this);
+        this.update_opacity = this.update_opacity.bind(this);
     }
 
     update_zoom(value) {
@@ -216,6 +217,41 @@ class BackgroundImageOptionsBox extends OptionsBox {
         this.props.set_project_settings(this.props.project_settings);
     }
 
+    update_opacity(value) {
+        this.props.project_settings.background_image_opacity = parseFloat(value);
+        this.props.set_project_settings(this.props.project_settings);
+    }
+
+    opacity() {
+        const font_size = String(this.props.settings.small_font_size)+"vmin";
+
+        return (
+            <div
+            key="opacity"
+            style={{
+                color: this.props.settings.font_color,
+                accentColor: this.props.settings.accent_background_color,
+                fontSize: font_size,
+            }}
+            >   
+            <div>
+                Opacity:
+                </div>
+                <input 
+                type="range"
+                min={0.0}
+                max={1.0}
+                step={0.0001}
+                value={this.props.project_settings.background_image_opacity}
+                onChange={(event) => this.update_opacity(event.target.value)}
+                style={{
+                    width: String(0.9*this.props.width)+"vw"
+                }}
+            />
+            </div>
+        );
+    }
+
     display_image() {
         const font_size = String(this.props.settings.small_font_size)+"vmin";
 
@@ -247,10 +283,12 @@ class BackgroundImageOptionsBox extends OptionsBox {
         return [
             this.display_image(), 
             this.line("line1"), 
-            this.disabled(), 
+            this.opacity(),
             this.line("line2"), 
-            this.zoom(), this.zoom_max(), this.zoom_sensitivity(), this.restore_zoom(), 
+            this.disabled(), 
             this.line("line3"), 
+            this.zoom(), this.zoom_max(), this.zoom_sensitivity(), this.restore_zoom(), 
+            this.line("line4"), 
             this.defaults()
         ];
     }
