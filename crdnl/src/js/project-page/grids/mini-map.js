@@ -45,6 +45,7 @@ class MiniMap extends Component {
                     project_settings={this.props.project_settings}
                     display_scale_factor={this.props.project_display_factor} 
                     display_dimensions = {this.display_dimensions}
+                    is_minimap={true}
                 /> : null}
             </div> 
         );

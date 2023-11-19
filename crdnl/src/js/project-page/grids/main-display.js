@@ -44,6 +44,7 @@ class MainDisplay extends Component {
                 display_dimensions = {this.display_dimensions}
                 project_info = {this.props.project_info}
                 project_settings={this.props.project_settings}
+                set_project_settings={this.props.set_project_settings}
                 /> : null}
             </div>
         );

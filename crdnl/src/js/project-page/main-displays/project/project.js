@@ -1,10 +1,17 @@
 import { Component } from "react";
 
-import logo from "logos/CardinalQuiltsSmallLogo.png"
+import BackgroundImage from "../background-image";
 
 class Project extends Component {
+    constructor(props) {
+        super(props);
+
+        this.project_dimensions = this.project_dimensions.bind(this);
+    }
+
     static defaultProps = {
         display_scale_factor: 1.0,
+        is_minimap: false
     }
 
     project_dimensions() {
@@ -42,12 +49,13 @@ class Project extends Component {
         }}
         >
 
-            <img src={logo} className="logo" alt="logo"
-                style={{
-                    position: "abolute",
-                    transform: `translate(${0}px, 0%) scale(${this.props.project_settings.background_image_zoom})`,                
-                    height: height_px
-            }}/>
+        {this.props.project_settings.background_image_display? 
+        <BackgroundImage
+            project_dimensions = {this.project_dimensions}
+            project_settings = {this.props.project_settings}
+            set_project_settings={this.props.set_project_settings}
+            is_minimap = {this.props.is_minimap}
+        /> : null }
         </div>
         );
     }
