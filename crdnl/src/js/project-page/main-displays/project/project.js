@@ -1,6 +1,8 @@
 import { Component } from "react";
 
-import BackgroundImage from "../background-image";
+import RecursivePiecing from "./recursive-piecing";
+
+import BackgroundImage from "./background-image";
 
 class Project extends Component {
     constructor(props) {
@@ -38,6 +40,7 @@ class Project extends Component {
             justifyContent: "center", 
             alignItems: "center", 
             display: "grid",
+            position: "relative",
             borderStyle: "solid",
             borderColor: "black",
             borderRadius: "0.5vmin",
@@ -48,6 +51,10 @@ class Project extends Component {
             transform: `scale(${this.props.display_scale_factor})`,
         }}
         >
+
+        <RecursivePiecing
+            project_dimensions = {this.project_dimensions}
+        />
 
         {this.props.project_settings.background_image_display? 
         <BackgroundImage
