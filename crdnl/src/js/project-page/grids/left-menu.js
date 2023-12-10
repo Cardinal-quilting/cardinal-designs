@@ -8,7 +8,6 @@ class LeftMenu extends Component {
         return ( 
             <div
             style={{
-                paddingLeft: "0.25vw",
                 boxSizing: "border-box",
                 minWidth: width, 
                 maxWidth: width,

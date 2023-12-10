@@ -21,7 +21,7 @@ class Button extends Component {
                 marginRight: this.props.margin_right,
                 marginTop: this.props.margin_top,
                 marginBottom: this.props.margin_bottom,
-                fontSize: this.props.font_size
+                fontSize: this.props.font_size===undefined? String(this.props.settings.font_size)+"vmin" : this.props.font_size
             }
 
         return (

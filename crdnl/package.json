@@ -13,7 +13,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "launch": "concurrently -k \"npm run server\" \"npm run dev\"",
     "dev": "concurrently -k \"BROWSER=none npm start\" \"npm:electron\"",
+    "server": "export port=$(grep BACKEND .env | cut -d '=' -f2) && cd ../crdnl-backend/ && ./run-server $port",
     "electron": "wait-on tcp:$(grep PORT .env | cut -d '=' -f2) && electron public/electron.js",
     "start": "react-scripts start",
     "build": "react-scripts build",

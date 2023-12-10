@@ -64,7 +64,11 @@ class RowBorder extends Component {
         return (
             <div className="row-border"
             style={{
-                backgroundColor: this.props.color
+                backgroundColor: this.props.color,
+                minHeight: "0.25vh",
+                maxHeight: "0.25vh",
+                minWidth: "100vw",
+                maxWidth: "100vw"
             }}
             onMouseEnter={() => this.props.set_color(true)}
             onMouseLeave={() => this.props.set_color(false)}

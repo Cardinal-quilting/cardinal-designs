@@ -12,9 +12,6 @@ function createWindow() {
     },
   });
 
-  // take the full screen
-  win.maximize();
-
   // set the image for the MacOS dock
   if( process.platform=="darwin" ) {
     console.log(__dirname);
@@ -22,7 +19,10 @@ function createWindow() {
   }
 
   // and load the index.html of the app.
-  win.loadURL(`http://localhost:${process.env.PORT}`);
+  win.loadURL(`http://localhost:${process.env.PORT}?backend_port=${process.env.BACKEND}`);
+
+  // take the full screen
+  win.maximize();
 
   // open the DevTools
   if( process.env.SHOW_DEV_TOOLS==1 ) { win.webContents.openDevTools(/*{ mode: "detach" }*/); }

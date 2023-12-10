@@ -71,10 +71,11 @@ class ColumnBorder extends Component {
             style={{
                 backgroundColor: this.props.color,
                 minHeight: this.props.height,
-                maxHeight: this.props.height
+                maxHeight: this.props.height,
+                minWidth: "0.25vw",
+                maxWidth: "0.25vw",
             }}
             >
-                &nbsp;
             </div>
         );
     }

@@ -9,8 +9,6 @@ class SupportGrid extends Grid {
         const center_width = String(this.center_width()) + "vw";
         const right_width = String(this.props.right_width) + "vw";
 
-        const project_display_factor = Math.min(this.props.left_width/this.props.project_display_width, this.props.height/this.props.project_display_height);
-
         return (
             <Row
             left_border_color={this.state.left_border_color}
@@ -25,11 +23,11 @@ class SupportGrid extends Grid {
             >
             <MiniMap
             settings={this.props.settings}
-            project_info={this.props.project_info}
             project_settings={this.props.project_settings}
             width={this.props.left_width}
             height={String(this.props.height)+"vh"}
-            project_display_factor={project_display_factor}
+            project_display_width={this.props.project_display_width}
+            project_display_height={this.props.project_display_height}
             />
             <div
             style={{ 

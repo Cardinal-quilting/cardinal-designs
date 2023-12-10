@@ -91,7 +91,6 @@ class ProjectGrid extends Grid {
                 settings={this.props.settings}
                 width={numerical_center_width}
                 height={String(display_height)+"vh"}
-                project_info={this.props.project_info}
                 project_settings={this.props.project_settings}
                 set_project_settings={this.props.set_project_settings}
                 />

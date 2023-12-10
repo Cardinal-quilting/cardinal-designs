@@ -2,21 +2,33 @@ import NavigationBar from "js/infrastructure/navigation-bar";
 
 import Button from "js/infrastructure/button";
 
-import logo from "logos/CardinalQuiltsSmallLogo.png"
-
 import "css/project-page/navigation-bar.css"
 
 class ProjectPageNavigationBar extends NavigationBar {
-    home_button() {
+    save_button() {
         return (
             <Button 
                 settings={this.props.settings}
-                on_click={this.props.go_to_launch_page}
+                on_click={this.props.save_project}
                 font_color={this.props.settings.font_color}
                 font_size={String(this.props.settings.font_size)+"vh"}
                 disabled={this.props.disabled}
                 >
-                    Home
+                    Save
+            </Button>
+        );
+    }
+
+    save_as_button() {
+        return (
+            <Button 
+                settings={this.props.settings}
+                on_click={this.props.save_project_as}
+                font_color={this.props.settings.font_color}
+                font_size={String(this.props.settings.font_size)+"vh"}
+                disabled={this.props.disabled}
+                >
+                    Save As
             </Button>
         );
     }
@@ -29,13 +41,7 @@ class ProjectPageNavigationBar extends NavigationBar {
                 color: this.props.settings.font_color
             }}
             >
-                <img src={logo} className="logo" alt="logo"
-                style={{
-                    height: String(this.props.settings.font_size)+"vh",
-                    margin: "0.25vh 0.5vw 0.25vh 0.0vw", // top, right, bottom, left
-                    opacity: (this.props.disabled? 0.1 : 1.0),
-                    borderRadius: "1vmin"                    
-                }}/>
+                {this.render_logo()}
                 <div
                 style={{
                     textAlign: "left",
@@ -43,15 +49,10 @@ class ProjectPageNavigationBar extends NavigationBar {
                 }}
                 >
                     {this.props.disabled? null : this.home_button()}
+                    {this.props.disabled? null : this.save_as_button()}
+                    {this.props.disabled? null : this.save_button()}
                 </div>
-                <div
-                style={{
-                    textAlign: "right",
-                    width: "50%"
-                }}
-                >    
-                    {this.props.disabled? null : this.settings_button()}
-                </div>
+                {this.render_settings_button()}
             </div>
         );
     }

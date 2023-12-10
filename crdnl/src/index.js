@@ -8,18 +8,20 @@ import "css/styles.css";
 import reportWebVitals from "./reportWebVitals";
 
 function App() {
+  const url_params = new URLSearchParams(window.location.search);
+
   return (
     <div>
       <Router>
         <Routes>
-        <Route path="/" element={<HomePage />}/> 
+        <Route path="/" element={<HomePage backend_port={url_params.get("backend_port")}/>}/> 
         </Routes>
       </Router>
     </div>
   );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <App />

@@ -56,11 +56,13 @@ class BackgroundImage extends Component {
     }
 
     mouse_move(event) {
+        const [height, width] = this.props.project_dimensions();
+
         var xmove = event.screenX - this.state.start_move.screen_x;
         var ymove = event.screenY - this.state.start_move.screen_y;
 
-        this.props.project_settings.background_image_translation.x = this.state.start_move.image_x + xmove;
-        this.props.project_settings.background_image_translation.y = this.state.start_move.image_y + ymove;
+        this.props.project_settings.background_image_translation.x = this.state.start_move.image_x + 100.0*xmove/window.innerWidth/width;
+        this.props.project_settings.background_image_translation.y = this.state.start_move.image_y + 100.0*ymove/window.innerHeight/height;
 
         this.props.set_project_settings(this.props.project_settings);
 
@@ -88,23 +90,23 @@ class BackgroundImage extends Component {
     }
 
     render() { 
-        const [height, ] = this.props.project_dimensions();
-        const height_px = String(height) + "px";
-        
+        const [height, width] = this.props.project_dimensions();
+        const height_px = String(height) + "px", width_px = String(width) + "px";
+
         return (
             <div
                 onMouseEnter={this.mouse_enter}
                 onMouseLeave={this.mouse_leave}
-                onMouseDown={this.mouse_down}
-                style={{
-                    position: "absolute"
+                onMouseDown={this.mouse_down}                
+                style={{                    
+                    transform: `translate(${width*this.props.project_settings.background_image_translation.x}vw, ${height*this.props.project_settings.background_image_translation.y}vh) scale(${this.props.project_settings.background_image_zoom})`, 
+                    height: height_px,
+                    width: width_px
                 }}
             >
                 <img src={logo} className="logo" alt="logo"
                 style={{
                     opacity: this.props.project_settings.background_image_opacity,
-                    position: "abolute",
-                    transform: `translate(${this.props.project_settings.background_image_translation.x}px, ${this.props.project_settings.background_image_translation.y}px) scale(${this.props.project_settings.background_image_zoom})`,                
                     height: height_px
             }}/>
             </div>

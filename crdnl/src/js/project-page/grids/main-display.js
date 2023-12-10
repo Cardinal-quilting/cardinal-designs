@@ -42,9 +42,9 @@ class MainDisplay extends Component {
                 {this.state.mounted? 
                 <Project
                 display_dimensions = {this.display_dimensions}
-                project_info = {this.props.project_info}
                 project_settings={this.props.project_settings}
                 set_project_settings={this.props.set_project_settings}
+                display_scale_factor = {0.96}
                 /> : null}
             </div>
         );

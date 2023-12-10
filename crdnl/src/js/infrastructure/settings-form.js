@@ -25,7 +25,7 @@ class SettingsForm extends Component {
                 type="color"
                 name={name}
                 value={this.props.settings[name]}
-                onChange={(event) => this.props.update_setting_element(name, event.target.value)}
+                onChange={(event) => this.props.update_settings_element(name, event.target.value)}
                 style={{
                     width: String(3*Number(this.props.settings.font_size))+"vmin",
                     backgroundColor: this.props.settings.background_color,
@@ -40,7 +40,7 @@ class SettingsForm extends Component {
                 <Button 
                 font_size={font_size}
                 settings={this.props.settings}
-                on_click={() => this.props.update_setting_element(name, this.state.default_settings[name])}
+                on_click={() => this.props.update_settings_element(name, this.state.default_settings[name])}
                 >Default</Button>
             </div>
         )
@@ -56,7 +56,7 @@ class SettingsForm extends Component {
             step="0.01"
             min="0.0"
             value={this.props.settings[name]}
-            onChange={(event) => this.props.update_setting_element(name, event.target.value)}
+            onChange={(event) => this.props.update_settings_element(name, event.target.value)}
             style={{
                 width: String(3*Number(this.props.settings.font_size))+"vmin",
                 fontSize: font_size,
@@ -72,7 +72,7 @@ class SettingsForm extends Component {
             <Button 
                 settings={this.props.settings}
                 font_size={font_size}
-                on_click={() => this.props.update_setting_element(name, this.state.default_settings[name])}
+                on_click={() => this.props.update_settings_element(name, this.state.default_settings[name])}
                 >Default
             </Button>
           </div>  

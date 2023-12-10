@@ -31,6 +31,9 @@ class MiniMap extends Component {
             <div className="mini-map"
             ref={this.ref}
             style={{
+                //justifyContent: "right", 
+                //alignItems: "right", 
+                //display: "flex",
                 minWidth: width, 
                 maxWidth: width,
                 minHeight: this.props.height, 
@@ -39,12 +42,11 @@ class MiniMap extends Component {
                 overflow: "hidden"
             }}
             >
-                {this.state.mounted? 
+                {this.state.mounted?
                 <Project 
-                    project_info={this.props.project_info}
                     project_settings={this.props.project_settings}
-                    display_scale_factor={this.props.project_display_factor} 
                     display_dimensions = {this.display_dimensions}
+                    display_scale_factor = {0.9}
                     is_minimap={true}
                 /> : null}
             </div> 

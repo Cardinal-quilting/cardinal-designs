@@ -30,7 +30,7 @@ class PopUp extends Component {
             ref={this.box}
             style={{
                 backgroundColor: this.props.background_color,
-                color: this.props.settings.font_color
+                color: this.props.settings.font_color,
             }}
             >
                 {this.props.children}

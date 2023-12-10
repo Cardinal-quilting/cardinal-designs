@@ -8,7 +8,7 @@ import PopUp from "js/infrastructure/pop-up";
 
 import Button from "js/infrastructure/button";
 
-import Page from "js/page";
+import Page from "js/infrastructure/page";
 
 import "css/launch-page/launch-page.css"
 
@@ -16,7 +16,7 @@ class LaunchPage extends Page {
     constructor(props) {
         super(props);
 
-        this.render_start_buttons = this.render_start_buttons.bind(this);
+        this.render_buttons = this.render_buttons.bind(this);
     }
 
     render_settings_form() {
@@ -28,15 +28,15 @@ class LaunchPage extends Page {
             >
                 <SettingsForm 
                 settings={this.props.settings}
-                update_setting_element={this.props.update_setting_element}
+                update_settings_element={this.props.update_settings_element}
                 />
             </PopUp>
         );
     }
 
-    render_start_buttons() {
+    render_buttons() {
         return (
-        <div>
+        <div key={this.props.key===undefined? "Button" : this.props.key}>
         <Button 
         settings={this.props.settings} 
         margin_right="5vw"
@@ -53,6 +53,7 @@ class LaunchPage extends Page {
         font_size={String(this.props.settings.large_font_size)+"vmin"}
         background_color={this.props.settings.accent_background_color}
         disabled={this.state.display_settings_form}
+        on_click={this.props.load_project}
         >
             Load project
         </Button>
@@ -93,8 +94,8 @@ class LaunchPage extends Page {
                 this.state.display_settings_form? 
                 // the pop window to change the settings
                 this.render_settings_form()
-                : // the start buttons (only display if we are not editting the settings)
-                this.render_start_buttons()
+                : // the start and load buttons (only display if we are not editting the settings)
+                this.render_buttons()
                 }
             </div>
         </div>
