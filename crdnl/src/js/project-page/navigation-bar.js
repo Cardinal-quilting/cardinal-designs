@@ -38,14 +38,18 @@ class ProjectPageNavigationBar extends NavigationBar {
             <div className="project-page-navigation-bar"
             style={{
                 backgroundColor: this.props.background_color,
-                color: this.props.settings.font_color
+                color: this.props.settings.font_color,
+                maxWidth: "100vw",
+                minWidth: "100vw",
+                overflowY: "scroll",
+                overflowX: "hidden"
             }}
             >
                 {this.render_logo()}
                 <div
                 style={{
                     textAlign: "left",
-                    width: "50%"
+                    width: "50vw"
                 }}
                 >
                     {this.props.disabled? null : this.home_button()}

@@ -21,6 +21,10 @@ class ProjectPage extends Page {
             project_grid_left_width: 10, // units are in vw
             support_grid_right_width: 15, // units are in vw
             support_grid_left_width: 15, // units are in vw
+
+            // use these to force the window to reload on resize
+            window_width: window.innerWidth,
+            window_height: window.innerHeight
         });
 
         this.set_grid_border_color = this.set_grid_border_color.bind(this);
@@ -30,6 +34,23 @@ class ProjectPage extends Page {
         this.set_support_grid_left_width = this.set_support_grid_left_width.bind(this);
         this.set_support_grid_right_width = this.set_support_grid_right_width.bind(this);
         this.save_project = this.save_project.bind(this);
+        this.handle_resize = this.handle_resize.bind(this);
+    }
+
+    componentDidMount() {
+        window.addEventListener("resize", this.handle_resize);  
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.handle_resize);
+    }
+
+    handle_resize() { 
+        // if the user resizes constantly this is pretty ineffient, but I expect it will be pretty rare
+        this.setState({
+            window_width: window.innerWidth,
+            window_height: window.innerHeight
+        }); 
     }
 
     set_project_grid_left_width(width) {
@@ -89,6 +110,8 @@ class ProjectPage extends Page {
                 maxWidth: "100vw",
                 //minHeight: "100vh",
                 //maxHeight: "100vh"
+                overflowY: "scroll",
+                overflowX: "hidden"
             }}
             >
             <ProjectPageNavigationBar
@@ -102,7 +125,10 @@ class ProjectPage extends Page {
             />
             <div className="project-page"
             style={{
-                backgroundColor: background_color
+                backgroundColor: background_color,
+                //maxWidth: "100vw",
+                //minWidth: "100vw",
+                //overflowY: "scroll"
             }}
             >
             { display_grids?

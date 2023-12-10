@@ -88,12 +88,10 @@ class HomePage extends Component {
         return await axios.post(`http://localhost:${this.props.backend_port}/save_project/`, this.state.project_settings).then(
             (value) => {
                 if( value.data.success ) {
-                    console.log("YES");
                     this.update_project_settings_element("project_id", value.data.project_id)
-                    return true;
+                    return { success: true, message: "success" };
                 } else {
-                    console.log("NO, do better");
-                    return false;
+                    return { success: false, message: value.data.message };
                 }
         });
     }

@@ -11,7 +11,7 @@ class SaveProjectAsPage extends Page {
         super(props);
 
         this.state = {
-            project_name: ""
+            project_name: "",
         }
 
         this.save_project_as = this.save_project_as.bind(this);
@@ -25,15 +25,14 @@ class SaveProjectAsPage extends Page {
         psettings["project_id"] = undefined
 
         this.props.set_project_settings(psettings);
-        this.props.save_project().then((success) => {
-            if( success ) { this.props.return_to_project(); }
-            console.log("success:", success)
+        this.props.save_project().then(status => {
+            status.success? this.props.return_to_project() : this.setState({ message: status.message });
         });
-
-        //this.props.return_to_project();
     }
     
     render_save_project_as() {
+        const font_size = String(this.props.settings.font_size)+"vmin";
+
         return (
             <PopUp
             settings={this.props.settings}
@@ -43,7 +42,7 @@ class SaveProjectAsPage extends Page {
                 <div key="project_name">
                 <label htmlFor="project_name"
                 style={{
-                    fontSize: String(this.props.settings.font_size)+"vmin",
+                    fontSize: font_size,
                     color: this.props.settings.font_color
                 }}
                 >Project name: </label>
@@ -52,12 +51,13 @@ class SaveProjectAsPage extends Page {
                     onChange={(event) => this.setState({project_name: event.target.value.trim()})}
                     style={{
                         width: "35vw",
-                        fontSize: String(this.props.settings.font_size)+"vmin",
+                        fontSize: font_size,
                         color: this.props.settings.font_color,
                         backgroundColor: this.props.settings.background_color,
                     }}
                 />
                 </div>
+                <p style={{ fontSize: font_size }}>{this.state.message}</p>
                 <Button
                         margin_top="1vh"
                         margin_right="1vw"

@@ -58,7 +58,7 @@ class LoadProjectPage extends Page {
                         maxWidth: "95vw",
                         display: "grid",
                         textAlign: "center",
-                        fontSize: String(this.props.settings.font_size)+"vmin",
+                        fontSize: String(this.props.settings.font_size)+"vh",
                         color: this.props.settings.font_color,
                     }}
                 >
@@ -98,7 +98,7 @@ class LoadProjectPage extends Page {
                     style={{
                         display: "grid",
                         textAlign: "center",
-                        fontSize: String(this.props.settings.font_size)+"vmin",
+                        fontSize: String(this.props.settings.font_size)+"vh",
                         color: this.props.settings.font_color,
                     }}
                 >
@@ -131,7 +131,7 @@ class LoadProjectPage extends Page {
                                 margin_left="1vw"
                                 background_color={selected? this.props.settings.accent_background_color : this.props.settings.background_color}
                                 settings={this.props.settings}
-                                font_size={this.props.settings.small_font_size}
+                                font_size={String(this.props.settings.font_size)+"vh"}
                                 on_click={() => {this.setState({ project: p });}}
                             >
                                 {p.project_name}

@@ -43,7 +43,7 @@ class SaveProjectView(APIView):
 
         # a project with this name already exists, return an error
         if len(existing_project)>0:
-            return Response({ "success": False }) 
+            return Response({ "success": False, "message": f"""Project "{existing_project[0].project_name}" already exists.""" }) 
 
         # save the project to the database
         serializer = ProjectSerializer(data=request.data) 

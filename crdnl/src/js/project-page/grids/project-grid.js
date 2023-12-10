@@ -6,6 +6,8 @@ import MainDisplay from "./main-display";
 
 import LeftMenu from "./left-menu";
 
+import ProjectNameDisplay from "./project-name-display";
+
 import "css/project-page/grids/row.css"
 
 class ProjectGrid extends Grid {
@@ -31,7 +33,9 @@ class ProjectGrid extends Grid {
             <div className="project-grid"
             style={{
                 minHeight: height,
-                maxHeight: height
+                maxHeight: height,
+                maxWidth: "100vw",
+                minWidth: "100vw",
             }}
             >
                 <Row
@@ -45,14 +49,12 @@ class ProjectGrid extends Grid {
                 set_right_width={this.props.set_right_width}
                 height={this.props.views_height}                
                 >
-                <div 
-                style={{
-                    minWidth: left_width, 
-                    maxWidth: left_width,
-                }}
-                >
-                    left views
-                </div>
+                <ProjectNameDisplay
+                settings={this.props.settings}
+                width={left_width}
+                height={String(this.props.views_height)+"vh"}
+                project_name={this.props.project_settings.project_name}
+                />
                 <div
                 style={{ 
                     minWidth: center_width, 
