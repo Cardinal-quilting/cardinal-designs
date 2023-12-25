@@ -2,17 +2,16 @@ import { Component } from "react";
 
 import ColumnBorder from "./column-border";
 
-import "css/project-page/grids/row.css"
-
 class Row extends Component {
     render() {
         const height = String(this.props.height)+"vh";
 
         return ( 
-            <div className="row"
+            <div
             style={{
                 minHeight: height,
                 maxHeight: height,
+                display: "flex",
             }}
             >
                 {this.props.children[0]}

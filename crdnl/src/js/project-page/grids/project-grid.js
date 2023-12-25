@@ -8,8 +8,6 @@ import LeftMenu from "./left-menu";
 
 import ProjectNameDisplay from "./project-name-display";
 
-import "css/project-page/grids/row.css"
-
 class ProjectGrid extends Grid {
     constructor(props) {
         super(props);
@@ -34,8 +32,6 @@ class ProjectGrid extends Grid {
             style={{
                 minHeight: height,
                 maxHeight: height,
-                maxWidth: "100vw",
-                minWidth: "100vw",
             }}
             >
                 <Row
@@ -88,6 +84,8 @@ class ProjectGrid extends Grid {
                 width={this.props.left_width}
                 project_settings={this.props.project_settings}
                 set_project_settings={this.props.set_project_settings}
+                update_project_settings_element={this.props.update_project_settings_element}
+                initialize_recursive_piecing={this.props.initialize_recursive_piecing}
                 />
                 <MainDisplay 
                 settings={this.props.settings}
@@ -95,11 +93,12 @@ class ProjectGrid extends Grid {
                 height={String(display_height)+"vh"}
                 project_settings={this.props.project_settings}
                 set_project_settings={this.props.set_project_settings}
+                recursive_piecing_settings={this.props.recursive_piecing_settings}
                 />
                 <div
                 style={{ 
                     minWidth: right_width, 
-                    maxWidth: right_width 
+                    maxWidth: right_width, 
                 }}
                 >
                     right menu

@@ -9,6 +9,7 @@ import LoadProjectPage from "./launch-project-page/load-project-page";
 import SaveProjectAsPage from "./launch-project-page/save-project-as-page";
 
 import ProjectSettings from "./project-page/main-displays/project/project-settings";
+import RecursivePiecingSettings from "./project-page/main-displays/project/recursive-piecing/recursive-piecing-settings";
 
 import axios from "axios"; 
 
@@ -32,8 +33,16 @@ class HomePage extends Component {
         this.set_project_settings = this.set_project_settings.bind(this);
         this.update_project_settings_element = this.update_project_settings_element.bind(this);
         this.switch_page = this.switch_page.bind(this);
+
+        this.delete_project = this.delete_project.bind(this);
+
         this.load_project = this.load_project.bind(this);
+        this.load_project_settings = this.load_project_settings.bind(this);
+
         this.save_project = this.save_project.bind(this);
+        this.save_main_project = this.save_main_project.bind(this);
+        this.save_recursive_piecing = this.save_recursive_piecing.bind(this);
+        this.initialize_recursive_piecing = this.initialize_recursive_piecing.bind(this);
     }
 
     update_settings_element(element_name, value) {
@@ -57,16 +66,27 @@ class HomePage extends Component {
         this.set_project_settings(new_settings);
     }
 
+    initialize_recursive_piecing() {
+        var new_settings = this.state.project_settings;
+        new_settings["has_recursive_piecing"] = true;
+
+        this.setState({
+            project_settings: new_settings,
+            recursive_piecing_settings: new RecursivePiecingSettings()
+        });
+    }
+
     switch_page(page_name) {
         if( page_name===PageNames.launch_page ) {
             this.setState({
                 page: page_name,
-                project_settings: undefined
+                project_settings: undefined,
+                recursive_piecing_settings: undefined
             });
         } else if( page_name===PageNames.start_new_project_page ) {
             this.setState({
                 page: page_name,
-                project_settings: new ProjectSettings()
+                project_settings: new ProjectSettings(),
             });
         } else {
             this.setState({
@@ -75,24 +95,76 @@ class HomePage extends Component {
         }
     }
 
-    async load_project(project_id) {
-        await axios.get(`http://localhost:${this.props.backend_port}/load_project/${project_id}`).then((value) =>{
+    load_project(project_id) {
+        this.load_project_settings(project_id).then((result) => {
+            return result.project_settings.has_recursive_piecing? this.load_recursive_piecing(result) : result;
+        }).then((result) => {
             this.setState({
-                project_settings: value.data,
+                project_settings: result.project_settings,
+                recursive_piecing_settings: result.recursive_piecing_settings,
                 page: PageNames.project_page
             });
         });
     }
 
-    async save_project() {
+    async load_recursive_piecing(result) {
+        return await axios.get(`http://localhost:${this.props.backend_port}/load_recursive_piecing/${result.project_settings.project_id}`).then((value) => {
+            result["recursive_piecing_settings"] = value.data
+            return result
+        });
+    }
+
+    async load_project_settings(project_id) {
+        return await axios.get(`http://localhost:${this.props.backend_port}/load_project/${project_id}`).then((value) => {
+            return {project_settings: value.data};
+        });
+    }
+
+    async delete_project(project_id) {
+        return await axios.delete(`http://localhost:${this.props.backend_port}/delete_project/${project_id}`);
+    }
+
+    save_project() {
+        // this function returns a promise to save a component of the project
+        const save_project_component = (save_component, project_id=undefined) => {
+            return save_component(project_id).then((result) => {
+                // if saving was successful, return the result
+                if( result.success ) { return result; }
+                // if not successful, throw the result as an error 
+                throw result
+            });
+        }
+
+        return save_project_component(this.save_main_project).then((result) => { 
+            return this.state.project_settings.has_recursive_piecing? 
+                save_project_component(this.save_recursive_piecing, result.project_id) 
+                : result;
+        }).then((result) => {
+            // since we have saved everything with a new id, delete the old project id 
+            if( this.state.project_settings.project_id!==undefined ) {
+                this.delete_project(this.state.project_settings.project_id);
+            }
+
+            this.update_project_settings_element("project_id", result.project_id);
+            return result;
+        });
+    }
+
+    async save_main_project() {
         return await axios.post(`http://localhost:${this.props.backend_port}/save_project/`, this.state.project_settings).then(
             (value) => {
+                // if the project has been saved
                 if( value.data.success ) {
-                    this.update_project_settings_element("project_id", value.data.project_id)
-                    return { success: true, message: "success" };
-                } else {
-                    return { success: false, message: value.data.message };
+                    return { success: true, project_id: value.data.project_id };
                 }
+                return { success: false, message: value.data.message };
+        });
+    }
+
+    async save_recursive_piecing(project_id) {
+        return await axios.post(`http://localhost:${this.props.backend_port}/save_recursive_piecing/${project_id}`, this.state.recursive_piecing_settings).then(
+            (value) => {
+                return value.data;
         });
     }
 
@@ -104,12 +176,13 @@ class HomePage extends Component {
                 update_settings_element={this.update_settings_element}
                 go_to_launch_page={() => this.switch_page(PageNames.launch_page)}
                 update_project_status={(status) => this.switch_page(PageNames.project_page, status)}
-                backend_port={this.props.backend_port}
                 set_project_settings={this.set_project_settings}
                 update_project_settings_element={this.update_project_settings_element}
                 project_settings={this.state.project_settings}
                 save_project_as={() => this.switch_page(PageNames.save_project_as_page)}
                 save_project={this.save_project}
+                recursive_piecing_settings={this.state.recursive_piecing_settings}
+                initialize_recursive_piecing={this.initialize_recursive_piecing}
                 />
             );
         } else if( this.state.page===PageNames.start_new_project_page ) {
@@ -131,8 +204,9 @@ class HomePage extends Component {
                 go_to_launch_page={() => this.switch_page(PageNames.launch_page)}
                 update_project_settings_element={this.update_project_settings_element}
                 project_settings={this.state.project_settings}
-                backend_port={this.props.backend_port}
                 load_project={this.load_project}
+                delete_project={this.delete_project}
+                backend_port={this.props.backend_port}
                 />
             );
         } else if( this.state.page===PageNames.save_project_as_page ) {

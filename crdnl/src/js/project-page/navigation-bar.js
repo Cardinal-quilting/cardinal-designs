@@ -2,8 +2,6 @@ import NavigationBar from "js/infrastructure/navigation-bar";
 
 import Button from "js/infrastructure/button";
 
-import "css/project-page/navigation-bar.css"
-
 class ProjectPageNavigationBar extends NavigationBar {
     save_button() {
         return (
@@ -36,13 +34,17 @@ class ProjectPageNavigationBar extends NavigationBar {
     render() { 
         return (
             <div className="project-page-navigation-bar"
+            ref = {this.ref}
             style={{
+                display: "flex",
+                justifyContent: "center", 
+                alignItems: "center",
                 backgroundColor: this.props.background_color,
                 color: this.props.settings.font_color,
+                maxHeight: undefined,
+                minHeight: undefined,
                 maxWidth: "100vw",
                 minWidth: "100vw",
-                overflowY: "scroll",
-                overflowX: "hidden"
             }}
             >
                 {this.render_logo()}

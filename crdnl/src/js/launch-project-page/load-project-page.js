@@ -38,11 +38,12 @@ class LoadProjectPage extends Page {
     }
 
     async delete_project() {
-        await axios.delete(`http://localhost:${this.props.backend_port}/delete_project/${this.state.project.project_id}`).then(() =>{
-            this.setState({
-                project: undefined,
-                display_delete_project_popup: false
-            });
+        // make sure to delete the project before updating the state so that it is gone when we get the projects again
+        await this.props.delete_project(this.state.project.project_id);
+
+        this.setState({
+            project: undefined,
+            display_delete_project_popup: false
         });
     }
 
@@ -87,7 +88,7 @@ class LoadProjectPage extends Page {
         );
     }
 
-    render_load_project_popup() {
+    render_load_project_popup(max_project_list_display_height) {
         return (
             <PopUp
             settings={this.props.settings}
@@ -100,9 +101,11 @@ class LoadProjectPage extends Page {
                         textAlign: "center",
                         fontSize: String(this.props.settings.font_size)+"vh",
                         color: this.props.settings.font_color,
+                        maxHeight: String(max_project_list_display_height)+"vh",
+                        overflowY: "auto"
                     }}
                 >
-                    <div style={{ marginBottom: "1vh" }}>
+                    <div style={{ marginBottom: "1vh", }}>
                         {this.state.projects===undefined? "Loading projects ..." : "Load project"}
                     </div>
 
@@ -112,8 +115,6 @@ class LoadProjectPage extends Page {
                         textAlign: "left",
                         fontSize: String(this.props.settings.font_size)+"vmin",
                         color: this.props.settings.font_color,
-                        maxHeight: "95vh",
-                        overflow: "auto"
                     }}
                     >
                     {this.state.projects===undefined? null : 
@@ -147,6 +148,7 @@ class LoadProjectPage extends Page {
                         settings={this.props.settings}
                         on_click={() => this.props.load_project(this.state.project.project_id)}
                         disabled={this.state.project===undefined}
+                        font_size={String(this.props.settings.font_size)+"vh"}
                     >
                         Load project
                     </Button>
@@ -156,6 +158,7 @@ class LoadProjectPage extends Page {
                         settings={this.props.settings}
                         on_click={() => this.setState({ display_delete_project_popup: true })}
                         disabled={this.state.project===undefined}
+                        font_size={String(this.props.settings.font_size)+"vh"}
                     >
                         Delete project
                     </Button>
@@ -164,6 +167,7 @@ class LoadProjectPage extends Page {
                         margin_left="1vw"
                         settings={this.props.settings}
                         on_click={this.props.go_to_launch_page}
+                        font_size={String(this.props.settings.font_size)+"vh"}
                     >
                         Home
                     </Button>
@@ -173,29 +177,37 @@ class LoadProjectPage extends Page {
 
     render() {
         const background_color = this.background_color();
+        const max_project_list_display_height = 80-(this.state.navbar_height===undefined?0:this.state.navbar_height);
 
         return (
-        <div>
+        <div
+        style={{
+            backgroundColor: background_color,
+            minHeight: "100vh",
+            maxHeight: "100vh",
+            minWidth: "100vw",
+            maxWidth: "100vw",
+        }}
+        >
             <LaunchProjectNavigationBar
                 settings={this.props.settings}
                 background_color={this.props.settings.dark_background_color}
                 toggle_display_settings_form={this.toggle_display_settings_form}
                 disabled={this.state.display_settings_form}
                 go_to_launch_page={this.props.go_to_launch_page}
+                set_navbar_height={(height) => {this.setState({ navbar_height: height })}}
             />
             <div
             style={{
-                minHeight: "100vh",
                 display: "flex", 
                 flexDirection: "column",
                 alignItems: "center",
                 textAlign: "center",
-                backgroundColor: background_color
             }}
             >
             { // the pop window to start new project or change the settings
                 this.state.display_settings_form? this.render_settings() : 
-                    (this.state.display_delete_project_popup? this.render_delete_project_popup() : this.render_load_project_popup())
+                    (this.state.display_delete_project_popup? this.render_delete_project_popup() : this.render_load_project_popup(max_project_list_display_height))
             }
             </div>
         </div>

@@ -61,8 +61,8 @@ class BackgroundImage extends Component {
         var xmove = event.screenX - this.state.start_move.screen_x;
         var ymove = event.screenY - this.state.start_move.screen_y;
 
-        this.props.project_settings.background_image_translation.x = this.state.start_move.image_x + 100.0*xmove/window.innerWidth/width;
-        this.props.project_settings.background_image_translation.y = this.state.start_move.image_y + 100.0*ymove/window.innerHeight/height;
+        this.props.project_settings.background_image_translation.x = this.state.start_move.image_x + xmove/width;
+        this.props.project_settings.background_image_translation.y = this.state.start_move.image_y + ymove/height;
 
         this.props.set_project_settings(this.props.project_settings);
 
@@ -104,7 +104,7 @@ class BackgroundImage extends Component {
                 onMouseLeave={this.mouse_leave}
                 onMouseDown={this.mouse_down}                
                 style={{                    
-                    transform: `translate(${width*this.props.project_settings.background_image_translation.x}vw, ${height*this.props.project_settings.background_image_translation.y}vh) scale(${this.props.project_settings.background_image_zoom})`, 
+                    transform: `translate(${width*this.props.project_settings.background_image_translation.x}px, ${height*this.props.project_settings.background_image_translation.y}px) scale(${this.props.project_settings.background_image_zoom})`, 
                     height: height_px,
                     width: width_px
                 }}

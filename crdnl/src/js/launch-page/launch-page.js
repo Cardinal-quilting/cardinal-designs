@@ -10,8 +10,6 @@ import Button from "js/infrastructure/button";
 
 import Page from "js/infrastructure/page";
 
-import "css/launch-page/launch-page.css"
-
 class LaunchPage extends Page {
     constructor(props) {
         super(props);
@@ -66,38 +64,62 @@ class LaunchPage extends Page {
         const font_color = this.state.display_settings_form? this.props.settings.greyed_out_font_color : this.props.settings.font_color;
 
         return (
-            <div>
+            <div
+            style={{
+                backgroundColor: background_color,
+                minHeight: "100vh",
+                maxHeight: "100vh",
+                minWidth: "100vw",
+                maxWidth: "100vw",
+            }}
+            >
             <LaunchPageNavigationBar 
             settings={this.props.settings}
             background_color={background_color}
             toggle_display_settings_form={this.toggle_display_settings_form}
             disabled={this.state.display_settings_form}
             />
-            <div className="launch-page"
+            <div
             style={{
                 backgroundColor: background_color,
                 color: font_color,
+                display: "flex", 
+                flexDirection: "column", 
+                textAlign: "center",
+                alignItems: "center",
+                minWidth: "100vw",
+                maxWidth: "100vw",
             }}
             >
+            { this.state.display_settings_form? this.render_settings_form() :
+                <div style={{ justifyContent: "center" }}>
                 <img 
                 src={logo} 
-                className="logo" 
                 alt="logo"
                 style={{
+                    height: "40vmin",
+                    pointerEvents: "none",
                     opacity: this.state.display_settings_form? 0.1 : 1.0,
                     borderRadius: "1vmin"
                 }}/>
 
                 <p style={{fontSize: String(this.props.settings.large_font_size)+"vmin"}}>Welcome to Cardinal Designs!</p>
+
+                {this.render_buttons()}
+                </div>
+
                 
-                {
+                
+            }
+            </div>
+                {/*
                 this.state.display_settings_form? 
                 // the pop window to change the settings
                 this.render_settings_form()
                 : // the start and load buttons (only display if we are not editting the settings)
                 this.render_buttons()
-                }
-            </div>
+            */}
+            
         </div>
         );
     }

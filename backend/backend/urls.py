@@ -16,12 +16,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from projects.views import SaveProjectView, LoadProjectView, DeleteProjectView, ProjectNamesView
+from projects.views.project_views import (SaveProjectView, LoadProjectView, 
+                                          DeleteProjectView, ProjectNamesView)
+from projects.views.recursive_piecing_views import SaveRecursivePiecingView, LoadRecursivePiecing, GetAllRecursivePiecingComponents
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+
+    # project views
     path("save_project/", SaveProjectView.as_view(), name="save project"),
     path("load_project/<str:project_id>", LoadProjectView.as_view(), name="load project"),
     path("delete_project/<str:project_id>", DeleteProjectView.as_view(), name="delete project"),
-    path("get_project_names/", ProjectNamesView.as_view(), name="get project names")
+    path("get_project_names/", ProjectNamesView.as_view(), name="get project names"),
+
+    # recursive peicing views
+    path("save_recursive_piecing/<str:project_id>", SaveRecursivePiecingView.as_view(), name="save recursive piecing"),
+    path("load_recursive_piecing/<str:project_id>", LoadRecursivePiecing.as_view(), name="load recursive piecing"),
+    path("get_recursive_piecing_components/", GetAllRecursivePiecingComponents.as_view(), name="get recursive piecing components")
 ]

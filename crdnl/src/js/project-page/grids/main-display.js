@@ -44,7 +44,8 @@ class MainDisplay extends Component {
                 display_dimensions = {this.display_dimensions}
                 project_settings={this.props.project_settings}
                 set_project_settings={this.props.set_project_settings}
-                display_scale_factor = {0.96}
+                display_scale_factor={0.96}
+                recursive_piecing_settings={this.props.recursive_piecing_settings}
                 /> : null}
             </div>
         );

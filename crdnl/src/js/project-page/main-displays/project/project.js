@@ -1,6 +1,6 @@
 import { Component } from "react";
 
-import RecursivePiecing from "./recursive-piecing";
+import RecursivePiecing from "./recursive-piecing/recursive-piecing";
 
 import BackgroundImage from "./background-image";
 
@@ -62,9 +62,11 @@ class Project extends Component {
         }}
         >
 
-        {<RecursivePiecing
+        {this.props.project_settings.has_recursive_piecing?
+        <RecursivePiecing
             project_dimensions = {this.project_dimensions}
-        />}
+            recursive_piecing_settings={this.props.recursive_piecing_settings}
+        /> : null }
 
         {this.props.project_settings.background_image_display? 
         <BackgroundImage

@@ -28,6 +28,7 @@ class SupportGrid extends Grid {
             height={String(this.props.height)+"vh"}
             project_display_width={this.props.project_display_width}
             project_display_height={this.props.project_display_height}
+            recursive_piecing_settings={this.props.recursive_piecing_settings}
             />
             <div
             style={{ 

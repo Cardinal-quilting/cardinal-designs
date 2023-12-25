@@ -20,13 +20,21 @@ class SaveProjectAsPage extends Page {
     save_project_as() {
         if( this.state.project_name==="" ) { return; }
 
+        // set the project name
         var psettings = this.props.project_settings
         psettings["project_name"] = this.state.project_name
         psettings["project_id"] = undefined
-
         this.props.set_project_settings(psettings);
+
         this.props.save_project().then(status => {
-            status.success? this.props.return_to_project() : this.setState({ message: status.message });
+            this.props.return_to_project();
+        }).catch((error) => {
+            // resent the project name
+            psettings["project_name"] = undefined
+            psettings["project_id"] = undefined
+            this.props.set_project_settings(psettings);
+
+            this.setState({ message: error.message })
         });
     }
     
@@ -82,7 +90,15 @@ class SaveProjectAsPage extends Page {
         const background_color = this.background_color();
 
         return (
-        <div>
+        <div
+        style={{
+            backgroundColor: background_color,
+            minHeight: "100vh",
+            maxHeight: "100vh",
+            minWidth: "100vw",
+            maxWidth: "100vw",
+        }}
+        >
             <LaunchProjectNavigationBar
                 settings={this.props.settings}
                 background_color={this.props.settings.dark_background_color}
@@ -92,7 +108,6 @@ class SaveProjectAsPage extends Page {
             />
             <div
             style={{
-                minHeight: "100vh",
                 display: "flex", 
                 flexDirection: "column",
                 alignItems: "center",

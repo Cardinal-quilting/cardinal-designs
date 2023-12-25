@@ -4,6 +4,7 @@ class LaunchProjectNavigationBar extends NavigationBar {
     render() { 
         return (
             <div
+            ref={this.ref}
             style={{
                 display: "flex",
                 justifyContent: "center", 

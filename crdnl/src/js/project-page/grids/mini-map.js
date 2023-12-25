@@ -31,9 +31,6 @@ class MiniMap extends Component {
             <div className="mini-map"
             ref={this.ref}
             style={{
-                //justifyContent: "right", 
-                //alignItems: "right", 
-                //display: "flex",
                 minWidth: width, 
                 maxWidth: width,
                 minHeight: this.props.height, 
@@ -46,8 +43,9 @@ class MiniMap extends Component {
                 <Project 
                     project_settings={this.props.project_settings}
                     display_dimensions = {this.display_dimensions}
-                    display_scale_factor = {0.9}
+                    display_scale_factor = {0.95}
                     is_minimap={true}
+                    recursive_piecing_settings={this.props.recursive_piecing_settings}
                 /> : null}
             </div> 
         );

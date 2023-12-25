@@ -75,7 +75,15 @@ class StartNewProjectPage extends Page {
         const background_color = this.background_color();
 
         return (
-            <div>
+            <div
+            style={{
+                backgroundColor: background_color,
+                minHeight: "100vh",
+                maxHeight: "100vh",
+                minWidth: "100vw",
+                maxWidth: "100vw",
+            }}
+            >
             <LaunchProjectNavigationBar
                 settings={this.props.settings}
                 background_color={this.props.settings.dark_background_color}
@@ -85,12 +93,10 @@ class StartNewProjectPage extends Page {
             />
             <div
             style={{
-                minHeight: "100vh",
                 display: "flex", 
                 flexDirection: "column",
                 alignItems: "center",
-                textAlign: "center",
-                backgroundColor: background_color
+                textAlign: "center"
             }}
             >
             { // the pop window to start new project or change the settings

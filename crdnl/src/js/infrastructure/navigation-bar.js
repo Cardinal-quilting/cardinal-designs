@@ -1,10 +1,37 @@
-import { Component } from "react";
+import React, { Component } from "react";
 
 import Button from "js/infrastructure/button";
 
 import logo from "logos/CardinalQuiltsSmallLogo.png"
 
 class NavigationBar extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = { sent_height: undefined };
+
+        this.ref = React.createRef();
+    }
+
+    componentDidMount() {
+        if( this.ref.current && this.props.set_navbar_height!==undefined ) {
+            const height = (this.ref.current.getBoundingClientRect().height/window.innerHeight)*100;
+            this.setState({sent_height: height});
+            this.props.set_navbar_height(height);
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if( this.ref.current & this.props.set_navbar_height!==undefined ) {
+            const height = (this.ref.current.getBoundingClientRect().height/window.innerHeight)*100;
+
+            if( Math.abs(height-this.state.sent_height)>1.0e-12 ) { 
+                this.setState({sent_height: height});
+                this.props.set_navbar_height(height);
+            }
+        }
+    }
+
     static defaultProps = {
         disabled: false
     }
