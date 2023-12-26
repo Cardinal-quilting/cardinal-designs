@@ -29,10 +29,15 @@ class HomePage extends Component {
             page: PageNames.launch_page,
         }
 
+        this.switch_page = this.switch_page.bind(this);
+
         this.update_settings_element = this.update_settings_element.bind(this);
+
         this.set_project_settings = this.set_project_settings.bind(this);
         this.update_project_settings_element = this.update_project_settings_element.bind(this);
-        this.switch_page = this.switch_page.bind(this);
+
+        this.set_recursive_piecing_settings = this.set_recursive_piecing_settings.bind(this);
+        this.update_recursive_piecing_settings_element = this.update_recursive_piecing_settings_element.bind(this);
 
         this.delete_project = this.delete_project.bind(this);
 
@@ -64,6 +69,18 @@ class HomePage extends Component {
         var new_settings = this.state.project_settings;
         new_settings[element_name] = value;
         this.set_project_settings(new_settings);
+    }
+
+    set_recursive_piecing_settings(new_settings) {
+        this.setState({
+            recursive_piecing_settings: new_settings
+        });
+    }
+
+    update_recursive_piecing_settings_element(element_name, value) {
+        var new_settings = this.state.recursive_piecing_settings;
+        new_settings[element_name] = value;
+        this.set_recursive_piecing_settings(new_settings);
     }
 
     initialize_recursive_piecing() {
@@ -183,6 +200,8 @@ class HomePage extends Component {
                 save_project={this.save_project}
                 recursive_piecing_settings={this.state.recursive_piecing_settings}
                 initialize_recursive_piecing={this.initialize_recursive_piecing}
+                set_recursive_piecing_settings={this.set_recursive_piecing_settings}
+                update_recursive_piecing_settings_element={this.update_recursive_piecing_settings_element}
                 />
             );
         } else if( this.state.page===PageNames.start_new_project_page ) {

@@ -6,3 +6,7 @@ class RecursivePiecing(models.Model):
     project = models.OneToOneField(Project, on_delete=models.CASCADE, related_name="recursive_piecing")
 
     node_size = models.FloatField()
+    min_node_size = models.FloatField()
+    max_node_size = models.FloatField()
+
+    node_color = models.CharField(max_length=7)

@@ -8,21 +8,16 @@ from projects.serializers.recursive_piecing_serializer import RecursivePiecingSe
 class LoadRecursivePiecing(APIView):
     def get(self, request, project_id):
         project = Project.objects.get(id=project_id) 
-        print(project)
-
-        print()
-        print()
-
-        print(project.recursive_piecing)
-
         serializer = RecursivePiecingSerializer(project.recursive_piecing)
         return Response(serializer.data)
-
 
 class GetAllRecursivePiecingComponents(APIView):
     def get(self, request):
         detail = [ { "project_id": rp.project.id,
-                     "node_size": rp.node_size } for rp in RecursivePiecing.objects.all() ]
+                     "node_size": rp.node_size,
+                     "min_node_size": rp.min_node_size,
+                     "max_node_size": rp.max_node_size,
+                     "node_color": rp.node_color } for rp in RecursivePiecing.objects.all() ]
 
         return Response(detail)
 

@@ -106,7 +106,8 @@ class BackgroundImage extends Component {
                 style={{                    
                     transform: `translate(${width*this.props.project_settings.background_image_translation.x}px, ${height*this.props.project_settings.background_image_translation.y}px) scale(${this.props.project_settings.background_image_zoom})`, 
                     height: height_px,
-                    width: width_px
+                    width: width_px,
+                    position: "absolute"
                 }}
             >
                 <img src={logo} className="logo" alt="logo"

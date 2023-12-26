@@ -41,8 +41,7 @@ class Project extends Component {
             style={{
                 justifyContent: "center", 
                 alignItems: "center", 
-                display: "flex",
-                position: "relative",
+                display: "grid",
                 minWidth: parent_width_px, 
                 maxWidth: parent_width_px,
                 minHeight: parent_height_px, 
@@ -62,12 +61,6 @@ class Project extends Component {
         }}
         >
 
-        {this.props.project_settings.has_recursive_piecing?
-        <RecursivePiecing
-            project_dimensions = {this.project_dimensions}
-            recursive_piecing_settings={this.props.recursive_piecing_settings}
-        /> : null }
-
         {this.props.project_settings.background_image_display? 
         <BackgroundImage
             project_dimensions = {this.project_dimensions}
@@ -75,6 +68,13 @@ class Project extends Component {
             set_project_settings={this.props.set_project_settings}
             is_minimap = {this.props.is_minimap}
         /> : null }
+
+        {this.props.project_settings.has_recursive_piecing?
+        <RecursivePiecing
+            project_dimensions = {this.project_dimensions}
+            recursive_piecing_settings={this.props.recursive_piecing_settings}
+        /> : null }
+
         </div>
         </div>
         );

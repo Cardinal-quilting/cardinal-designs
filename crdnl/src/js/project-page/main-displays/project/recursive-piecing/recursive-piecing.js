@@ -25,6 +25,7 @@ class RecursivePiecing extends Component {
                     project_height = {height}
                     project_width = {width}
                     size={node_size}
+                    color={this.props.recursive_piecing_settings.node_color}
                 />
 
                 <RecursivePiecingNode
@@ -33,6 +34,7 @@ class RecursivePiecing extends Component {
                     project_height = {height}
                     project_width = {width}
                     size={node_size}
+                    color={this.props.recursive_piecing_settings.node_color}
                 />
 
                 <RecursivePiecingNode
@@ -41,6 +43,7 @@ class RecursivePiecing extends Component {
                      project_height = {height}
                     project_width = {width}
                     size={node_size}
+                    color={this.props.recursive_piecing_settings.node_color}
                 />
 
                 <RecursivePiecingNode
@@ -49,6 +52,7 @@ class RecursivePiecing extends Component {
                      project_height = {height}
                     project_width = {width}
                     size={node_size}
+                    color={this.props.recursive_piecing_settings.node_color}
                 />
             </div>
         );

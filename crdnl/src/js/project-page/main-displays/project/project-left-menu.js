@@ -19,6 +19,9 @@ class ProjectLeftMenu extends Component {
                 title="Paper piecing"
                 width={0.95*this.props.width}
                 initialize_recursive_piecing={this.props.initialize_recursive_piecing}
+                recursive_piecing_settings={this.props.recursive_piecing_settings}
+                set_recursive_piecing_settings={this.props.set_recursive_piecing_settings}
+                update_recursive_piecing_settings_element={this.props.update_recursive_piecing_settings_element}
                 />
                 <BackgroundImageOptionsBox
                 settings={this.props.settings}
