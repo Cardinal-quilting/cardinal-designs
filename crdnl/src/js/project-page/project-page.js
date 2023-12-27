@@ -147,6 +147,7 @@ class ProjectPage extends Page {
                     set_left_width={this.set_project_grid_left_width}
                     set_right_width={this.set_project_grid_right_width}                    
                     recursive_piecing_settings={this.props.recursive_piecing_settings}
+                    recursive_piecing_nodes={this.props.recursive_piecing_nodes}
                     initialize_recursive_piecing={this.props.initialize_recursive_piecing}
                     set_recursive_piecing_settings={this.props.set_recursive_piecing_settings}
                     update_recursive_piecing_settings_element={this.props.update_recursive_piecing_settings_element}
@@ -168,6 +169,7 @@ class ProjectPage extends Page {
                     project_display_width={99.5-this.state.project_grid_left_width-this.state.project_grid_right_width}
                     project_display_height={project_grid_height}
                     recursive_piecing_settings={this.props.recursive_piecing_settings}
+                    recursive_piecing_nodes={this.props.recursive_piecing_nodes}
                 />
                 </div> : null
             }

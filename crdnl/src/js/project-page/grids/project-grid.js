@@ -97,6 +97,7 @@ class ProjectGrid extends Grid {
                 project_settings={this.props.project_settings}
                 set_project_settings={this.props.set_project_settings}
                 recursive_piecing_settings={this.props.recursive_piecing_settings}
+                recursive_piecing_nodes={this.props.recursive_piecing_nodes}
                 />
                 <div
                 style={{ 

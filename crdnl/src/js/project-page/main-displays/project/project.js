@@ -49,17 +49,14 @@ class Project extends Component {
                 transform: `scale(${this.props.display_scale_factor})`,
             }}
             >
-                <div
-        style={{     
-            borderStyle: "solid",
-            borderColor: "black",
-            borderRadius: "0.5vmin",
+            <div
+            style={{     
             minWidth: width_px, 
             maxWidth: width_px,
             minHeight: height_px, 
             maxHeight: height_px,
-        }}
-        >
+            }}
+            >
 
         {this.props.project_settings.background_image_display? 
         <BackgroundImage
@@ -73,6 +70,7 @@ class Project extends Component {
         <RecursivePiecing
             project_dimensions = {this.project_dimensions}
             recursive_piecing_settings={this.props.recursive_piecing_settings}
+            recursive_piecing_nodes={this.props.recursive_piecing_nodes}
         /> : null }
 
         </div>

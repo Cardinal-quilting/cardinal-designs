@@ -1,6 +1,7 @@
 import { Component } from "react";
 
 import RecursivePiecingNode from "./node";
+import RecursivePiecingLine from "./line";
 
 class RecursivePiecing extends Component {
     render() {
@@ -17,43 +18,24 @@ class RecursivePiecing extends Component {
                 maxWidth: width_px,
                 minHeight: height_px, 
                 maxHeight: height_px,
+                pointerEvents: "none"
             }}
             >
-                <RecursivePiecingNode
-                    x = {1}
-                    y = {1}
+                {Object.entries(this.props.recursive_piecing_nodes).map(([key, node]) => {
+                    return (
+                    <RecursivePiecingNode
+                    key = {key}
+                    x = {node.x}
+                    y = {node.y}
                     project_height = {height}
                     project_width = {width}
                     size={node_size}
                     color={this.props.recursive_piecing_settings.node_color}
-                />
+                    />  );  
+                })}  
 
-                <RecursivePiecingNode
-                x = {0}
-                y = {1}
-                    project_height = {height}
-                    project_width = {width}
-                    size={node_size}
-                    color={this.props.recursive_piecing_settings.node_color}
-                />
-
-                <RecursivePiecingNode
-                x = {1}
-                y = {0}
-                     project_height = {height}
-                    project_width = {width}
-                    size={node_size}
-                    color={this.props.recursive_piecing_settings.node_color}
-                />
-
-                <RecursivePiecingNode
-                x = {0}
-                y = {0}
-                     project_height = {height}
-                    project_width = {width}
-                    size={node_size}
-                    color={this.props.recursive_piecing_settings.node_color}
-                />
+                <RecursivePiecingLine
+                />  
             </div>
         );
     }

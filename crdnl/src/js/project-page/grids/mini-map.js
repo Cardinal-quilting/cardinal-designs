@@ -46,6 +46,7 @@ class MiniMap extends Component {
                     display_scale_factor = {0.95}
                     is_minimap={true}
                     recursive_piecing_settings={this.props.recursive_piecing_settings}
+                    recursive_piecing_nodes={this.props.recursive_piecing_nodes}
                 /> : null}
             </div> 
         );

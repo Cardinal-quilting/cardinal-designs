@@ -1,3 +1,3 @@
 from django.test import TestCase
 
-# Create your tests here.
+from projects.models.recursive_piecing.tests.panels_tests import TestPanels

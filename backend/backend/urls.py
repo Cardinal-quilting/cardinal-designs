@@ -18,7 +18,9 @@ from django.contrib import admin
 from django.urls import path
 from projects.views.project_views import (SaveProjectView, LoadProjectView, 
                                           DeleteProjectView, ProjectNamesView)
-from projects.views.recursive_piecing_views import SaveRecursivePiecingView, LoadRecursivePiecing, GetAllRecursivePiecingComponents
+from projects.views.recursive_piecing_views import (SaveRecursivePiecingSettings, SaveRecursivePiecingNodes, 
+                                                    LoadRecursivePiecing, LoadRecursivePiecingNodes,
+                                                    GetAllRecursivePiecingSettings, GetAllRecursivePiecingNodes)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -30,7 +32,11 @@ urlpatterns = [
     path("get_project_names/", ProjectNamesView.as_view(), name="get project names"),
 
     # recursive peicing views
-    path("save_recursive_piecing/<str:project_id>", SaveRecursivePiecingView.as_view(), name="save recursive piecing"),
-    path("load_recursive_piecing/<str:project_id>", LoadRecursivePiecing.as_view(), name="load recursive piecing"),
-    path("get_recursive_piecing_components/", GetAllRecursivePiecingComponents.as_view(), name="get recursive piecing components")
+    path("save_recursive_piecing_settings/<str:project_id>", SaveRecursivePiecingSettings.as_view(), name="save recursive piecing"),
+    path("save_recursive_piecing_nodes/<str:project_id>", SaveRecursivePiecingNodes.as_view(), name="save recursive piecing"),
+    path("load_recursive_piecing_settings/<str:project_id>", LoadRecursivePiecing.as_view(), name="load recursive piecing"),
+    path("load_recursive_piecing_nodes/<str:project_id>", LoadRecursivePiecingNodes.as_view(), name="load recursive piecing nodes"),
+    path("get_recursive_piecing_settings/", GetAllRecursivePiecingSettings.as_view(), name="get recursive piecing components"),
+    path("get_recursive_piecing_nodes/", GetAllRecursivePiecingNodes.as_view(), name="get recursive piecing components"),
+    path("get_recursive_piecing_nodes/<str:project_id>", GetAllRecursivePiecingNodes.as_view(), name="get recursive piecing components")
 ]
