@@ -6,7 +6,7 @@ class Node(models.Model):
     """
     A recursive piecing node.
     """
-    recursive_piecing_project = models.ForeignKey(RecursivePiecing, on_delete=models.CASCADE, related_name="recursive_piecing_project")
+    recursive_piecing_project = models.ForeignKey(RecursivePiecing, on_delete=models.CASCADE, related_name="recursive_piecing_nodes")
 
     x = models.FloatField()
     y = models.FloatField()

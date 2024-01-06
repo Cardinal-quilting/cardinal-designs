@@ -71,6 +71,7 @@ class Project extends Component {
             project_dimensions = {this.project_dimensions}
             recursive_piecing_settings={this.props.recursive_piecing_settings}
             recursive_piecing_nodes={this.props.recursive_piecing_nodes}
+            recursive_piecing_lines={this.props.recursive_piecing_lines}
         /> : null }
 
         </div>
