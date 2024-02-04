@@ -15,7 +15,7 @@ class ProjectPage extends Page {
             grid_border_color: this.props.settings.background_color,
             views_height: 5, // units are in vh
             support_grid_height: 25, // units are in vh
-            project_grid_right_width: 10, // units are in vw
+            project_grid_right_width: 15, // units are in vw
             project_grid_left_width: 15, // units are in vw
             support_grid_right_width: 15, // units are in vw
             support_grid_left_width: 20, // units are in vw
@@ -149,6 +149,7 @@ class ProjectPage extends Page {
                     recursive_piecing_settings={this.props.recursive_piecing_settings}
                     recursive_piecing_nodes={this.props.recursive_piecing_nodes}
                     recursive_piecing_lines={this.props.recursive_piecing_lines}
+                    recursive_piecing_panels={this.props.recursive_piecing_panels}
                     initialize_recursive_piecing={this.props.initialize_recursive_piecing}
                     set_recursive_piecing_settings={this.props.set_recursive_piecing_settings}
                     update_recursive_piecing_settings_element={this.props.update_recursive_piecing_settings_element}

@@ -5,6 +5,7 @@ import Row from "./row";
 import MainDisplay from "./main-display";
 
 import LeftMenu from "./left-menu";
+import RightMenu from "./right-menu";
 
 import ProjectNameDisplay from "./project-name-display";
 
@@ -99,15 +100,16 @@ class ProjectGrid extends Grid {
                 recursive_piecing_settings={this.props.recursive_piecing_settings}
                 recursive_piecing_nodes={this.props.recursive_piecing_nodes}
                 recursive_piecing_lines={this.props.recursive_piecing_lines}
+                recursive_piecing_panels={this.props.recursive_piecing_panels}
+                update_recursive_piecing_settings_element={this.props.update_recursive_piecing_settings_element}
                 />
-                <div
-                style={{ 
-                    minWidth: right_width, 
-                    maxWidth: right_width, 
-                }}
-                >
-                    right menu
-                </div>
+                <RightMenu
+                width={this.props.right_width}
+                settings={this.props.settings}
+                project_settings={this.props.project_settings}
+                recursive_piecing_settings={this.props.recursive_piecing_settings}
+                update_recursive_piecing_settings_element={this.props.update_recursive_piecing_settings_element}
+                />
                 </Row>
             </div>
         );

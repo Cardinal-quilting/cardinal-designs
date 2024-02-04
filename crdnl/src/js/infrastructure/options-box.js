@@ -28,19 +28,29 @@ class OptionsBox extends Component {
     }
 
     line(key_name) {
+        const parent_width = String(this.props.width)+"vw"
         const width = String(0.75*this.props.width)+"vw"
 
         return (
-            <hr key={key_name}
+            <div key={key_name}
+            style={{
+                alignContent: "center",
+                alignItems: "center",
+                maxWidth: parent_width,
+                minWidth: parent_width,
+            }}
+            >
+            <hr
             style={{
                 border: "none",
-                borderTop: "0.2vmin solid",
+                borderTop: "0.3vmin solid",
                 borderColor: this.props.settings.accent_background_color,
                 maxWidth: width,
                 minWidth: width,
-                opacity: 0.4
+                opacity: 0.6
             }}
             />
+            </div>
         );
     }
 

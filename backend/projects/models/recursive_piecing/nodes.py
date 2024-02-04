@@ -11,4 +11,4 @@ class Node(models.Model):
     x = models.FloatField()
     y = models.FloatField()
 
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)

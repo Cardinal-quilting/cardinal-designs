@@ -29,7 +29,11 @@ class SaveProjectAsPage extends Page {
         this.props.save_project().then(status => {
             this.props.return_to_project();
         }).catch((error) => {
-            // resent the project name
+            if( error.project_id!==undefined ) {
+                this.props.delete_project(error.project_id);
+            }
+
+            // reset the project name
             psettings["project_name"] = undefined
             psettings["project_id"] = undefined
             this.props.set_project_settings(psettings);

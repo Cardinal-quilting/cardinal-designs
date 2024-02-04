@@ -7,6 +7,8 @@ class RecursivePiecingSettings {
 
     // the color of the nodes 
     node_color = getComputedStyle(document.documentElement).getPropertyValue("--black");
+    active_node_color = getComputedStyle(document.documentElement).getPropertyValue("--red");
+    new_node_color = getComputedStyle(document.documentElement).getPropertyValue("--blue");  
 
     line_thickness = 0.01; // defines the thickness of each line to be this fraction of the project dimensions
 
@@ -16,6 +18,15 @@ class RecursivePiecingSettings {
 
     // the color of the lines 
     line_color = getComputedStyle(document.documentElement).getPropertyValue("--black");
+    active_line_color = getComputedStyle(document.documentElement).getPropertyValue("--red");
+    new_line_color = getComputedStyle(document.documentElement).getPropertyValue("--blue");
+
+    // the currently active panel (undefined indicates)
+    active_panel = undefined;
+
+    // proposed new nodes in the active panel
+    new_start_node = undefined;
+    new_end_node = undefined;
 }
 
 export default RecursivePiecingSettings;

@@ -159,6 +159,80 @@ class RecursivePiecingOptionsBox extends OptionsBox {
         );
     }
 
+    active_node_color() {
+        const font_size = String(this.props.settings.small_font_size)+"vmin";
+
+        return ( 
+            <div key={"active node color"}
+            style={{
+                color: this.props.settings.font_color,
+                accentColor: this.props.settings.accent_background_color,
+                fontSize: font_size,
+            }}
+            >
+                <input
+                type="color"
+                name="active node color"
+                value={this.props.recursive_piecing_settings.active_node_color}
+                onChange={(event) => this.props.update_recursive_piecing_settings_element("active_node_color", event.target.value)}
+                style={{
+                    width: String(1.5*Number(this.props.settings.font_size))+"vmin",
+                    height: String(Number(this.props.settings.font_size))+"vmin",
+                    backgroundColor: this.props.settings.background_color,
+                    border: "none"
+                }}
+                />
+                <label htmlFor={"active node color"}
+                    style={{
+                        fontSize: font_size,
+                    }}
+                > Active node color </label>
+                <Button 
+                font_size={font_size}
+                settings={this.props.settings}
+                on_click={() => this.props.update_recursive_piecing_settings_element("active_node_color", getComputedStyle(document.documentElement).getPropertyValue("--red"))}
+                >Default</Button>
+            </div>
+        );
+    }
+
+    new_node_color() {
+        const font_size = String(this.props.settings.small_font_size)+"vmin";
+
+        return ( 
+            <div key={"new node color"}
+            style={{
+                color: this.props.settings.font_color,
+                accentColor: this.props.settings.accent_background_color,
+                fontSize: font_size,
+            }}
+            >
+                <input
+                type="color"
+                name="new node color"
+                value={this.props.recursive_piecing_settings.new_node_color}
+                onChange={(event) => this.props.update_recursive_piecing_settings_element("new_node_color", event.target.value)}
+                style={{
+                    width: String(1.5*Number(this.props.settings.font_size))+"vmin",
+                    height: String(Number(this.props.settings.font_size))+"vmin",
+                    backgroundColor: this.props.settings.background_color,
+                    border: "none"
+                }}
+                />
+                <label htmlFor={"new node color"}
+                    style={{
+                        fontSize: font_size,
+                    }}
+                > New node color </label>
+                <Button 
+                font_size={font_size}
+                settings={this.props.settings}
+                on_click={() => this.props.update_recursive_piecing_settings_element("new_node_color", getComputedStyle(document.documentElement).getPropertyValue("--blue"))}
+                >Default</Button>
+            </div>
+        );
+    }
+
     line_color() {
         const font_size = String(this.props.settings.small_font_size)+"vmin";
 
@@ -191,6 +265,80 @@ class RecursivePiecingOptionsBox extends OptionsBox {
                 font_size={font_size}
                 settings={this.props.settings}
                 on_click={() => this.props.update_recursive_piecing_settings_element("line_color", getComputedStyle(document.documentElement).getPropertyValue("--black"))}
+                >Default</Button>
+            </div>
+        );
+    }
+
+    active_line_color() {
+        const font_size = String(this.props.settings.small_font_size)+"vmin";
+
+        return ( 
+            <div key={"active line color"}
+            style={{
+                color: this.props.settings.font_color,
+                accentColor: this.props.settings.accent_background_color,
+                fontSize: font_size,
+            }}
+            >
+                <input
+                type="color"
+                name="active line color"
+                value={this.props.recursive_piecing_settings.active_line_color}
+                onChange={(event) => this.props.update_recursive_piecing_settings_element("active_line_color", event.target.value)}
+                style={{
+                    width: String(1.5*Number(this.props.settings.font_size))+"vmin",
+                    height: String(Number(this.props.settings.font_size))+"vmin",
+                    backgroundColor: this.props.settings.background_color,
+                    border: "none"
+                }}
+                />
+                <label htmlFor={"active line color"}
+                    style={{
+                        fontSize: font_size,
+                    }}
+                > Active line color </label>
+                <Button 
+                font_size={font_size}
+                settings={this.props.settings}
+                on_click={() => this.props.update_recursive_piecing_settings_element("active_line_color", getComputedStyle(document.documentElement).getPropertyValue("--red"))}
+                >Default</Button>
+            </div>
+        );
+    }
+
+    new_line_color() {
+        const font_size = String(this.props.settings.small_font_size)+"vmin";
+
+        return ( 
+            <div key={"new line color"}
+            style={{
+                color: this.props.settings.font_color,
+                accentColor: this.props.settings.accent_background_color,
+                fontSize: font_size,
+            }}
+            >
+                <input
+                type="color"
+                name="new line color"
+                value={this.props.recursive_piecing_settings.new_line_color}
+                onChange={(event) => this.props.update_recursive_piecing_settings_element("new_line_color", event.target.value)}
+                style={{
+                    width: String(1.5*Number(this.props.settings.font_size))+"vmin",
+                    height: String(Number(this.props.settings.font_size))+"vmin",
+                    backgroundColor: this.props.settings.background_color,
+                    border: "none"
+                }}
+                />
+                <label htmlFor={"new line color"}
+                    style={{
+                        fontSize: font_size,
+                    }}
+                > New line color </label>
+                <Button 
+                font_size={font_size}
+                settings={this.props.settings}
+                on_click={() => this.props.update_recursive_piecing_settings_element("new_line_color", getComputedStyle(document.documentElement).getPropertyValue("--blue"))}
                 >Default</Button>
             </div>
         );
@@ -302,12 +450,16 @@ class RecursivePiecingOptionsBox extends OptionsBox {
         if( this.props.project_settings.has_recursive_piecing ) {
             return [
                 this.node_color(),
+                this.active_node_color(),
+                this.new_node_color(),
                 this.line("line1"), 
                 this.adjust_node_size(),
                 this.min_node_size(),
                 this.max_node_size(),
                 this.line("line2"), 
                 this.line_color(),
+                this.active_line_color(),
+                this.new_line_color(),
                 this.line("line3"),
                 this.adjust_line_thickness(),
                 this.min_line_thickness(),

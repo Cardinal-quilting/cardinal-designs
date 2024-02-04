@@ -49,6 +49,7 @@ class HomePage extends Component {
         this.save_recursive_piecing_settings = this.save_recursive_piecing_settings.bind(this);
         this.save_recursive_piecing_nodes = this.save_recursive_piecing_nodes.bind(this);
         this.save_recursive_piecing_lines = this.save_recursive_piecing_lines.bind(this);
+        this.save_recursive_piecing_panels = this.save_recursive_piecing_panels.bind(this);
         this.initialize_recursive_piecing = this.initialize_recursive_piecing.bind(this);
     }
 
@@ -99,7 +100,9 @@ class HomePage extends Component {
             recursive_piecing_lines: {line0: {start: "node0", end: "node1"},
                                       line1: {start: "node1", end: "node2"},
                                       line2: {start: "node2", end: "node3"},
-                                      line3: {start: "node3", end: "node0"}}
+                                      line3: {start: "node3", end: "node0"}},
+            recursive_piecing_panels: {panel0: {nodes: ["node0", "node1", "node2", "node3"],
+                                                lines: ["line0", "line1", "line2", "line3"]}}
         });
     }
 
@@ -131,11 +134,14 @@ class HomePage extends Component {
         }).then((result) => {
             return result.project_settings.has_recursive_piecing? this.load_recursive_piecing_lines(result) : result;
         }).then((result) => {
+            return result.project_settings.has_recursive_piecing? this.load_recursive_piecing_panels(result) : result;
+        }).then((result) => {
             this.setState({
                 project_settings: result.project_settings,
                 recursive_piecing_settings: result.recursive_piecing_settings,
                 recursive_piecing_nodes: result.recursive_piecing_nodes,
                 recursive_piecing_lines: result.recursive_piecing_lines,
+                recursive_piecing_panels: result.recursive_piecing_panels,
                 page: PageNames.project_page
             });
         });
@@ -158,6 +164,13 @@ class HomePage extends Component {
     async load_recursive_piecing_lines(result) {
         return await axios.get(`http://localhost:${this.props.backend_port}/load_recursive_piecing_lines/${result.project_settings.project_id}`).then((value) => {
             result["recursive_piecing_lines"] = value.data.lines
+            return result
+        });
+    }
+
+    async load_recursive_piecing_panels(result) {
+        return await axios.get(`http://localhost:${this.props.backend_port}/load_recursive_piecing_panels/${result.project_settings.project_id}`).then((value) => {
+            result["recursive_piecing_panels"] = value.data.panels
             return result
         });
     }
@@ -199,6 +212,11 @@ class HomePage extends Component {
                 save_project_component(this.save_recursive_piecing_lines, result.project_id) 
                 : result;
         }).then((result) => {
+            // save the recursive piecing panels
+            return this.state.project_settings.has_recursive_piecing?
+                save_project_component(this.save_recursive_piecing_panels, result.project_id) 
+                : result;
+        }).then((result) => {
             // since we have saved everything with a new id, delete the old project id 
             if( this.state.project_settings.project_id!==undefined ) {
                 this.delete_project(this.state.project_settings.project_id);
@@ -218,6 +236,13 @@ class HomePage extends Component {
 
     async save_recursive_piecing_lines(project_id) {
         return await axios.post(`http://localhost:${this.props.backend_port}/save_recursive_piecing_lines/${project_id}`, this.state.recursive_piecing_lines).then(
+            (value) => {
+                return value.data;
+        });
+    }
+
+    async save_recursive_piecing_panels(project_id) {
+        return await axios.post(`http://localhost:${this.props.backend_port}/save_recursive_piecing_panels/${project_id}`, this.state.recursive_piecing_panels).then(
             (value) => {
                 return value.data;
         });
@@ -257,6 +282,7 @@ class HomePage extends Component {
                 recursive_piecing_settings={this.state.recursive_piecing_settings}
                 recursive_piecing_nodes={this.state.recursive_piecing_nodes}
                 recursive_piecing_lines={this.state.recursive_piecing_lines}
+                recursive_piecing_panels={this.state.recursive_piecing_panels}
                 initialize_recursive_piecing={this.initialize_recursive_piecing}
                 set_recursive_piecing_settings={this.set_recursive_piecing_settings}
                 update_recursive_piecing_settings_element={this.update_recursive_piecing_settings_element}
@@ -295,6 +321,7 @@ class HomePage extends Component {
                 project_settings={this.state.project_settings}
                 set_project_settings={this.set_project_settings}
                 save_project={this.save_project}
+                delete_project={this.delete_project}
                 />
             );
         } else {

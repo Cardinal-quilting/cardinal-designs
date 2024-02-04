@@ -36,7 +36,7 @@ class MainDisplay extends Component {
                 minHeight: this.props.height, 
                 maxHeight: this.props.height,
                 backgroundColor: this.props.settings.project_display_background_color,
-                overflow: "hidden",
+                overflow: "hidden"
             }}
             >
                 {this.state.mounted? 
@@ -48,6 +48,8 @@ class MainDisplay extends Component {
                 recursive_piecing_settings={this.props.recursive_piecing_settings}
                 recursive_piecing_nodes={this.props.recursive_piecing_nodes}
                 recursive_piecing_lines={this.props.recursive_piecing_lines}
+                recursive_piecing_panels={this.props.recursive_piecing_panels}
+                update_recursive_piecing_settings_element={this.props.update_recursive_piecing_settings_element}
                 /> : null}
             </div>
         );
