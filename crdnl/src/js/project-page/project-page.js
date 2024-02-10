@@ -153,6 +153,7 @@ class ProjectPage extends Page {
                     initialize_recursive_piecing={this.props.initialize_recursive_piecing}
                     set_recursive_piecing_settings={this.props.set_recursive_piecing_settings}
                     update_recursive_piecing_settings_element={this.props.update_recursive_piecing_settings_element}
+                    split_active_recursive_piecing_panel={this.props.split_active_recursive_piecing_panel}
                 />
                 <RowBorder
                     color={this.state.grid_border_color}

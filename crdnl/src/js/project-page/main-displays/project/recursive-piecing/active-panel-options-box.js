@@ -30,13 +30,30 @@ class ActivePanelOptionsBox extends OptionsBox {
         );
     }
 
+    accept_new_line() {
+        const font_size = String(this.props.settings.small_font_size)+"vmin";
+
+        return (
+            <Button key="accept_new_line"
+            font_size={font_size}
+            settings={this.props.settings}
+            on_click={() => {
+                this.props.split_active_recursive_piecing_panel();
+            }}
+            >Accept panel split</Button>
+        );
+    }
+
     content() {
         var options = [
             this.deselect()
         ];
 
         if( this.props.recursive_piecing_settings.new_start_node!==undefined && this.props.recursive_piecing_settings.new_end_node!==undefined ) {
-            options = [this.cancel_new_line(), this.line("panel_splitting_line"), ...options];
+            options = [this.accept_new_line(), 
+                       this.cancel_new_line(), 
+                       this.line("panel_splitting_line"), 
+                       ...options];
         }
 
         return options;

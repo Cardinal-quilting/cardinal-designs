@@ -21,6 +21,7 @@ class RightMenu extends Component {
                     width={this.props.width}
                     recursive_piecing_settings={this.props.recursive_piecing_settings}
                     update_recursive_piecing_settings_element={this.props.update_recursive_piecing_settings_element}
+                    split_active_recursive_piecing_panel={this.props.split_active_recursive_piecing_panel}
                     /> : null
                 }
             </div>

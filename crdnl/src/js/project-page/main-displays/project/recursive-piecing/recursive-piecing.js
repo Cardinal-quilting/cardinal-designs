@@ -21,7 +21,8 @@ class RecursivePiecing extends Component {
 
     componentDidUpdate() {
         if( this.props.recursive_piecing_settings.new_start_node===undefined && this.props.recursive_piecing_settings.new_end_node===undefined ) {
-            this.ref.current.removeEventListener("mousemove", this.mouse_move);
+            this.ref.current.removeEventListener("mousemove", this.mouse_move_drag_new_node);
+            this.ref.current.removeEventListener("mousemove", this.mouse_move_split_panel);
         }
 
         if( this.state.active_lines!==undefined && this.props.recursive_piecing_settings.active_panel===undefined ) {
@@ -33,48 +34,46 @@ class RecursivePiecing extends Component {
     }
 
     select_panel(clickX, clickY) {
-        // get the panel that was just clicked
-        const active_panel = "panel0";
+        const selected_leaf = this.props.recursive_piecing_panels.get_selected_panel(clickX, clickY);
 
         // get the active lines and create references to them
         var active_lines = {}
-        this.props.recursive_piecing_panels[active_panel].lines.forEach((line) => {
-            active_lines[line] = React.createRef();
+        selected_leaf.lines.forEach((line) => {
+            active_lines[line.name] = React.createRef();
         });
         this.setState({active_lines: active_lines});
 
         // set the active panel
-        this.props.update_recursive_piecing_settings_element("active_panel", active_panel);
+        this.props.update_recursive_piecing_settings_element("active_panel", selected_leaf.name);
     }
 
     project_to_active_panel(x, y, skip_line=undefined) {
         if( this.state.active_lines===undefined ) { return undefined; }
 
-        const active_panel = this.props.recursive_piecing_settings.active_panel;
-
-        return this.props.recursive_piecing_panels[active_panel].lines.map((line) => {
-            if( this.state.active_lines[line].current===null ) { return undefined; }
-            var projected = this.state.active_lines[line].current.project_to_line(x, y);
-            projected["line"] = line;
+        return Object.keys(this.state.active_lines).map((key, index) => {
+            var projected = this.state.active_lines[key].current.project_to_line(x, y);
+            projected["line"] = key;
             return projected;
         }).reduce((prev, curr) => {
             if( skip_line!==undefined ) {
                 if( prev.line===skip_line ) { return curr; }
                 if( curr.line===skip_line ) { return prev; }
             }
-            return prev.distance<curr.distance ? prev : curr
+            return prev.distance<curr.distance ? prev : curr;
         });
     }
 
     handle_mouse_down(clickX, clickY) {
-        this.select_panel(clickX, clickY);
+        if( this.props.recursive_piecing_settings.active_panel===undefined ) {
+            this.select_panel(clickX, clickY);
+        }
 
         // there is an active panel
         if( this.state.active_lines!==undefined ) {
             // we do not have a candidate new line
             if( this.props.recursive_piecing_settings.new_start_node===undefined && this.props.recursive_piecing_settings.new_end_node===undefined ) {
                 const projection = this.project_to_active_panel(clickX, clickY);
-                
+                                
                 if( projection.on_line ) {
                     this.props.update_recursive_piecing_settings_element("new_start_node", {point: projection.point, line: projection.line});
                     this.ref.current.addEventListener("mousemove", this.mouse_move_split_panel);
@@ -187,39 +186,50 @@ class RecursivePiecing extends Component {
                 pointerEvents: (this.props.disabled? "none" : "auto"),
             }}
             >
-                {Object.entries(this.props.recursive_piecing_lines).map(([key, line]) => {
-                    var color = this.props.recursive_piecing_settings.line_color;
-                    var active = false;
-                    var line_ref = undefined;
-                    if( active_panel!==undefined && this.props.recursive_piecing_panels!==undefined ) {
-                        active = (!this.props.disabled && this.props.recursive_piecing_panels[active_panel].lines.includes(key));
-                        color = active? this.props.recursive_piecing_settings.active_line_color : this.props.recursive_piecing_settings.line_color;
-                        
-                        if( this.state.active_lines!==undefined ) {
-                            line_ref = this.state.active_lines[key]
-                        }
+                {Object.entries(this.props.recursive_piecing_lines.lines).map(([key, line]) => {
+                    if( !line.leaf_line ) {
+                        return undefined;
                     }
-
-                    const start = this.props.recursive_piecing_nodes[line.start]
-                    const end = this.props.recursive_piecing_nodes[line.end]
 
                     return (
                         <RecursivePiecingLine
                         key = {key}
-                        ref = {line_ref}
-                        start_point = {{x: start.x, y: start.y}}
-                        end_point = {{x: end.x, y: end.y}}
+                        start_point = {{x: line.start.x, y: line.start.y}}
+                        end_point = {{x: line.end.x, y: line.end.y}}
                         project_height = {height}
                         project_width = {width}
                         thickness = {line_thickness}
-                        color = {color}
-                        />  );  
+                        color = {this.props.recursive_piecing_settings.line_color}
+                        />  
+                    );  
                 })}  
 
-                {Object.entries(this.props.recursive_piecing_nodes).map(([key, node]) => {
+                {
+                this.state.active_lines===undefined? null : 
+                Object.keys(this.state.active_lines).map((line_name) => {
+                    const line = this.props.recursive_piecing_lines.lines[line_name];
+
+                    return (
+                        <RecursivePiecingLine
+                        key = {"active_"+line_name}
+                        ref = {this.state.active_lines[line_name]}
+                        start_point = {{x: line.start.x, y: line.start.y}}
+                        end_point = {{x: line.end.x, y: line.end.y}}
+                        project_height = {height}
+                        project_width = {width}
+                        thickness = {line_thickness}
+                        color = {this.props.recursive_piecing_settings.active_line_color}
+                        />  
+                    );  
+                })
+                
+                }
+
+
+                {Object.entries(this.props.recursive_piecing_nodes.nodes).map(([key, node]) => {
                     var color = this.props.recursive_piecing_settings.node_color;
                     if( active_panel!==undefined & this.props.recursive_piecing_panels!==undefined ) {
-                        color = !this.props.disabled & this.props.recursive_piecing_panels[active_panel].nodes.includes(key)? 
+                        color = !this.props.disabled & this.props.recursive_piecing_panels.panels[active_panel].includes_node(key)? 
                             this.props.recursive_piecing_settings.active_node_color : this.props.recursive_piecing_settings.node_color;
                     }
 

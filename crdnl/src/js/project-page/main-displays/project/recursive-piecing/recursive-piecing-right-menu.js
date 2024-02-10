@@ -13,6 +13,7 @@ class RecursivePiecingRightMenu extends Component {
                 settings={this.props.settings}
                 recursive_piecing_settings={this.props.recursive_piecing_settings}
                 update_recursive_piecing_settings_element={this.props.update_recursive_piecing_settings_element}
+                split_active_recursive_piecing_panel={this.props.split_active_recursive_piecing_panel}
                 />
                 : null}
             </div>

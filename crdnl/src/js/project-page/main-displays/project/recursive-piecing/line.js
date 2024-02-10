@@ -49,18 +49,22 @@ class RecursivePiecingLine extends Component {
 
         // compute the distance to the line
         const xdiff = x2pos - x1pos, ydiff = y2pos - y1pos;
-        const nrm = Math.sqrt(ydiff*ydiff + xdiff*xdiff);
-        const distance = Math.abs(ydiff*x - xdiff*y + x2pos*y1pos - y2pos*x1pos)/nrm;
+        const nrm2 = ydiff*ydiff + xdiff*xdiff;
+        const distance = Math.abs(ydiff*x - xdiff*y + x2pos*y1pos - y2pos*x1pos)/Math.sqrt(nrm2);
 
         // did the user click the line
         const on_line = distance<0.5*this.props.thickness/Math.min(this.props.project_height, this.props.project_width)
 
-        // project onto the line so that it is exactly on the line
-        const minx = Math.min(x1pos, x2pos), maxx = Math.max(x1pos, x2pos);
-        const projx = Math.max(Math.min(xdiff*xdiff*x/nrm, maxx), minx);
-        const miny = Math.min(y1pos, y2pos), maxy = Math.max(y1pos, y2pos);
-        const projy = Math.max(Math.min(ydiff*ydiff*y/nrm, maxy), miny);
-        
+        // calculate the dot product of the vector (x1pos, y1pos)->(x, y) and the direction vector
+        var dot = ((x-x1pos)*xdiff + (y-y1pos)*ydiff) / nrm2;
+
+        // clamp the dot product to the range [0, 1] to ensure the projected point lies on the line segment
+        dot = Math.max(0.0, Math.min(1.0, dot));
+
+        // calculate the coordinates of the projected point
+        var projx = x1pos + dot * xdiff;
+        var projy = y1pos + dot * ydiff;
+
         return {on_line: on_line, distance: distance, point: {x: projx, y: projy}};
     }
   
@@ -71,7 +75,8 @@ class RecursivePiecingLine extends Component {
             <div
             style={{
                 position: "absolute",
-                transform: `translate(${transform}px, ${transform}px)`
+                transform: `translate(${transform}px, ${transform}px)`, 
+                zIndex: this.props.z_index
             }}
             >
             <canvas 

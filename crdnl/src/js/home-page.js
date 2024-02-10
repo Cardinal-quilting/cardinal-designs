@@ -11,6 +11,8 @@ import SaveProjectAsPage from "./launch-project-page/save-project-as-page";
 import ProjectSettings from "./project-page/main-displays/project/project-settings";
 import RecursivePiecingSettings from "./project-page/main-displays/project/recursive-piecing/recursive-piecing-settings";
 
+import { initialize_recursive_piecing_containers } from "./project-page/main-displays/project/recursive-piecing/recursive-piecing-geometry";
+
 import axios from "axios"; 
 
 // enum to decide which page to display
@@ -38,6 +40,7 @@ class HomePage extends Component {
 
         this.set_recursive_piecing_settings = this.set_recursive_piecing_settings.bind(this);
         this.update_recursive_piecing_settings_element = this.update_recursive_piecing_settings_element.bind(this);
+        this.split_active_recursive_piecing_panel = this.split_active_recursive_piecing_panel.bind(this);
 
         this.delete_project = this.delete_project.bind(this);
 
@@ -90,19 +93,102 @@ class HomePage extends Component {
         var new_settings = this.state.project_settings;
         new_settings["has_recursive_piecing"] = true;
 
+        const [node_container, line_container, panel_container] = initialize_recursive_piecing_containers();
+        
         this.setState({
             project_settings: new_settings,
             recursive_piecing_settings: new RecursivePiecingSettings(),
-            recursive_piecing_nodes: {node0: {x: 0, y: 0}, 
-                                      node1: {x: 1, y: 0}, 
-                                      node2: {x: 1, y: 1}, 
-                                      node3: {x: 0, y: 1}},
-            recursive_piecing_lines: {line0: {start: "node0", end: "node1"},
-                                      line1: {start: "node1", end: "node2"},
-                                      line2: {start: "node2", end: "node3"},
-                                      line3: {start: "node3", end: "node0"}},
-            recursive_piecing_panels: {panel0: {nodes: ["node0", "node1", "node2", "node3"],
-                                                lines: ["line0", "line1", "line2", "line3"]}}
+            // store references to the containers
+            recursive_piecing_nodes: node_container, 
+            recursive_piecing_lines: line_container, 
+            recursive_piecing_panels: panel_container
+        });
+    }
+
+    split_active_recursive_piecing_panel() {
+        const start_node = this.state.recursive_piecing_nodes.add_node(this.state.recursive_piecing_settings.new_start_node.point.x,
+                                                                       this.state.recursive_piecing_settings.new_start_node.point.y);
+        const end_node = this.state.recursive_piecing_nodes.add_node(this.state.recursive_piecing_settings.new_end_node.point.x,
+                                                                     this.state.recursive_piecing_settings.new_end_node.point.y);
+        
+        // split the nodes into left and right
+        const new_line = this.state.recursive_piecing_lines.add_line(start_node, end_node);
+
+        const normal_vec = new_line.normal_vector(), midpoint = new_line.midpoint();
+        const active_panel = this.state.recursive_piecing_panels.panels[this.state.recursive_piecing_settings.active_panel];
+
+        // make a list of left and right nodes for the subpanels
+        var left_nodes = [start_node, end_node], 
+            right_nodes = [start_node, end_node];
+        active_panel.nodes.forEach(node => {
+            const diffx = node.x - midpoint.x, diffy = node.y - midpoint.y;
+            const dot = diffx*normal_vec.x + diffy*normal_vec.y
+
+            if( dot<0.0 ) {
+                left_nodes = [node, ...left_nodes];
+            } else {
+                right_nodes = [node, ...right_nodes];
+            }
+        });
+
+        const line_on_left = (line) => {
+            const line_midpoint = line.midpoint();
+            const diffx = line_midpoint.x - midpoint.x, diffy = line_midpoint.y - midpoint.y;
+
+            const dot = diffx*normal_vec.x + diffy*normal_vec.y
+            return dot<0.0
+        }
+
+        const split_line = (line, node) => {
+            const start_line = this.state.recursive_piecing_lines.add_line(node, line.start), 
+                  end_line = this.state.recursive_piecing_lines.add_line(node, line.end);
+
+            if( line_on_left(start_line) ) {
+                left_lines = [start_line, ...left_lines];
+                right_lines = [end_line, ...right_lines];
+            } else {
+                left_lines = [end_line, ...left_lines];
+                right_lines = [start_line, ...right_lines];
+            }
+
+            line.leaf_line = false;
+            line.sub_lines = [start_line, end_line, ...line.sub_lines]
+        }
+
+        // make a list of left and right lines for the subpanels
+        var left_lines = [new_line], right_lines = [new_line];
+        active_panel.lines.forEach(line => {
+            if( line.name===this.state.recursive_piecing_settings.new_start_node.line ) {
+                split_line(line, start_node);
+                return;
+            }
+            if( line.name===this.state.recursive_piecing_settings.new_end_node.line ) {
+                split_line(line, end_node);
+                return;
+            }
+
+            if( line_on_left(line) ) {
+                left_lines = [line, ...left_lines];
+            } else {
+                right_lines = [line, ...right_lines];
+            }
+        });
+
+        const left_panel = this.state.recursive_piecing_panels.add_panel(left_nodes, left_lines),
+              right_panel = this.state.recursive_piecing_panels.add_panel(right_nodes, right_lines);
+
+        active_panel.split(left_panel, right_panel, new_line);
+
+        var new_settings = this.state.recursive_piecing_settings;
+        new_settings["new_start_node"] = undefined;
+        new_settings["new_end_node"] = undefined;
+        new_settings["active_panel"] = undefined;
+
+        this.setState({
+            recursive_piecing_settings: new_settings,
+            recursive_piecing_nodes: this.state.recursive_piecing_nodes,
+            recursive_piecing_lines: this.state.recursive_piecing_lines,
+            recursive_piecing_panels: this.state.recursive_piecing_panels
         });
     }
 
@@ -235,7 +321,7 @@ class HomePage extends Component {
     }
 
     async save_recursive_piecing_lines(project_id) {
-        return await axios.post(`http://localhost:${this.props.backend_port}/save_recursive_piecing_lines/${project_id}`, this.state.recursive_piecing_lines).then(
+        return await axios.post(`http://localhost:${this.props.backend_port}/save_recursive_piecing_lines/${project_id}`, this.state.recursive_piecing_lines.lines).then(
             (value) => {
                 return value.data;
         });
@@ -286,6 +372,7 @@ class HomePage extends Component {
                 initialize_recursive_piecing={this.initialize_recursive_piecing}
                 set_recursive_piecing_settings={this.set_recursive_piecing_settings}
                 update_recursive_piecing_settings_element={this.update_recursive_piecing_settings_element}
+                split_active_recursive_piecing_panel={this.split_active_recursive_piecing_panel}
                 />
             );
         } else if( this.state.page===PageNames.start_new_project_page ) {
