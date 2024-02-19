@@ -10,7 +10,11 @@ class ActivePanelOptionsBox extends OptionsBox {
             <Button key="deselect"
             font_size={font_size}
             settings={this.props.settings}
-            on_click={() => this.props.update_recursive_piecing_settings_element("active_panel", undefined)}
+            on_click={() => {
+                this.props.update_recursive_piecing_settings_element("new_start_node", undefined);
+                this.props.update_recursive_piecing_settings_element("new_end_node", undefined);
+                this.props.update_recursive_piecing_settings_element("active_panel", undefined);
+            }}
             >Deselect</Button>
         );
     }

@@ -1,55 +1,64 @@
 export class RecursivePiecingNodeContainer {
-    constructor() {
+    constructor(next_node_id = 0) {
         this.nodes = {};
+        this.next_node_id = next_node_id;
     }
 
     add_node(x, y) {
-        const node = new RecursivePiecingGeometricNode(x, y);
-        this.nodes[node.name] = node;
+        const name = `node${this.next_node_id++}`;
+
+        const node = new RecursivePiecingGeometricNode(x, y, name);
+        this.nodes[name] = node;
 
         return node;
     }
+
+    add_nodes(nodes) {
+        Object.values(nodes).forEach(node => {
+            this.nodes[node.name] = new RecursivePiecingGeometricNode(node.x, node.y, node.name);
+        });
+    }
 }
 
-class RecursivePiecingGeometricNode {
-    constructor(x, y) {
+export class RecursivePiecingGeometricNode {
+    constructor(x, y, name) {
         this.x = x;
         this.y = y;
-
-        this.name = `node${RecursivePiecingGeometricNode.instance_count++}`;
+        this.name = name;
     }
-
-    static instance_count = 0;
 }
 
 export class RecursivePiecingLineContainer {
-    constructor() {
-         this.lines = {};      
+    constructor(next_line_id = 0) {
+        this.lines = {};
+        this.next_line_id = next_line_id;
     }
 
     add_line(start, end) {
-        const line = new RecursivePiecingGeometricLine(start, end);
-        this.lines[line.name] = line;
+        const name = `line${this.next_line_id++}`;
+
+        const line = new RecursivePiecingGeometricLine(start, end, name);
+        this.lines[name] = line;
 
         return line;
     }
+
+    add_lines(lines, node_container) {
+        Object.values(lines).forEach(line => {
+            this.lines[line.name] = new RecursivePiecingGeometricLine(node_container.nodes[line.start], node_container.nodes[line.end], line.name);
+        });
+    }
 }
 
-class RecursivePiecingGeometricLine {
-    constructor(start, end, leaf_line=true) {
+export class RecursivePiecingGeometricLine {
+    constructor(start, end, name, leaf_line=true) {
         this.start = start;
         this.end = end;
+        this.name = name;
 
         // is this a line associated with a leaf node
         this.leaf_line = leaf_line;
-
-        this.name = `line${RecursivePiecingGeometricLine.instance_count++}`;
-
-        // these are the lines that are contained within this line
-        this.sub_lines = []
     }
-
-    static instance_count = 0;
 
     midpoint() {
         return {x: 0.5*(this.start.x + this.end.x), y: 0.5*(this.start.y + this.end.y) }
@@ -63,20 +72,54 @@ class RecursivePiecingGeometricLine {
 }
 
 export class RecursivePiecingPanelContainer {
-    constructor() {
+    constructor(next_panel_id = 0) {
         this.panels = {}
+        this.next_panel_id = next_panel_id;
     }
 
     add_panel(nodes, lines) {
-        const panel = new RecursivePiecingGeometricPanel(nodes, lines);
+        const name = `panel${this.next_panel_id++}`;
+
+        const panel = new RecursivePiecingGeometricPanel(nodes, lines, name);
     
         if( Object.keys(this.panels).length===0 ) {
             this.top_panel = panel;
         }
 
-        this.panels[panel.name] = panel;
+        this.panels[name] = panel;
 
         return panel;
+    }
+
+    add_panels(panels, node_container, line_container) {
+        var active_panel = null;
+
+        // create objects for each panel by adding the nodes and lines 
+        Object.values(panels).forEach(panel => {
+            const nodes = panel.nodes.map(node_name => node_container.nodes[node_name]),
+                  lines = panel.lines.map(line_name => line_container.lines[line_name]);
+
+            this.panels[panel.name] = new RecursivePiecingGeometricPanel(nodes, lines, panel.name);
+
+            // set the top panel
+            if( panel.is_top_panel ) {
+                this.top_panel = this.panels[panel.name];
+            }
+
+            // set the active panel
+            if( panel.is_active_panel ) {
+                active_panel = this.panels[panel.name];
+            }
+        });
+
+        // now that the panels have been created, loop through again and add their children 
+        Object.values(panels).forEach(panel => {
+            this.panels[panel.name].left_panel = panel.left_panel===null? null : this.panels[panel.left_panel]
+            this.panels[panel.name].right_panel = panel.right_panel===null? null : this.panels[panel.right_panel]
+            this.panels[panel.name].split_line = panel.split_line===null? null : line_container.lines[panel.split_line]
+        });
+
+        return active_panel;
     }
 
     get_selected_panel(x, y) {
@@ -84,7 +127,7 @@ export class RecursivePiecingPanelContainer {
     }
 
     _recursively_get_selected_panel(x, y, current_panel) {
-        if( current_panel.split_line===undefined ) {
+        if( !current_panel.has_children() ) {
             return current_panel;
         }
         
@@ -99,19 +142,16 @@ export class RecursivePiecingPanelContainer {
     }
 }
 
-class RecursivePiecingGeometricPanel {
-    constructor(nodes, lines) {
+export class RecursivePiecingGeometricPanel {
+    constructor(nodes, lines, name) {
         this.nodes = nodes;
         this.lines = lines;
-
-        this.name = `panel${RecursivePiecingGeometricPanel.instance_count++}`;
+        this.name = name;
     }
 
-    static instance_count = 0;
-
-    includes_node(node_name) {
+    includes_node(node) {
         for( var key in this.nodes ) {
-            if( this.nodes[key].name===node_name ) {
+            if( this.nodes[key]===node ) {
                 return true;
             }
         }
@@ -131,6 +171,12 @@ class RecursivePiecingGeometricPanel {
         this.left_panel = left_panel;
         this.right_panel = right_panel;
         this.split_line = split_line;
+    }
+
+    has_children() {
+        return this.left_panel!==undefined && this.left_panel!==null
+            && this.right_panel!==undefined && this.right_panel!==null
+            && this.split_line!==undefined && this.split_line!==null
     }
 }
 

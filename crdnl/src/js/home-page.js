@@ -13,6 +13,8 @@ import RecursivePiecingSettings from "./project-page/main-displays/project/recur
 
 import { initialize_recursive_piecing_containers } from "./project-page/main-displays/project/recursive-piecing/recursive-piecing-geometry";
 
+import { RecursivePiecingNodeContainer, RecursivePiecingLineContainer, RecursivePiecingPanelContainer } from "./project-page/main-displays/project/recursive-piecing/recursive-piecing-geometry";
+
 import axios from "axios"; 
 
 // enum to decide which page to display
@@ -115,7 +117,7 @@ class HomePage extends Component {
         const new_line = this.state.recursive_piecing_lines.add_line(start_node, end_node);
 
         const normal_vec = new_line.normal_vector(), midpoint = new_line.midpoint();
-        const active_panel = this.state.recursive_piecing_panels.panels[this.state.recursive_piecing_settings.active_panel];
+        const active_panel = this.state.recursive_piecing_settings.active_panel;
 
         // make a list of left and right nodes for the subpanels
         var left_nodes = [start_node, end_node], 
@@ -152,17 +154,18 @@ class HomePage extends Component {
             }
 
             line.leaf_line = false;
-            line.sub_lines = [start_line, end_line, ...line.sub_lines]
         }
 
         // make a list of left and right lines for the subpanels
         var left_lines = [new_line], right_lines = [new_line];
-        active_panel.lines.forEach(line => {
-            if( line.name===this.state.recursive_piecing_settings.new_start_node.line ) {
+        const start_index = parseInt(this.state.recursive_piecing_settings.new_start_node.active_index), 
+              end_index = parseInt(this.state.recursive_piecing_settings.new_end_node.active_index);
+        active_panel.lines.forEach((line, index) => {
+            if( start_index===index ) {
                 split_line(line, start_node);
                 return;
             }
-            if( line.name===this.state.recursive_piecing_settings.new_end_node.line ) {
+            if( end_index===index ) {
                 split_line(line, end_node);
                 return;
             }
@@ -222,12 +225,24 @@ class HomePage extends Component {
         }).then((result) => {
             return result.project_settings.has_recursive_piecing? this.load_recursive_piecing_panels(result) : result;
         }).then((result) => {
+            // add the nodes into a container 
+            var nodes = new RecursivePiecingNodeContainer(result.recursive_piecing_settings.next_node_id);
+            nodes.add_nodes(result.recursive_piecing_nodes);
+
+            // add the lines into a container
+            var lines = new RecursivePiecingLineContainer(result.recursive_piecing_settings.next_line_id);
+            lines.add_lines(result.recursive_piecing_lines, nodes);
+
+            // add the panls into a container
+            var panels = new RecursivePiecingPanelContainer(result.recursive_piecing_settings.next_panel_id);
+            result.recursive_piecing_settings.active_panel = panels.add_panels(result.recursive_piecing_panels, nodes, lines);
+
             this.setState({
                 project_settings: result.project_settings,
                 recursive_piecing_settings: result.recursive_piecing_settings,
-                recursive_piecing_nodes: result.recursive_piecing_nodes,
-                recursive_piecing_lines: result.recursive_piecing_lines,
-                recursive_piecing_panels: result.recursive_piecing_panels,
+                recursive_piecing_nodes: nodes,
+                recursive_piecing_lines: lines,
+                recursive_piecing_panels: panels,
                 page: PageNames.project_page
             });
         });
@@ -314,7 +329,7 @@ class HomePage extends Component {
     }
 
     async save_recursive_piecing_nodes(project_id) {
-        return await axios.post(`http://localhost:${this.props.backend_port}/save_recursive_piecing_nodes/${project_id}`, this.state.recursive_piecing_nodes).then(
+        return await axios.post(`http://localhost:${this.props.backend_port}/save_recursive_piecing_nodes/${project_id}`, this.state.recursive_piecing_nodes.nodes).then(
             (value) => {
                 return value.data;
         });
@@ -328,14 +343,46 @@ class HomePage extends Component {
     }
 
     async save_recursive_piecing_panels(project_id) {
-        return await axios.post(`http://localhost:${this.props.backend_port}/save_recursive_piecing_panels/${project_id}`, this.state.recursive_piecing_panels).then(
+        // we don't want to send a bunch of copies of the panels, so go through and replace references with names
+        var panels = {}
+        Object.values(this.state.recursive_piecing_panels.panels).forEach(panel => {
+            var compressed_panel = {
+                name: panel.name,
+                nodes: panel.nodes.map(n => {return n.name}),
+                lines: panel.lines.map(l => {return l.name}),
+            }
+
+            if( panel.has_children() ) {
+                compressed_panel.left_panel = panel.left_panel.name
+                compressed_panel.right_panel = panel.right_panel.name
+                compressed_panel.split_line = panel.split_line.name
+            }
+
+            panels[panel.name] = compressed_panel;
+        });
+
+        const data = { 
+            panels: panels, 
+            top_panel_name: this.state.recursive_piecing_panels.top_panel.name
+        }
+
+        if( this.state.recursive_piecing_settings.active_panel!==undefined && this.state.recursive_piecing_settings.active_panel!==null ) {
+            data.active_panel_name = this.state.recursive_piecing_settings.active_panel.name;
+        }
+        
+        return await axios.post(`http://localhost:${this.props.backend_port}/save_recursive_piecing_panels/${project_id}`, data).then(
             (value) => {
                 return value.data;
         });
     }
 
     async save_recursive_piecing_settings(project_id) {
-        return await axios.post(`http://localhost:${this.props.backend_port}/save_recursive_piecing_settings/${project_id}`, this.state.recursive_piecing_settings).then(
+        var recursive_piecing_info = this.state.recursive_piecing_settings;
+        recursive_piecing_info["next_node_id"] = this.state.recursive_piecing_nodes.next_node_id;
+        recursive_piecing_info["next_line_id"] = this.state.recursive_piecing_lines.next_line_id;
+        recursive_piecing_info["next_panel_id"] = this.state.recursive_piecing_panels.next_panel_id;
+
+        return await axios.post(`http://localhost:${this.props.backend_port}/save_recursive_piecing_settings/${project_id}`, recursive_piecing_info).then(
             (value) => {
                 return value.data;
         });

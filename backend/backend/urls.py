@@ -18,9 +18,10 @@ from django.contrib import admin
 from django.urls import path
 from projects.views.project_views import (SaveProjectView, LoadProjectView, 
                                           DeleteProjectView, ProjectNamesView)
-from projects.views.recursive_piecing_views import (SaveRecursivePiecingSettings, SaveRecursivePiecingNodes, SaveRecursivePiecingLines, SaveRecursivePiecingPanels,
-                                                    LoadRecursivePiecing, LoadRecursivePiecingNodes, LoadRecursivePiecingLines, LoadRecursivePiecingPanels,
-                                                    GetAllRecursivePiecingSettings, GetAllRecursivePiecingNodes, GetAllRecursivePiecingLines, GetAllRecursivePiecingPanels)
+from projects.views.recursive_piecing.recursive_piecing import (SaveRecursivePiecingSettings, LoadRecursivePiecing, GetAllRecursivePiecingSettings)
+from projects.views.recursive_piecing.nodes import (SaveRecursivePiecingNodes, LoadRecursivePiecingNodes, GetAllRecursivePiecingNodes)
+from projects.views.recursive_piecing.lines import (SaveRecursivePiecingLines, LoadRecursivePiecingLines, GetAllRecursivePiecingLines)
+from projects.views.recursive_piecing.panels import (SaveRecursivePiecingPanels, LoadRecursivePiecingPanels, GetAllRecursivePiecingPanels)
 
 urlpatterns = [
     path("admin/", admin.site.urls),

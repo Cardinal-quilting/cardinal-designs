@@ -1,6 +1,6 @@
 from django.db import models
 
-from projects.models.recursive_piecing.recursive_piecing_model import RecursivePiecing
+from projects.models.recursive_piecing.recursive_piecing import RecursivePiecing
 
 class Node(models.Model):
     """
@@ -12,3 +12,4 @@ class Node(models.Model):
     y = models.FloatField()
 
     name = models.CharField(max_length=100)
+
