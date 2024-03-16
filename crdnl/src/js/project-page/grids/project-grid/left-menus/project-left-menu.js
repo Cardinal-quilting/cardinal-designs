@@ -1,7 +1,7 @@
 import { Component } from "react";
 
 import BackgroundImageOptionsBox from "./background-image-options-box";
-import RecursivePiecingOptionsBox from "./recursive-piecing/recursive-piecing-options-box";
+import RecursivePiecingOptionsBox from "./recursive-piecing-options-box";
 import ProjectOptionsBox from "./project-options-box";
 
 class ProjectLeftMenu extends Component {

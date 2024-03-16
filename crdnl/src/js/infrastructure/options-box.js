@@ -81,7 +81,7 @@ class OptionsBox extends Component {
                 disabled={this.props.disabled}
                 on_click={this.toggle_display}
                 >
-                    {this.props.title + ((!this.props.disabled & this.state.display)? "\u25BE":"\u25B8")}
+                    {this.props.title + ((!this.props.disabled & this.state.display)? "\u25BE" : "\u25B8")}
                 </Button>
                 </div>
 

@@ -1,6 +1,6 @@
-import Grid from "./grid";
+import Grid from "../grid";
 
-import Row from "./row";
+import Row from "../row";
 
 import MiniMap from "./mini-map";
 

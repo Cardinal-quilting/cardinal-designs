@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import Project from "../main-displays/project/project";
+import Project from "./project-display/project";
 
 import "css/project-page/grids/main-display.css"
 

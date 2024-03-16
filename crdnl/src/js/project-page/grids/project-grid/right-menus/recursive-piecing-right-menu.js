@@ -1,6 +1,6 @@
 import { Component } from "react";
 
-import ActivePanelOptionsBox from "./active-panel-options-box";
+import ActivePanelOptionsBox from "./active-recursive-piecing-panel-options-box";
 
 class RecursivePiecingRightMenu extends Component {
     render() {

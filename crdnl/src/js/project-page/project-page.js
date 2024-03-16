@@ -1,7 +1,7 @@
 import ProjectPageNavigationBar from "./navigation-bar";
 
-import ProjectGrid from "./grids/project-grid";
-import SupportGrid from "./grids/support-grid";
+import ProjectGrid from "./grids/project-grid/project-grid";
+import SupportGrid from "./grids/support-grid/support-grid";
 
 import RowBorder from "./grids/row-border";
 

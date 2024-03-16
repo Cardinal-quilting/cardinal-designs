@@ -8,12 +8,12 @@ import StartNewProjectPage from "./launch-project-page/start-new-project-page";
 import LoadProjectPage from "./launch-project-page/load-project-page";
 import SaveProjectAsPage from "./launch-project-page/save-project-as-page";
 
-import ProjectSettings from "./project-page/main-displays/project/project-settings";
-import RecursivePiecingSettings from "./project-page/main-displays/project/recursive-piecing/recursive-piecing-settings";
+import ProjectSettings from "./project-page/project-settings";
+import RecursivePiecingSettings from "./project-page/recursive-piecing-settings";
 
-import { initialize_recursive_piecing_containers } from "./project-page/main-displays/project/recursive-piecing/recursive-piecing-geometry";
+import { initialize_recursive_piecing_containers } from "./project-page/grids/project-grid/main-displays/project-display/recursive-piecing/recursive-piecing-geometry";
 
-import { RecursivePiecingNodeContainer, RecursivePiecingLineContainer, RecursivePiecingPanelContainer } from "./project-page/main-displays/project/recursive-piecing/recursive-piecing-geometry";
+import { RecursivePiecingNodeContainer, RecursivePiecingLineContainer, RecursivePiecingPanelContainer } from "./project-page/grids/project-grid/main-displays/project-display/recursive-piecing/recursive-piecing-geometry";
 
 import axios from "axios"; 
 

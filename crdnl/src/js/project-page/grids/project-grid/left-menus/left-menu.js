@@ -1,6 +1,6 @@
 import { Component } from "react";
 
-import ProjectLeftMenu from "../main-displays/project/project-left-menu";
+import ProjectLeftMenu from "./project-left-menu";
 
 class LeftMenu extends Component {
     render() {

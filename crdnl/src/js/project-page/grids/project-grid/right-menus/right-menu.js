@@ -1,6 +1,6 @@
 import { Component } from "react";
 
-import RecursivePiecingRightMenu from "../main-displays/project/recursive-piecing/recursive-piecing-right-menu";
+import RecursivePiecingRightMenu from "./recursive-piecing-right-menu";
 
 class RightMenu extends Component {
     render() { 
