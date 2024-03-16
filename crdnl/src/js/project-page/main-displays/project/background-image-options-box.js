@@ -19,15 +19,13 @@ class BackgroundImageOptionsBox extends OptionsBox {
     }
 
     update_zoom(value) {
-        if( this.props.project_settings.background_image_disable_movement ) { return; }
-
         this.props.project_settings.background_image_zoom = parseFloat(value);
         this.props.set_project_settings(this.props.project_settings);
     }
 
     zoom() {
         const font_size = String(this.props.settings.small_font_size)+"vmin";
-        const max_zoom = Math.max(this.props.project_settings.background_image_max_zoom, 1.01*Math.pow(this.props.project_settings.background_image_zoom, 1.0));
+        const max_zoom = Math.max(this.props.project_settings.background_image_max_zoom, 1.01*this.props.project_settings.background_image_zoom);
 
         return (
             <div
@@ -51,6 +49,7 @@ class BackgroundImageOptionsBox extends OptionsBox {
                 style={{
                     width: String(0.9*this.props.width)+"vw"
                 }}
+                disabled={this.props.project_settings.background_image_disable_movement}
             />
             </div>
         );

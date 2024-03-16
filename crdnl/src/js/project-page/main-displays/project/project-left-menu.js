@@ -2,6 +2,7 @@ import { Component } from "react";
 
 import BackgroundImageOptionsBox from "./background-image-options-box";
 import RecursivePiecingOptionsBox from "./recursive-piecing/recursive-piecing-options-box";
+import ProjectOptionsBox from "./project-options-box";
 
 class ProjectLeftMenu extends Component {
     render() {
@@ -12,6 +13,15 @@ class ProjectLeftMenu extends Component {
                 minWidth: String(this.props.width)+"vw",
             }}
             >
+                <ProjectOptionsBox
+                settings={this.props.settings}
+                project_settings={this.props.project_settings}
+                update_project_settings_element={this.props.update_project_settings_element}
+                set_project_settings={this.props.set_project_settings}
+                title="Project options"
+                width={0.95*this.props.width}
+                />
+
                 <RecursivePiecingOptionsBox
                 settings={this.props.settings}
                 project_settings={this.props.project_settings}
@@ -23,6 +33,7 @@ class ProjectLeftMenu extends Component {
                 set_recursive_piecing_settings={this.props.set_recursive_piecing_settings}
                 update_recursive_piecing_settings_element={this.props.update_recursive_piecing_settings_element}
                 />
+
                 <BackgroundImageOptionsBox
                 settings={this.props.settings}
                 project_settings={this.props.project_settings}

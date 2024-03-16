@@ -97,6 +97,7 @@ class ProjectGrid extends Grid {
                 height={String(display_height)+"vh"}
                 project_settings={this.props.project_settings}
                 set_project_settings={this.props.set_project_settings}
+                update_project_settings_element={this.props.update_project_settings_element}
                 recursive_piecing_settings={this.props.recursive_piecing_settings}
                 recursive_piecing_nodes={this.props.recursive_piecing_nodes}
                 recursive_piecing_lines={this.props.recursive_piecing_lines}

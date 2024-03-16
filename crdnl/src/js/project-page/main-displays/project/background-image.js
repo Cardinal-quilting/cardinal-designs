@@ -50,9 +50,6 @@ class BackgroundImage extends Component {
             dragging: false,
             start_move: undefined
         });
-
-        event.preventDefault();
-        event.stopPropagation();   
     }
 
     mouse_move(event) {
@@ -65,9 +62,6 @@ class BackgroundImage extends Component {
         this.props.project_settings.background_image_translation.y = this.state.start_move.image_y + ymove/height;
 
         this.props.set_project_settings(this.props.project_settings);
-
-        event.preventDefault();
-        event.stopPropagation();        
     }
 
     mouse_down(event) {
@@ -84,9 +78,6 @@ class BackgroundImage extends Component {
                 screen_y: event.screenY
             }
         });
-
-        event.preventDefault();
-        event.stopPropagation();
     }
 
     render() { 

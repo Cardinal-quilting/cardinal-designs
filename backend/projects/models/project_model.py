@@ -14,3 +14,10 @@ class Project(models.Model):
     background_image_display = models.BooleanField()
 
     aspect_ratio = models.FloatField()
+
+    project_display_zoom = models.FloatField()
+    max_project_display_zoom = models.FloatField()
+    project_display_zoom_wheel_sensitivity = models.FloatField()
+    disable_project_display_movement = models.BooleanField()
+
+    project_display_translation = models.JSONField()

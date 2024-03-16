@@ -43,7 +43,7 @@ class MiniMap extends Component {
                 <Project 
                     project_settings={this.props.project_settings}
                     display_dimensions = {this.display_dimensions}
-                    display_scale_factor = {0.95}
+                    display_scale_factor = {0.96}
                     is_minimap={true}
                     recursive_piecing_settings={this.props.recursive_piecing_settings}
                     recursive_piecing_nodes={this.props.recursive_piecing_nodes}

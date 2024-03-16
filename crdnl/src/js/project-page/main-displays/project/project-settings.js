@@ -13,6 +13,13 @@ class ProjectSettings {
     background_image_display = true;
 
     aspect_ratio = 1.0;
+
+    project_display_zoom = 0.96;
+    max_project_display_zoom = 5.0;
+    project_display_zoom_wheel_sensitivity = 0.00025;
+    disable_project_display_movement = false;
+
+    project_display_translation = { x: 0, y: 0 }
 }
 
 export default ProjectSettings;

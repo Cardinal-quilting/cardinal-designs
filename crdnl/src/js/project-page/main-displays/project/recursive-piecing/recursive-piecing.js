@@ -99,39 +99,62 @@ class RecursivePiecing extends Component {
     }
 
     handle_mouse_down(clickX, clickY) {
+        // there is not an active panel
+        if( this.state.active_line_refs===undefined ) {
+            // return false because we are not moving a node
+            return false;
+        }
+
+        const has_start = this.has_start_node(), 
+              has_end = this.has_end_node();
+
+        // we have clicked again but have a candidate line, so stop moving the end point and allow the user to drag the start and end
+        if( has_start && has_end ) {
+            this.ref.current.removeEventListener("mousemove", this.mouse_move_split_panel);
+
+            // possibly drag the start node
+            if( this.new_start_node_ref.current.has_clicked_node(clickX, clickY) ) {
+                this.setState({ dragging_start: true, dragging_new: {
+                    x: clickX - this.props.recursive_piecing_settings.new_start_node.point.x,
+                    y: clickY - this.props.recursive_piecing_settings.new_start_node.point.y
+                } });
+                this.ref.current.addEventListener("mousemove", this.mouse_move_drag_new_node);
+
+                // return true because we are moving a node
+                return true;
+            }
+
+            // possibly drag the end node 
+            if( this.new_end_node_ref.current.has_clicked_node(clickX, clickY) ) {
+                this.setState({ dragging_start: false, dragging_new: {
+                    x: clickX - this.props.recursive_piecing_settings.new_end_node.point.x,
+                    y: clickY - this.props.recursive_piecing_settings.new_end_node.point.y
+                } });
+                this.ref.current.addEventListener("mousemove", this.mouse_move_drag_new_node);
+
+                // return true because we are moving a node
+                return true;
+            }
+        }
+
+        // return false because we are not moving a node
+        return false;
+    }
+
+    handle_click(clickX, clickY) {
         if( !this.has_active() ) {
             this.select_panel(clickX, clickY);
         }
 
         // there is an active panel
         if( this.state.active_line_refs!==undefined ) {
-            const has_start = this.has_start_node(), has_end = this.has_end_node();
+            const has_start = this.has_start_node(), 
+                  has_end = this.has_end_node();
 
-            // we have clicked again but have a candidate line, so stop moving the end point and allow the user to drag the start and end
-            if( has_start && has_end ) {
-                this.ref.current.removeEventListener("mousemove", this.mouse_move_split_panel);
-
-                // possibly drag the start node
-                if( this.new_start_node_ref.current.has_clicked_node(clickX, clickY) ) {
-                    this.setState({ dragging_start: true, dragging_new: {
-                        x: clickX - this.props.recursive_piecing_settings.new_start_node.point.x,
-                        y: clickY - this.props.recursive_piecing_settings.new_start_node.point.y
-                    } });
-                    this.ref.current.addEventListener("mousemove", this.mouse_move_drag_new_node);
-                }
-
-                // possibly drag the end node 
-                if( this.new_end_node_ref.current.has_clicked_node(clickX, clickY) ) {
-                    this.setState({ dragging_start: false, dragging_new: {
-                        x: clickX - this.props.recursive_piecing_settings.new_end_node.point.x,
-                        y: clickY - this.props.recursive_piecing_settings.new_end_node.point.y
-                    } });
-                    this.ref.current.addEventListener("mousemove", this.mouse_move_drag_new_node);
-                }
             // we do not have a candidate new line
             // we need to make sure that neither end point is created, if the user clicks twice without moving their mouse 
             // it is possible that we have a start but not an end node
-            } else if ( !has_start && !has_end ) {
+            if ( !has_start && !has_end ) {
                 const projection = this.project_to_active_panel(clickX, clickY);
                                 
                 if( projection!==undefined && projection.on_line ) {
@@ -154,8 +177,15 @@ class RecursivePiecing extends Component {
         // project to the lines, but if we are dragging end don't project to the line with start and vice versa
         const projection = this.project_to_active_panel(moveX, moveY, this.state.dragging_start? this.props.recursive_piecing_settings.new_end_node.active_index : this.props.recursive_piecing_settings.new_start_node.active_index);
 
+        const moved_node = {
+            point: projection.point, 
+            line: projection.line,
+            active_index: this.state.dragging_start? this.props.recursive_piecing_settings.new_start_node.active_index
+                                                   : this.props.recursive_piecing_settings.new_end_node.active_index
+        }
+
         // update the node location
-        this.props.update_recursive_piecing_settings_element(this.state.dragging_start? "new_start_node" : "new_end_node", {point: projection.point, line: projection.line});
+        this.props.update_recursive_piecing_settings_element(this.state.dragging_start? "new_start_node" : "new_end_node", moved_node);
     }
 
     mouse_move_split_panel(event) {
