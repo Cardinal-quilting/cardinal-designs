@@ -59,17 +59,17 @@ class RecursivePiecing extends Component {
         return this.props.recursive_piecing_settings.active_panel!==undefined && this.props.recursive_piecing_settings.active_panel!==null
     }
 
-    project_to_active_panel(x, y, skip_index=undefined) {
+    project_to_active_panel(x, y, skip_line_name=undefined) {
         if( !this.has_active() ) { return undefined; }
 
-        return Object.keys(this.state.active_line_refs).map(key => {
+        var projected_point = Object.keys(this.state.active_line_refs).map(key => {
             const ref = this.state.active_line_refs[key];
             if( ref.current===null ) {
                 return undefined;
             }
 
             var projected = ref.current.project_to_line(x, y);
-            projected["active_index"] = key;
+            projected["line"] = this.props.recursive_piecing_settings.active_panel.lines[key];
             
             return projected;
         }).reduce((prev, curr) => {
@@ -80,12 +80,39 @@ class RecursivePiecing extends Component {
                 return prev;
             }
 
-            if( skip_index!==undefined ) {
-                if( prev.active_index===skip_index ) { return curr; }
-                if( curr.active_index===skip_index ) { return prev; }
+            if( skip_line_name!==undefined ) {
+                if( prev.line.name===skip_line_name ) { return curr; }
+                if( curr.line.name===skip_line_name ) { return prev; }
             }
             return prev.distance<curr.distance ? prev : curr;
         });
+
+        if( projected_point===undefined ) {
+            return undefined;
+        }
+
+        const [height, width] = this.props.project_dimensions();
+
+        // check if the point is close to the line endpoints 
+        const snap_to_endpoint = (projected, endpoint) => {
+            const diffx = width*(projected.point.x-endpoint.x), diffy = height*(projected.point.y-endpoint.y);
+            const dist = Math.sqrt(diffx*diffx + diffy*diffy);
+
+            if( 2.0*dist<this.node_radius ) {
+                projected.line = undefined;
+                projected.point = {x: endpoint.x, y: endpoint.y}
+            }
+
+            return projected;
+        };
+
+        // if a the point is close to one of the endpoints, snap to the end point
+        projected_point = snap_to_endpoint(projected_point, projected_point.line.end);
+        if( projected_point.line!==undefined ) {
+            projected_point = snap_to_endpoint(projected_point, projected_point.line.start);
+        }
+
+        return projected_point;
     }
 
     // check to see if a candidate node to start a new line that splits a panal has been defined
@@ -158,7 +185,7 @@ class RecursivePiecing extends Component {
                 const projection = this.project_to_active_panel(clickX, clickY);
                                 
                 if( projection!==undefined && projection.on_line ) {
-                    this.props.update_recursive_piecing_settings_element("new_start_node", {point: projection.point, active_index: projection.active_index});
+                    this.props.update_recursive_piecing_settings_element("new_start_node", {point: projection.point, line: projection.line});
                     this.ref.current.addEventListener("mousemove", this.mouse_move_split_panel);
                 }
              }
@@ -175,13 +202,14 @@ class RecursivePiecing extends Component {
         const moveX = clickX - this.state.dragging_new.x, moveY = clickY - this.state.dragging_new.y;
 
         // project to the lines, but if we are dragging end don't project to the line with start and vice versa
-        const projection = this.project_to_active_panel(moveX, moveY, this.state.dragging_start? this.props.recursive_piecing_settings.new_end_node.active_index : this.props.recursive_piecing_settings.new_start_node.active_index);
+        const get_line_name = (line) => {
+            return line===undefined? undefined : line.name;
+        };
+        const projection = this.project_to_active_panel(moveX, moveY, this.state.dragging_start? get_line_name(this.props.recursive_piecing_settings.new_end_node.line) : get_line_name(this.props.recursive_piecing_settings.new_start_node.line));
 
         const moved_node = {
             point: projection.point, 
-            line: projection.line,
-            active_index: this.state.dragging_start? this.props.recursive_piecing_settings.new_start_node.active_index
-                                                   : this.props.recursive_piecing_settings.new_end_node.active_index
+            line: projection.line
         }
 
         // update the node location
@@ -190,13 +218,24 @@ class RecursivePiecing extends Component {
 
     mouse_move_split_panel(event) {
         const [clickX, clickY] = this.props.transform_click_to_project_domain(event);
-        const projection = this.project_to_active_panel(clickX, clickY, this.props.recursive_piecing_settings.new_start_node.active_index);
-        this.props.update_recursive_piecing_settings_element("new_end_node", {point: projection.point, active_index: projection.active_index});
+        const get_line_name = (line) => {
+            return line===undefined? undefined : line.name;
+        };
+        const projection = this.project_to_active_panel(clickX, clickY, get_line_name(this.props.recursive_piecing_settings.new_start_node.line));
+        this.props.update_recursive_piecing_settings_element("new_end_node", {point: projection.point, line: projection.line});
+    }
+
+    get node_scale() {
+        const [height, width] = this.props.project_dimensions();
+        return Math.min(height, width);
+    }
+
+    get node_radius() {
+        return this.props.recursive_piecing_settings.node_size*this.node_scale;
     }
 
     render_node(point, color, key, ref=undefined) {
         const [height, width] = this.props.project_dimensions();
-        const node_size = this.props.recursive_piecing_settings.node_size*Math.min(height, width);
 
         return (
             <RecursivePiecingNode
@@ -206,7 +245,7 @@ class RecursivePiecing extends Component {
                 y = {point.y}
                 project_height = {height}
                 project_width = {width}
-                size = {node_size}
+                size = {this.node_radius}
                 color = {color}
                 on_mouse_down = {this.drag_new_node}
             />

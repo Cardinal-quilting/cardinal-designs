@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import Project from "./project-display/project";
+import RecursivePiecingTreeDisplay from "./recursive-piecing-tree-display/recursive-piecing-tree-display";
 
 import "css/project-page/grids/main-display.css"
 
@@ -24,6 +25,31 @@ class MainDisplay extends Component {
         return [this.ref.current.getBoundingClientRect().height, this.ref.current.getBoundingClientRect().width];
     }
 
+    content() {
+        if( this.props.project_settings.main_display==="Project" ) {
+            return (
+                <Project
+                    display_dimensions = {this.display_dimensions}
+                    project_settings={this.props.project_settings}
+                    set_project_settings={this.props.set_project_settings}
+                    update_project_settings_element={this.props.update_project_settings_element}
+                    recursive_piecing_settings={this.props.recursive_piecing_settings}
+                    recursive_piecing_nodes={this.props.recursive_piecing_nodes}
+                    recursive_piecing_lines={this.props.recursive_piecing_lines}
+                    recursive_piecing_panels={this.props.recursive_piecing_panels}
+                    update_recursive_piecing_settings_element={this.props.update_recursive_piecing_settings_element}
+                /> 
+            );
+        }
+
+        if( this.props.project_settings.main_display==="Recursive piecing tree") {
+            return (
+                <RecursivePiecingTreeDisplay
+                />
+            );
+        }
+    }
+
     render() {
         const width = String(this.props.width) + "vw";
 
@@ -39,18 +65,7 @@ class MainDisplay extends Component {
                 overflow: "hidden"
             }}
             >
-                {this.state.mounted? 
-                <Project
-                display_dimensions = {this.display_dimensions}
-                project_settings={this.props.project_settings}
-                set_project_settings={this.props.set_project_settings}
-                update_project_settings_element={this.props.update_project_settings_element}
-                recursive_piecing_settings={this.props.recursive_piecing_settings}
-                recursive_piecing_nodes={this.props.recursive_piecing_nodes}
-                recursive_piecing_lines={this.props.recursive_piecing_lines}
-                recursive_piecing_panels={this.props.recursive_piecing_panels}
-                update_recursive_piecing_settings_element={this.props.update_recursive_piecing_settings_element}
-                /> : null}
+                {this.state.mounted? this.content() : null}
             </div>
         );
     }

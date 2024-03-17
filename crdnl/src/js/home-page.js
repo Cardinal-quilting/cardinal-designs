@@ -108,16 +108,63 @@ class HomePage extends Component {
     }
 
     split_active_recursive_piecing_panel() {
+        const reset_active_panel = () => {
+            var new_settings = this.state.recursive_piecing_settings;
+            new_settings["new_start_node"] = undefined;
+            new_settings["new_end_node"] = undefined;
+            new_settings["active_panel"] = undefined;
+
+            this.setState({
+                recursive_piecing_settings: new_settings,
+                recursive_piecing_nodes: this.state.recursive_piecing_nodes,
+                recursive_piecing_lines: this.state.recursive_piecing_lines,
+                recursive_piecing_panels: this.state.recursive_piecing_panels
+            });
+        }
+
+        const active_panel = this.state.recursive_piecing_settings.active_panel;
+
+        // if the new line is contained within one of the active lines, we don't actually need to split this panel
+        const compute_slope = (l) => { return (l.end.y - l.start.y)/(l.end.x - l.start.x) }
+        const compute_intercept = (p, slope) => { return p.y - slope*p.x }
+
+        // do not create a real line because we do not want to add it to the container (it would need to be destroyed if the new segment is a sub segement of an existing one)
+        const temp_line = {start: this.state.recursive_piecing_settings.new_start_node.point, end: this.state.recursive_piecing_settings.new_end_node.point}
+        const new_slope = compute_slope(temp_line);
+        const new_intercept = compute_intercept(temp_line.start, new_slope);
+        const is_sub_segment = active_panel.lines.some(line => {
+            const slope = compute_slope(line);
+            if( Math.abs(slope-new_slope)<1.0e-14 ) {
+                const intercept = compute_intercept(line.start, slope);
+                if( Math.abs(intercept-new_intercept)<1.0e-14 ) {
+                    reset_active_panel();
+                    return true;
+                }
+            }
+            if( Math.abs(slope)===Infinity && Math.abs(new_slope)===Infinity ) {
+                console.log(Math.abs(slope)===Infinity, Math.abs(new_slope)===Infinity, Math.abs(temp_line.start.x-line.start.x)<1.0e-1);
+                if( Math.abs(temp_line.start.x-line.start.x)<1.0e-14 ) {
+                    reset_active_panel();
+                    return true;
+                }
+            }
+            return false;
+        })
+
+        // if the new line is a subsegment of one of the sides of the polygon, we don't need to split
+        if( is_sub_segment ) {
+            return;
+        }
+
         const start_node = this.state.recursive_piecing_nodes.add_node(this.state.recursive_piecing_settings.new_start_node.point.x,
-                                                                       this.state.recursive_piecing_settings.new_start_node.point.y);
+            this.state.recursive_piecing_settings.new_start_node.point.y);
         const end_node = this.state.recursive_piecing_nodes.add_node(this.state.recursive_piecing_settings.new_end_node.point.x,
-                                                                     this.state.recursive_piecing_settings.new_end_node.point.y);
-        
+            this.state.recursive_piecing_settings.new_end_node.point.y);
+
         // split the nodes into left and right
         const new_line = this.state.recursive_piecing_lines.add_line(start_node, end_node);
 
         const normal_vec = new_line.normal_vector(), midpoint = new_line.midpoint();
-        const active_panel = this.state.recursive_piecing_settings.active_panel;
 
         // make a list of left and right nodes for the subpanels
         var left_nodes = [start_node, end_node], 
@@ -158,14 +205,20 @@ class HomePage extends Component {
 
         // make a list of left and right lines for the subpanels
         var left_lines = [new_line], right_lines = [new_line];
-        const start_index = parseInt(this.state.recursive_piecing_settings.new_start_node.active_index), 
-              end_index = parseInt(this.state.recursive_piecing_settings.new_end_node.active_index);
-        active_panel.lines.forEach((line, index) => {
-            if( start_index===index ) {
+
+        const get_line_name = (node) => {
+            // the line might be undefined beacuse the node is snapped to an endpoint
+            return node.line===undefined? undefined : node.line.name;
+        };
+
+        const start_line_name = get_line_name(this.state.recursive_piecing_settings.new_start_node), 
+              end_line_name = get_line_name(this.state.recursive_piecing_settings.new_end_node);
+              active_panel.lines.forEach((line, index) => {
+            if( start_line_name===line.name ) {
                 split_line(line, start_node);
                 return;
             }
-            if( end_index===index ) {
+            if( end_line_name===line.name ) {
                 split_line(line, end_node);
                 return;
             }
@@ -182,17 +235,7 @@ class HomePage extends Component {
 
         active_panel.split(left_panel, right_panel, new_line);
 
-        var new_settings = this.state.recursive_piecing_settings;
-        new_settings["new_start_node"] = undefined;
-        new_settings["new_end_node"] = undefined;
-        new_settings["active_panel"] = undefined;
-
-        this.setState({
-            recursive_piecing_settings: new_settings,
-            recursive_piecing_nodes: this.state.recursive_piecing_nodes,
-            recursive_piecing_lines: this.state.recursive_piecing_lines,
-            recursive_piecing_panels: this.state.recursive_piecing_panels
-        });
+        reset_active_panel();
     }
 
     switch_page(page_name) {

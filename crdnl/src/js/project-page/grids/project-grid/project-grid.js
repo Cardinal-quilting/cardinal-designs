@@ -8,7 +8,7 @@ import LeftMenu from "./left-menus/left-menu";
 import RightMenu from "./right-menus/right-menu";
 
 import ProjectNameDisplay from "./project-name-display";
-import TopViews from "./top-views";
+import TopViews from "./top-views/top-views";
 
 class ProjectGrid extends Grid {
     constructor(props) {
@@ -19,15 +19,26 @@ class ProjectGrid extends Grid {
         });
     }
 
+    get_main_display_options() {
+        var displays = ["Project"];
+
+        if( this.props.project_settings.has_recursive_piecing ) {
+            displays = displays.concat(["Recursive piecing tree"]);
+        }
+
+        return displays;
+    }
+
     render() {
         // compute the widths of each column
         const left_width = String(this.props.left_width) + "vw";
         const numerical_center_width = this.center_width()
-        const center_width = String(numerical_center_width) + "vw";
         const right_width = String(this.props.right_width) + "vw";
 
         const height = String(this.props.height)+"vh"
         const display_height = this.props.height-this.props.views_height
+
+        const display_options = this.get_main_display_options();
 
         return ( 
             <div className="project-grid"
@@ -54,8 +65,12 @@ class ProjectGrid extends Grid {
                         project_name={this.props.project_settings.project_name}
                     />
                     <TopViews
-                        width = {center_width}
+                        width={numerical_center_width}
                         settings={this.props.settings}
+                        display_options={display_options}
+                        project_settings={this.props.project_settings}
+                        update_project_settings_element={this.props.update_project_settings_element}
+                        z_index={10}
                     />
                     <div
                         style={{ 

@@ -96,13 +96,15 @@ class Project extends Component {
             this.recursive_piecing_ref.current.handle_mouse_up();
         }
 
-        const moved_x = Math.abs(this.props.project_settings.project_display_translation.x - this.state.start_move.current_translation_x),
-              moved_y = Math.abs(this.props.project_settings.project_display_translation.y - this.state.start_move.current_translation_y);
+        if( this.state.start_move!==undefined ) {
+            const moved_x = Math.abs(this.props.project_settings.project_display_translation.x - this.state.start_move.current_translation_x),
+                  moved_y = Math.abs(this.props.project_settings.project_display_translation.y - this.state.start_move.current_translation_y);
 
-        // we did not move the project, so deal with the fact that we clicked on it
-        if( moved_x<1.0e-14 && moved_y<1.0e-14 && this.recursive_piecing_ref.current!==null && !this.disabled_recursive_piecing() ) {
-            const [clickX, clickY] = this.transform_click_to_project_domain(event); 
-            this.recursive_piecing_ref.current.handle_click(clickX, clickY);
+            // we did not move the project, so deal with the fact that we clicked on it
+            if( moved_x<1.0e-14 && moved_y<1.0e-14 && this.recursive_piecing_ref.current!==null && !this.disabled_recursive_piecing() ) {
+                const [clickX, clickY] = this.transform_click_to_project_domain(event); 
+                this.recursive_piecing_ref.current.handle_click(clickX, clickY);
+            }
         }
 
         this.setState({ 
@@ -113,7 +115,7 @@ class Project extends Component {
 
     mouse_move(event) {
         // the mouse is moving, but we are not dragging the project
-        if( !this.state.dragging ) {
+        if( !this.state.dragging || this.props.project_settings.disable_project_display_movement ) {
             return;
         }
 

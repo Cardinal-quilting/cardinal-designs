@@ -20,6 +20,8 @@ class ProjectSettings {
     disable_project_display_movement = false;
 
     project_display_translation = { x: 0, y: 0 }
+
+    main_display = "Project";
 }
 
 export default ProjectSettings;

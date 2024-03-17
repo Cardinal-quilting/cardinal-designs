@@ -68,6 +68,7 @@ class OptionsBox extends Component {
                 boxSizing: "border-box",
                 borderStyle: ((!this.props.disabled & this.state.display)? "solid" : "none"),
                 borderColor: this.props.settings.accent_background_color,
+                backgroundColor: this.props.settings.background_color,
                 borderRadius: "0.5vmin",
                 minWidth: width, 
                 maxWidth: width,
@@ -88,7 +89,7 @@ class OptionsBox extends Component {
                 <div
                     style= {{
                         marginTop: "0.25vh",
-                        marginBottom: "0.25vh"
+                        marginBottom: "0.25vh",
                     }}
                 >
                     {(!this.props.disabled & this.state.display)? this.content().map((d) => <li key={d.key} style={{listStyle: "none"}}>{d}</li>) : null }

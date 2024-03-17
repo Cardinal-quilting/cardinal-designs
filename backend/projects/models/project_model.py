@@ -21,3 +21,5 @@ class Project(models.Model):
     disable_project_display_movement = models.BooleanField()
 
     project_display_translation = models.JSONField()
+
+    main_display = models.CharField(max_length=250)
