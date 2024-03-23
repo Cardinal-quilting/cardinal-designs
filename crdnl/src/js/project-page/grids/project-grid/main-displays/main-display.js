@@ -45,6 +45,10 @@ class MainDisplay extends Component {
         if( this.props.project_settings.main_display==="Recursive piecing tree") {
             return (
                 <RecursivePiecingTreeDisplay
+                    display_dimensions = {this.display_dimensions}
+                    settings={this.props.settings}
+                    recursive_piecing_panels={this.props.recursive_piecing_panels}
+                    recursive_piecing_settings={this.props.recursive_piecing_settings}
                 />
             );
         }

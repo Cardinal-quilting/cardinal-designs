@@ -77,11 +77,52 @@ export class RecursivePiecingPanelContainer {
         this.next_panel_id = next_panel_id;
     }
 
+    recursive_piecing_tree() {
+       /*
+        Get an object that maps each layer of a binary tree to a list of paenls in that layer. 
+        They are ordered from left most panel (always take the left paenl given a parent) to the 
+        right most panel. (always take the right panel given a parent). Adjacent nodes (i, i+1) have 
+        the same parent if i is even.
+       */
+       var panels_per_level = {};
+
+       // recursively add panels to each list 
+       const add_panel = (panel, level) => {
+        if( panels_per_level[level]===undefined ) {
+            panels_per_level[level] = [panel];
+        } else {
+            panels_per_level[level].push(panel);
+        }
+
+        if( panel.left_panel!==undefined ) {
+            add_panel(panel.left_panel, level+1);
+        }
+        if( panel.right_panel!==undefined ) {
+            add_panel(panel.right_panel, level+1);
+        }
+       };
+
+       // add the top panel and all of its children
+       add_panel(this.top_panel, 0);
+
+       // make a list of the number of panels per level
+       panels_per_level.num_panels_per_level = Object.values(panels_per_level).map(value => value.length);
+
+       // get the number of level 
+       panels_per_level.num_levels = panels_per_level.num_panels_per_level.length;
+
+       // determine the level with the most panels
+       panels_per_level.widest_level = panels_per_level.num_panels_per_level.indexOf(Math.max(...panels_per_level.num_panels_per_level));
+
+       return panels_per_level;
+    }
+
     add_panel(nodes, lines) {
         const name = `panel${this.next_panel_id++}`;
 
         const panel = new RecursivePiecingGeometricPanel(nodes, lines, name);
     
+        // set the top panel of a binary tree
         if( Object.keys(this.panels).length===0 ) {
             this.top_panel = panel;
         }

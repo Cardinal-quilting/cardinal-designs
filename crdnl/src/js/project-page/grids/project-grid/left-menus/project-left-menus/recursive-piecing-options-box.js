@@ -361,7 +361,7 @@ class RecursivePiecingOptionsBox extends OptionsBox {
                 min={String(1.01*this.props.recursive_piecing_settings.max_line_thickness)}
                 max="1.0"
                 value={this.props.recursive_piecing_settings.max_line_thickness}
-                onChange={(event) => {this.props.update_recursive_piecing_settings_element("max_line_thickness", Math.max(event.target.value, this.props.recursive_piecing_settings.max_line_thickness))}}
+                onChange={(event) => {this.props.update_recursive_piecing_settings_element("max_line_thickness", Math.max(event.target.value, this.props.recursive_piecing_settings.min_line_thickness))}}
                 style={{
                 width: String(2.25*Number(this.props.settings.font_size))+"vmin",
                 fontSize: font_size,

@@ -31,6 +31,16 @@ class RecursivePiecing(models.Model):
     new_start_node = models.JSONField(null=True)
     new_end_node = models.JSONField(null=True)
 
+    # the size of nodes that are displayed when looking at trees (this will be scaled by project dimensions)
+    tree_node_size = models.FloatField()
+    min_tree_node_size = models.FloatField()
+    max_tree_node_size = models.FloatField()
+
+    # the line thickness and their min/max values for the tree visualization
+    tree_line_thickness = models.FloatField()
+    min_tree_line_thickness = models.FloatField()
+    max_tree_line_thickness = models.FloatField()
+
     # this is the next id for newly constructed nodes/lines/panels
     next_node_id = models.IntegerField()
     next_line_id = models.IntegerField()

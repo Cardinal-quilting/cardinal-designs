@@ -1,6 +1,7 @@
 import { Component } from "react";
 
-import ProjectLeftMenu from "./project-left-menu";
+import ProjectLeftMenu from "./project-left-menus/project-left-menu";
+import RecursivePiecingTreeLeftMenu from "./recursive-piecing-tree-left-menus/recursive-piecing-tree-left-menu";
 
 class LeftMenu extends Component {
     content() {
@@ -15,6 +16,17 @@ class LeftMenu extends Component {
                     initialize_recursive_piecing={this.props.initialize_recursive_piecing}
                     recursive_piecing_settings={this.props.recursive_piecing_settings}
                     set_recursive_piecing_settings={this.props.set_recursive_piecing_settings}
+                    update_recursive_piecing_settings_element={this.props.update_recursive_piecing_settings_element}
+                />
+            );
+        }
+
+        if( this.props.project_settings.main_display==="Recursive piecing tree" ) {
+            return (
+                <RecursivePiecingTreeLeftMenu
+                    settings={this.props.settings}
+                    width={this.props.width}
+                    recursive_piecing_settings={this.props.recursive_piecing_settings}
                     update_recursive_piecing_settings_element={this.props.update_recursive_piecing_settings_element}
                 />
             );
