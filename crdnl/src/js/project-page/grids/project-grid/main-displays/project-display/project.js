@@ -207,6 +207,7 @@ class Project extends Component {
             ref={this.recursive_piecing_ref}
             project_dimensions = {this.project_dimensions}
             recursive_piecing_settings={this.props.recursive_piecing_settings}
+            project_settings={this.props.project_settings}
             recursive_piecing_nodes={this.props.recursive_piecing_nodes}
             recursive_piecing_lines={this.props.recursive_piecing_lines}
             recursive_piecing_panels={this.props.recursive_piecing_panels}

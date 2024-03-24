@@ -15,19 +15,30 @@ class RecursivePiecingTreeDisplay extends Component {
         return this.props.recursive_piecing_settings.tree_node_size*Math.min(height, width);
     }
 
+    has_tree_selected() {
+        return this.props.recursive_piecing_settings.tree_selected_panel!==undefined && this.props.recursive_piecing_settings.tree_selected_panel!==null
+    }
+
     display_tree_node(panel, x, y, x_child, y_child, dx_child, nodes, lines) {
         const [height, width] = this.project_dimensions;
         const line_thickness = this.props.recursive_piecing_settings.tree_line_thickness*Math.min(height, width);
 
+        const is_selected = this.has_tree_selected() && this.props.recursive_piecing_settings.tree_selected_panel.name===panel.name;
+        const node_color = is_selected? this.props.recursive_piecing_settings.active_node_color : this.props.recursive_piecing_settings.node_color;
+        const node_size = is_selected? this.props.recursive_piecing_settings.selected_tree_node_scale*this.node_size : this.node_size;
+
+
         const node = (
             <TreeNode
                 key={panel.name}
-                color = {this.props.settings.dark_background_color}
+                panel={panel}
+                color = {node_color}
                 x = {x}
                 y = {y}
-                size = {this.node_size}
+                size = {node_size}
                 project_height = {height}
                 project_width = {width}
+                update_recursive_piecing_settings_element={this.props.update_recursive_piecing_settings_element}
             />
         );
 

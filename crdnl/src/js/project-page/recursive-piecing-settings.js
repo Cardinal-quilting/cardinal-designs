@@ -29,13 +29,17 @@ class RecursivePiecingSettings {
 
     // the size of nodes that are displayed when looking at trees (this will be scaled by project dimensions)
     tree_node_size = 0.015;
+    selected_tree_node_scale = 1.5; // multiply the selected node by this factor
     min_tree_node_size = 0.0;
     max_tree_node_size = 0.05;
 
     // the line thickness and their min/max values for the tree visualization
-    tree_line_thickness = 0.01; // defines the thickness of each line to be this fraction of the project dimensions
+    tree_line_thickness = 0.0025; // defines the thickness of each line to be this fraction of the project dimensions
     min_tree_line_thickness = 0.0;
     max_tree_line_thickness = 0.005;
+
+    // the panel selected while in a tree view 
+    tree_selected_panel = undefined;
 }
 
 export default RecursivePiecingSettings;

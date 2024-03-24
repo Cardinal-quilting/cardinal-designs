@@ -205,12 +205,49 @@ class TreeSettingsOptionsBox extends OptionsBox {
         );
     }
 
+    selected_tree_node_scale() {
+        const font_size = String(this.props.settings.small_font_size)+"vmin";
+
+        return (
+            <div key="selected_tree_node_scale" name="selected_tree_node_scale"
+            style={{
+                color: this.props.settings.font_color,
+                accentColor: this.props.settings.accent_background_color,
+                fontSize: font_size,
+            }}
+            >
+                <input
+                type="number"
+                step="0.001"
+                min="0.0"
+                value={this.props.recursive_piecing_settings.selected_tree_node_scale}
+                onChange={(event) => {this.props.update_recursive_piecing_settings_element("selected_tree_node_scale", event.target.value)}}
+                style={{
+                width: String(2.25*Number(this.props.settings.font_size))+"vmin",
+                fontSize: font_size,
+                color: this.props.settings.font_color,
+                backgroundColor: this.props.settings.background_color,
+                }}
+            />
+            <label htmlFor={"selected_tree_node_scale"}
+                style={{
+                    fontSize: font_size
+                }}
+            >
+                Selected node scale
+            </label>
+        </div>
+        );
+    }
+
     content() {
         return [
             this.adjust_tree_node_size(),
             this.max_tree_node_size(),
             this.min_tree_node_size(),
             this.line("line1"),
+            this.selected_tree_node_scale(),
+            this.line("line2"),
             this.adjust_tree_line_thickness(),
             this.max_tree_line_thickness(),
             this.min_tree_line_thickness()

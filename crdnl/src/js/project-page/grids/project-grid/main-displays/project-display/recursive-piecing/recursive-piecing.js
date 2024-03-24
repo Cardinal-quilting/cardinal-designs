@@ -11,8 +11,6 @@ class RecursivePiecing extends Component {
         this.handle_mouse_down = this.handle_mouse_down.bind(this);
         this.mouse_move_split_panel = this.mouse_move_split_panel.bind(this);
         this.mouse_move_drag_new_node = this.mouse_move_drag_new_node.bind(this);
-        this.render_active_panel_nodes = this.render_active_panel_nodes.bind(this);
-        this.render_active_panel_lines = this.render_active_panel_lines.bind(this);
         this.has_start_node = this.has_start_node.bind(this);
         this.has_end_node = this.has_end_node.bind(this);
 
@@ -56,7 +54,19 @@ class RecursivePiecing extends Component {
     }
 
     has_active() {
+        if( this.props.project_settings.main_display!=="Project" ) {
+            return false;
+        }
+
         return this.props.recursive_piecing_settings.active_panel!==undefined && this.props.recursive_piecing_settings.active_panel!==null
+    }
+
+    has_tree_selected() {
+        if( this.props.project_settings.main_display!=="Recursive piecing tree" ) {
+            return false;
+        }
+
+        return this.props.recursive_piecing_settings.tree_selected_panel!==undefined && this.props.recursive_piecing_settings.tree_selected_panel!==null
     }
 
     project_to_active_panel(x, y, skip_line_name=undefined) {
@@ -269,22 +279,19 @@ class RecursivePiecing extends Component {
             />  );  
     }
 
-    render_active_panel_lines() {
-        const active_panel = this.props.recursive_piecing_settings.active_panel;
+    render_panel_lines(panel, is_active) {
         const color = this.props.recursive_piecing_settings.active_line_color;
 
-        return Object.entries(active_panel.lines).map((line) => {
-            const ref = this.state.active_line_refs===undefined? undefined : this.state.active_line_refs[line[0]];
-
+        return Object.entries(panel.lines).map((line) => {
+            const ref = !is_active || this.state.active_line_refs===undefined? undefined : this.state.active_line_refs[line[0]];
             return this.render_line(line[1].start, line[1].end, color, `active_line${line[0]}`, ref);
         })
     }
 
-    render_active_panel_nodes() {
-        const active_panel = this.props.recursive_piecing_settings.active_panel;
+    render_panel_nodes(panel) {
         const color = this.props.recursive_piecing_settings.active_node_color;
         
-        return Object.entries(active_panel.nodes).map((node) => {
+        return Object.entries(panel.nodes).map((node) => {
             return this.render_node(node[1], color, `active_node${node[0]}`);
         })
     }
@@ -294,6 +301,7 @@ class RecursivePiecing extends Component {
         const height_px = String(height) + "px", width_px = String(width) + "px";
 
         const has_active = this.has_active();
+        const has_tree_selected = this.has_tree_selected();
 
         // check if we have a start or end node, undefined and null both signal that we do not 
         const no_new_start_node = this.props.recursive_piecing_settings.new_start_node===null || this.props.recursive_piecing_settings.new_start_node===undefined;
@@ -324,8 +332,11 @@ class RecursivePiecing extends Component {
                     return this.render_node(node, color, `node${key}`);
                 })}  
 
-                {has_active? this.render_active_panel_lines() : null}
-                {has_active? this.render_active_panel_nodes() : null}
+                {has_active? this.render_panel_lines(this.props.recursive_piecing_settings.active_panel, true) : null}
+                {has_active? this.render_panel_nodes(this.props.recursive_piecing_settings.active_panel) : null}
+
+                {has_tree_selected? this.render_panel_lines(this.props.recursive_piecing_settings.tree_selected_panel, true) : null}
+                {has_tree_selected? this.render_panel_nodes(this.props.recursive_piecing_settings.tree_selected_panel) : null}
 
                 {no_new_start_node || !has_active? null : this.render_node(
                     this.props.recursive_piecing_settings.new_start_node.point, 

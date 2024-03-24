@@ -49,6 +49,7 @@ class MainDisplay extends Component {
                     settings={this.props.settings}
                     recursive_piecing_panels={this.props.recursive_piecing_panels}
                     recursive_piecing_settings={this.props.recursive_piecing_settings}
+                    update_recursive_piecing_settings_element={this.props.update_recursive_piecing_settings_element}
                 />
             );
         }
